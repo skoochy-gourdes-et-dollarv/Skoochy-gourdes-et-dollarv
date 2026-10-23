@@ -752,8 +752,13 @@ if (el) el.textContent = lang[key];
 });
 }
 
+
 if (languageSelect) {
-languageSelect.addEventListener("change", translatePage);
+  languageSelect.addEventListener("change", function () {
+    translatePage();
+  });
+
+  translatePage();
 }
 
 window.translateSkoochyPage = translatePage;
