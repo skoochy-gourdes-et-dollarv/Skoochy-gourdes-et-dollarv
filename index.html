@@ -627,10 +627,9 @@ function translatePage() {
       return new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: currency
-      }).format(amount);
-    };
-
-    document.getElementById("calculateBtn").addEventListener("click", function () {
+      }).format(amount); 
+      
+   document.getElementById("calculateBtn").addEventListener("click", function () {
       const amount = Number(document.getElementById("amount").value);
       const rate = Number(document.getElementById("rate").value);
       const direction = document.getElementById("direction").value;
