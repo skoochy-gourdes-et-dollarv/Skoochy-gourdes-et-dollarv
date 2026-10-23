@@ -730,22 +730,39 @@ function translatePage() {
     document.getElementById("year").textContent = new Date().getFullYear();
     translatePage();
     showBalance();
+  </script>
   
- </script>
-  <section id="compte-utilisateur" style="max-width:420px;margin:30px auto;padding:20px;border:1px solid #ddd;border-radius:15px;font-family:Arial,sans-serif;">
+<section id="compte-utilisateur" style="max-width:420px;margin:30px auto;padding:20px;border:1px solid #ddd;border-radius:15px;font-family:Arial,sans-serif;">
   <h2>Créer un compte</h2>
   <p>Inscrivez-vous gratuitement pour utiliser votre espace personnel.</p>
 
   <label for="emailCompte">Adresse e-mail</label>
-  <input id="emailCompte" type="email" autocomplete="email" placeholder="Votre e-mail" style="display:block;width:100%;padding:12px;margin:8px 0 15px;box-sizing:border-box;">
+  <input
+    id="emailCompte"
+    type="email"
+    autocomplete="email"
+    placeholder="Votre e-mail"
+    style="display:block;width:100%;padding:12px;margin:8px 0 15px;box-sizing:border-box;"
+  >
 
   <label for="motDePasseCompte">Mot de passe</label>
-  <input id="motDePasseCompte" type="password" autocomplete="new-password" minlength="6" placeholder="6 caractères minimum" style="display:block;width:100%;padding:12px;margin:8px 0 15px;box-sizing:border-box;">
+  <input
+    id="motDePasseCompte"
+    type="password"
+    autocomplete="new-password"
+    minlength="6"
+    placeholder="6 caractères minimum"
+    style="display:block;width:100%;padding:12px;margin:8px 0 15px;box-sizing:border-box;"
+  >
 
-  <button id="inscriptionCompte" type="button" style="padding:12px 16px;cursor:pointer;">Créer mon compte</button>
-  <p id="messageCompte" role="status"></p>
-  </section>
-  <script type="module">
+  <button id="inscriptionCompte" type="button" style="padding:12px 16px;cursor:pointer;">
+    Créer mon compte
+  </button>
+
+  <p id="messageCompte" role="status" aria-live="polite"></p>
+</section>
+
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
 import {
   getAuth,
@@ -769,32 +786,58 @@ const email = document.getElementById("emailCompte");
 const motDePasse = document.getElementById("motDePasseCompte");
 const message = document.getElementById("messageCompte");
 
-if (bouton && email && motDePasse && message) {
-  bouton.addEventListener("click", async () => {
-    message.textContent = "Création du compte en cours...";
+bouton.addEventListener("click", async () => {
+  const adresse = email.value.trim();
+  const motDePasseValeur = motDePasse.value;
 
-    try {
-      await createUserWithEmailAndPassword(
-        auth,
-        email.value.trim(),
-        motDePasse.value
-      );
+  if (!adresse || !motDePasseValeur) {
+    message.textContent = "Veuillez remplir tous les champs.";
+    return;
+  }
 
-      message.textContent =
-        "Compte créé avec succès ! Bienvenue sur Skoochy Gourdes et Dollar.";
-    } catch (erreur) {
-      const messages = {
-        "auth/email-already-in-use": "Cette adresse e-mail possède déjà un compte.",
-        "auth/invalid-email": "Veuillez saisir une adresse e-mail valide.",
-        "auth/weak-password": "Choisissez un mot de passe plus sécurisé.",
-        "auth/operation-not-allowed": "Activez Email/Password dans Firebase Authentication."
-      };
+  if (motDePasseValeur.length < 6) {
+    message.textContent =
+      "Le mot de passe doit contenir au moins 6 caractères.";
+    return;
+  }
 
-      message.textContent =
-        messages[erreur.code] || "Impossible de créer le compte. Vérifiez les informations et réessayez.";
-    }
-  });
-    
+  bouton.disabled = true;
+  message.textContent = "Création du compte en cours...";
+
+  try {
+    await createUserWithEmailAndPassword(
+      auth,
+      adresse,
+      motDePasseValeur
+    );
+
+    message.textContent =
+      "Compte créé avec succès ! Bienvenue sur Skoochy Gourdes et Dollar.";
+    email.value = "";
+    motDePasse.value = "";
+  } catch (erreur) {
+    const messages = {
+      "auth/email-already-in-use":
+        "Cette adresse e-mail possède déjà un compte.",
+      "auth/invalid-email":
+        "Veuillez saisir une adresse e-mail valide.",
+      "auth/weak-password":
+        "Choisissez un mot de passe plus sécurisé.",
+      "auth/operation-not-allowed":
+        "Activez Email/Password dans Firebase Authentication.",
+      "auth/network-request-failed":
+        "Problème de connexion Internet. Réessayez."
+    };
+
+    message.textContent =
+      messages[erreur.code] ||
+      "Impossible de créer le compte. Vérifiez la configuration Firebase et réessayez.";
+    console.error("Erreur Firebase Authentication :", erreur.code);
+  } finally {
+    bouton.disabled = false;
+  }
+});
 </script>
 </body>
+</html>
 </html>
