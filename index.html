@@ -620,8 +620,11 @@ function translatePage() {
         "Goud HTG → Dola USD";
     }
 
-    const languageSelect = document.getElementById("languageSelect");
-    languageSelect.addEventListener("change", translatePage);
+  const languageSelect = document.getElementById("languageSelect");
+
+if (languageSelect) {
+  languageSelect.addEventListener("change", translatePage);
+}
 
     const money = function (amount, currency) {
       return new Intl.NumberFormat("en-US", {
