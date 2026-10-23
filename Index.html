@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101b35">
+<meta name="description" content="Skoochy Gourdes et Dollar — aprann konvèti goud ak dola, pratike ak lajan vityèl, epi aprann finans.">
+<title>Skoochy Gourdes et Dollar</title>
+<style>
+:root{--bg:#f3f6fc;--card:#fff;--ink:#15213b;--muted:#68758d;--blue:#245bdb;--green:#0c9665;--border:#e0e7f2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+header{background:linear-gradient(135deg,#101b35,#245bdb);color:white;padding:24px 16px}
+.top{max-width:1050px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{font-size:22px;font-weight:800}
+.brand span{color:#81e7bb}
+select,input,button{font:inherit;border-radius:10px;padding:11px;border:1px solid var(--border);max-width:100%}
+header select{background:white;color:#15213b}
+main{max-width:1050px;margin:auto;padding:22px 15px}
+.hero{padding:25px 0}
+.hero h1{font-size:clamp(28px,5vw,43px);line-height:1.15;margin:0 0 12px}
+.hero p{max-width:650px;color:var(--muted)}
+.badge{display:inline-block;background:#e0f8ec;color:#08764f;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:17px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:17px;padding:20px;margin-bottom:17px;box-shadow:0 5px 20px #172d5108}
+.card h2{font-size:20px;margin:0 0 8px}
+.muted{color:var(--muted);font-size:14px}
+label{display:block;font-weight:600;margin:12px 0 5px}
+input,select{width:100%;background:white;color:var(--ink)}
+button{cursor:pointer;background:var(--blue);color:white;border:0;font-weight:700;margin-top:12px}
+button.secondary{background:#eaf0ff;color:var(--blue)}
+button.danger{background:#fff0f0;color:#b42318}
+button:hover{filter:brightness(.96)}
+.result{font-size:25px;font-weight:800;color:var(--green);margin-top:15px;overflow-wrap:anywhere}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:16px}
+.stat{padding:14px;background:#f3f6fc;border-radius:12px}
+.stat small{color:var(--muted)}
+.stat strong{display:block;font-size:21px;overflow-wrap:anywhere}
+.notice{padding:12px;border-radius:10px;background:#fff8e5;color:#765410;font-size:13px;margin-top:13px}
+.lesson{padding:13px 0;border-bottom:1px solid var(--border)}
+.lesson:last-child{border-bottom:0}
+footer{text-align:center;color:var(--muted);padding:25px 12px;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <div class="brand">Skoochy <span>Gourdes et Dollar</span></div>
+    <select id="languageSelect" aria-label="Choose language">
+      <option value="ht">Kreyòl ayisyen</option>
+      <option value="fr">Français</option>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <span class="badge" data-i18n="free">GRATIS • APRANN • PRATIKE</span>
+  <h1 data-i18n="headline">Aprann konprann goud ak dola.</h1>
+  <p data-i18n="intro">Yon espas senp pou konvèti lajan, pratike nan demo san risk, epi amelyore konesans finans ou.</p>
+</section>
+
+<div class="grid">
+<section class="card">
+  <h2 data-i18n="converter">Kalkilatris goud ak dola</h2>
+  <p class="muted" data-i18n="converterDesc">Antre kantite a epi mete to echanj ou vle itilize a.</p>
+  <label for="amount" data-i18n="amount">Kantite</label>
+  <input id="amount" type="number" min="0" step="any" value="100" placeholder="100">
+  <label for="direction" data-i18n="direction">Sans konvèsyon</label>
+  <select id="direction">
+    <option value="usdhtg">USD → HTG</option>
+    <option value="htgusd">HTG → USD</option>
+  </select>
+  <label for="rate" data-i18n="rate">To echanj (1 USD = konbyen HTG?)</label>
+  <input id="rate" type="number" min="0.000001" step="any" value="130">
+  <button id="nevCalc" data-i18n="calculate">Kalkile</button>
+  <div id="result" class="result" aria-live="polite">13,000 HTG</div>
+  <p class="muted" data-i18n="rateNote">To a se yon egzanp. Verifye to aktyèl la anvan ou fè tranzaksyon.</p>
+</section>
+
+<section class="card">
+  <h2 data-i18n="demo">Demo finansye</h2>
+  <p class="muted" data-i18n="demoDesc">Pratike jere yon balans vityèl. Pa gen lajan reyèl.</p>
+  <div class="stats">
+    <div class="stat"><small data-i18n="virtualBalance">Balans vityèl</small><strong id="demoBalance">$1,000.00</strong></div>
+    <div class="stat"><small data-i18n="currency">Lajan</small><strong>USD</strong></div>
+  </div>
+  <label for="demoAmount" data-i18n="demoAmount">Kantite pou pratike</label>
+  <input id="demoAmount" type="number" min="0.01" step="any" placeholder="50">
+  <div class="grid">
+    <button id="addFunds" data-i18n="add">Ajoute vityèl</button>
+    <button id="subtractFunds" class="secondary" data-i18n="subtract">Retire vityèl</button>
+  </div>
+  <button id="resetDemo" class="danger" data-i18n="reset">Rekòmanse demo</button>
+  <p id="demoMessage" class="muted" aria-live="polite"></p>
+  <div class="notice" data-i18n="demoWarning">Balans sa a se yon similasyon sèlman. Li pa reprezante lajan ou posede.</div>
+</section>
+</div>
+
+<section class="card">
+  <h2 data-i18n="learn">Aprann finans</h2>
+  <p class="muted" data-i18n="learnDesc">Kèk prensip senp pou ede w pran pi bon desizyon finansye.</p>
+  <div class="lesson"><strong data-i18n="lesson1Title">1. Konprann to echanj</strong><p data-i18n="lesson1">To echanj la montre konbyen goud ki koresponn ak yon dola ameriken.</p></div>
+  <div class="lesson"><strong data-i18n="lesson2Title">2. Prepare yon bidjè</strong><p data-i18n="lesson2">Ekri revni ou, depans ou ak objektif ekonomi ou.</p></div>
+  <div class="lesson"><strong data-i18n="lesson3Title">3. Evite risk initil</strong><p data-i18n="lesson3">Pa envesti lajan ou pa kapab pèdi, epi verifye sèvis finansye yo anvan ou itilize yo.</p></div>
+  <div class="lesson"><strong data-i18n="lesson4Title">4. Pwoteje enfòmasyon ou</strong><p data-i18n="lesson4">Pa pataje modpas, kòd sekirite oswa enfòmasyon bankè ak moun ou pa fè konfyans.</p></div>
+</section>
+
+<section class="card">
+  <h2 data-i18n="about">Konsènan platfòm nan</h2>
+  <p data-i18n="aboutText">Skoochy Gourdes et Dollar se yon pwojè edikasyon finansye. Kalkilatris la ak demo a se zouti aprantisaj; yo pa yon bank ni yon sèvis transfè lajan.</p>
+  <p class="muted" data-i18n="privacy">Vèsyon sa a pa mande enskripsyon ni dokiman idantite. Pa antre enfòmasyon pèsonèl sansib.</p>
+</section>
+</main>
+
+<footer>
+  © <span id="year"></span> Skoochy Gourdes et Dollar.
+  <span data-i18n="footer">Tout dwa rezève.</span>
+</footer>
+
+<script>
+const translations = {
+ht: {
+free:"GRATIS • APRANN • PRATIKE",headline:"Aprann konprann goud ak dola.",
+intro:"Yon espas senp pou konvèti lajan, pratike nan demo san risk, epi amelyore konesans finans ou.",
+converter:"Kalkilatris goud ak dola",converterDesc:"Antre kantite a epi mete to echanj ou vle itilize a.",
+amount:"Kantite",direction:"Sans konvèsyon",rate:"To echanj (1 USD = konbyen HTG?)",
+calculate:"Kalkile",rateNote:"To a se yon egzanp. Verifye to aktyèl la anvan ou fè tranzaksyon.",
+demo:"Demo finansye",demoDesc:"Pratike jere yon balans vityèl. Pa gen lajan reyèl.",
+virtualBalance:"Balans vityèl",currency:"Lajan",demoAmount:"Kantite pou pratike",
+add:"Ajoute vityèl",subtract:"Retire vityèl",reset:"Rekòmanse demo",
+demoWarning:"Balans sa a se yon similasyon sèlman. Li pa reprezante lajan ou posede.",
+learn:"Aprann finans",learnDesc:"Kèk prensip senp pou ede w pran pi bon desizyon finansye.",
+lesson1Title:"1. Konprann to echanj",lesson1:"To echanj la montre konbyen goud ki koresponn ak yon dola ameriken.",
+lesson2Title:"2. Prepare yon bidjè",lesson2:"Ekri revni ou, depans ou ak objektif ekonomi ou.",
+lesson3Title:"3. Evite risk initil",lesson3:"Pa envesti lajan ou pa kapab pèdi, epi verifye sèvis finansye yo anvan ou itilize yo.",
+lesson4Title:"4. Pwoteje enfòmasyon ou",lesson4:"Pa pataje modpas, kòd sekirite oswa enfòmasyon bankè ak moun ou pa fè konfyans.",
+about:"Konsènan platfòm nan",aboutText:"Skoochy Gourdes et Dollar se yon pwojè edikasyon finansye. Kalkilatris la ak demo a se zouti aprantisaj; yo pa yon bank ni yon sèvis transfè lajan.",
+privacy:"Vèsyon sa a pa mande enskripsyon ni dokiman idantite. Pa antre enfòmasyon pèsonèl sansib.",
+footer:"Tout dwa rezève.",invalid:"Tanpri antre kantite ak to ki valab.",added:"Lajan vityèl ajoute.",subtracted:"Lajan vityèl retire.",insufficient:"Balans vityèl la pa sifi.",resetMsg:"Demo a retounen nan balans inisyal la.",invalidDemo:"Antre yon kantite ki pi gran pase zewo."
+},
+fr: {
+free:"GRATUIT • APPRENDRE • PRATIQUER",headline:"Comprenez le dollar et la gourde.",
+intro:"Un espace simple pour convertir des devises, pratiquer en mode démo et améliorer vos connaissances financières.",
+converter:"Convertisseur gourde-dollar",converterDesc:"Saisissez un montant et le taux de change que vous souhaitez utiliser.",
+amount:"Montant",direction:"Sens de conversion",rate:"Taux de change (1 USD = combien de HTG ?)",
+calculate:"Calculer",rateNote:"Le taux indiqué est un exemple. Vérifiez le taux actuel avant toute transaction.",
+demo:"Démo financière",demoDesc:"Entraînez-vous avec un solde virtuel, sans argent réel.",
+virtualBalance:"Solde virtuel",currency:"Devise",demoAmount:"Montant à simuler",
+add:"Ajouter virtuellement",subtract:"Retirer virtuellement",reset:"Réinitialiser la démo",
+demoWarning:"Ce solde est une simulation. Il ne représente pas de l'argent réel.",
+learn:"Apprendre la finance",learnDesc:"Quelques principes simples pour mieux gérer votre argent.",
+lesson1Title:"1. Comprendre le taux de change",lesson1:"Le taux indique combien de gourdes correspondent à un dollar américain.",
+lesson2Title:"2. Préparer un budget",lesson2:"Notez vos revenus, vos dépenses et vos objectifs d'épargne.",
+lesson3Title:"3. Éviter les risques inutiles",lesson3:"N'investissez pas de l'argent que vous ne pouvez pas vous permettre de perdre.",
+lesson4Title:"4. Protéger vos informations",lesson4:"Ne partagez pas vos mots de passe ni vos codes de sécurité.",
+about:"À propos de la plateforme",aboutText:"Skoochy Gourdes et Dollar est un projet d'éducation financière. Les outils proposés sont éducatifs et ne constituent ni une banque ni un service de transfert d'argent.",
+privacy:"Cette version ne demande ni inscription ni pièce d'identité. N'entrez pas d'informations personnelles sensibles.",
+footer:"Tous droits réservés.",invalid:"Veuillez saisir un montant et un taux valides.",added:"Fonds virtuels ajoutés.",subtracted:"Fonds virtuels retirés.",insufficient:"Le solde virtuel est insuffisant.",resetMsg:"La démo a retrouvé son solde initial.",invalidDemo:"Saisissez un montant supérieur à zéro."
+},
+en: {
+free:"FREE • LEARN • PRACTICE",headline:"Understand gourdes and dollars.",
+intro:"A simple place to convert currencies, practice in demo mode, and improve your financial knowledge.",
+converter:"Gourde-dollar converter",converterDesc:"Enter an amount and the exchange rate you want to use.",
+amount:"Amount",direction:"Conversion direction",rate:"Exchange rate (1 USD = how many HTG?)",
+calculate:"Calculate",rateNote:"This rate is an example. Check the current rate before making transactions.",
+demo:"Financial demo",demoDesc:"Practice managing a virtual balance. No real money is involved.",
+virtualBalance:"Virtual balance",currency:"Currency",demoAmount:"Practice amount",
+add:"Add virtual funds",subtract:"Subtract virtual funds",reset:"Reset demo",
+demoWarning:"This balance is a simulation only. It is not real money.",
+learn:"Learn about finance",learnDesc:"Simple principles to help you make better financial decisions.",
+lesson1Title:"1. Understand exchange rates",lesson1:"An exchange rate shows how many gourdes equal one US dollar.",
+lesson2Title:"2. Build a budget",lesson2:"Track your income, expenses, and savings goals.",
+lesson3Title:"3. Avoid unnecessary risks",lesson3:"Never invest money you cannot afford to lose.",
+lesson4Title:"4. Protect your information",lesson4:"Never share passwords, security codes, or banking details with untrusted people.",
+about:"About the platform",aboutText:"Skoochy Gourdes et Dollar is a financial education project. Its tools are educational and do not constitute a bank or money transfer service.",
+privacy:"This version requires no registration or identity documents. Do not enter sensitive personal information.",
+footer:"All rights reserved.",invalid:"Please enter a valid amount and exchange rate.",added:"Virtual funds added.",subtracted:"Virtual funds subtracted.",insufficient:"Insufficient virtual balance.",resetMsg:"Demo reset to the initial balance.",invalidDemo:"Enter an amount greater than zero."
+},
+es: {
+free:"GRATIS • APRENDER • PRACTICAR",headline:"Comprende la gourde y el dólar.",
+intro:"Un espacio sencillo para convertir monedas, practicar en modo demo y mejorar tus conocimientos financieros.",
+converter:"Conversor de gourde y dólar",converterDesc:"Introduce una cantidad y el tipo de cambio que deseas utilizar.",
+amount:"Cantidad",direction:"Sentido de conversión",rate:"Tipo de cambio (1 USD = ¿cuántos HTG?)",
+calculate:"Calcular",rateNote:"Este tipo de cambio es un ejemplo. Comprueba el tipo actual antes de realizar transacciones.",
+demo:"Demo financiera",demoDesc:"Practica con un saldo virtual, sin dinero real.",
+virtualBalance:"Saldo virtual",currency:"Moneda",demoAmount:"Cantidad para practicar",
+add:"Añadir fondos virtuales",subtract:"Restar fondos virtuales",reset:"Reiniciar demo",
+demoWarning:"Este saldo es solo una simulación. No representa dinero real.",
+learn:"Aprender finanzas",learnDesc:"Principios sencillos para tomar mejores decisiones financieras.",
+lesson1Title:"1. Comprender el tipo de cambio",lesson1:"El tipo de cambio indica cuántas gourdes equivalen a un dólar estadounidense.",
+lesson2Title:"2. Preparar un presupuesto",lesson2:"Anota tus ingresos, gastos y objetivos de ahorro.",
+lesson3Title:"3. Evitar riesgos innecesarios",lesson3:"No inviertas dinero que no puedas permitirte perder.",
+lesson4Title:"4. Proteger tu información",lesson4:"No compartas contraseñas ni códigos de seguridad.",
+about:"Acerca de la plataforma",aboutText:"Skoochy Gourdes et Dollar es un proyecto de educación financiera. Sus herramientas son educativas; no es un banco ni un servicio de transferencia de dinero.",
+privacy:"Esta versión no requiere registro ni documentos de identidad. No introduzcas información personal sensible.",
+footer:"Todos los derechos reservados.",invalid:"Introduce una cantidad y un tipo de cambio válidos.",added:"Fondos virtuales añadidos.",subtracted:"Fondos virtuales restados.",insufficient:"El saldo virtual es insuficiente.",resetMsg:"La demo volvió al saldo inicial.",invalidDemo:"Introduce una cantidad mayor que cero."
+}
+};
+
+let currentLanguage = "ht";
+let virtualBalance = 1000;
+const initialBalance = 1000;
+
+const money = (amount, currency) =>
+  new Intl.NumberFormat(
+    currentLanguage === "ht" ? "fr-FR" : currentLanguage,
+    {style:"currency",currency:currency,maximumFractionDigits:2}
+  ).format(amount);
+
+function translatePage() {
+  const t = translations[currentLanguage];
+  document.documentElement.lang = currentLanguage;
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key]) el.textContent = t[key];
+  });
+  updateBalance();
+  calculate();
+}
+
+function calculate() {
+  const amount = Number(document.getElementById("amount").value);
+  const rate = Number(document.getElementById("rate").value);
+  const direction = document.getElementById("direction").value;
+  const result = document.getElementById("result");
+
+  if (!Number.isFinite(amount) || !Number.isFinite(rate) ||
+      amount < 0 || rate <= 0) {
+    result.textContent = translations[currentLanguage].invalid;
+    return;
+  }
+
+  result.textContent = direction === "usdhtg"
+    ? money(amount * rate, "HTG")
+    : money(amount / rate, "USD");
+}
+
+function updateBalance() {
+  document.getElementById("demoBalance").textContent =
+    money(virtualBalance, "USD");
+}
+
+document.getElementById("languageSelect").addEventListener("change", e => {
+  currentLanguage = e.target.value;
+  translatePage();
+});
+
+document.getElementById("nevCalc").addEventListener("click", calculate);
+document.getElementById("amount").addEventListener("input", calculate);
+document.getElementById("rate").addEventListener("input", calculate);
+document.getElementById("direction").addEventListener("change", calculate);
+
+document.getElementById("addFunds").addEventListener("click", () => {
+  const amount = Number(document.getElementById("demoAmount").value);
+  const t = translations[currentLanguage];
+  const message = document.getElementById("demoMessage");
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+    message.textContent = t.invalidDemo;
+    return;
+  }
+
+  virtualBalance += amount;
+  updateBalance();
+  message.textContent = t.added;
+});
+
+document.getElementById("subtractFunds").addEventListener("click", () => {
+  const amount = Number(document.getElementById("demoAmount").value);
+  const t = translations[currentLanguage];
+  const message = document.getElementById("demoMessage");
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+    message.textContent = t.invalidDemo;
+    return;
+  }
+
+  if (amount > virtualBalance) {
+    message.textContent = t.insufficient;
+    return;
+  }
+
+  virtualBalance -= amount;
+  updateBalance();
+  message.textContent = t.subtracted;
+});
+
+document.getElementById("resetDemo").addEventListener("click", () => {
+  virtualBalance = initialBalance;
+  updateBalance();
+  document.getElementById("demoMessage").textContent =
+    translations[currentLanguage].resetMsg;
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+translatePage();
+</script>
+</body>
+  </html>
