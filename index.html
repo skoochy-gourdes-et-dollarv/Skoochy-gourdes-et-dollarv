@@ -745,5 +745,56 @@ function translatePage() {
   <button id="inscriptionCompte" type="button" style="padding:12px 16px;cursor:pointer;">Créer mon compte</button>
   <p id="messageCompte" role="status"></p>
   </section>
+  <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAfw5iUv-sYqXqPiZwqSufzjz_ASLu_xDk",
+  authDomain: "skoochy-gourdes-et-dollar.firebaseapp.com",
+  projectId: "skoochy-gourdes-et-dollar",
+  storageBucket: "skoochy-gourdes-et-dollar.firebasestorage.app",
+  messagingSenderId: "309603649435",
+  appId: "1:309603649435:web:e85bc815ca33f3f712833e"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const bouton = document.getElementById("inscriptionCompte");
+const email = document.getElementById("emailCompte");
+const motDePasse = document.getElementById("motDePasseCompte");
+const message = document.getElementById("messageCompte");
+
+if (bouton && email && motDePasse && message) {
+  bouton.addEventListener("click", async () => {
+    message.textContent = "Création du compte en cours...";
+
+    try {
+      await createUserWithEmailAndPassword(
+        auth,
+        email.value.trim(),
+        motDePasse.value
+      );
+
+      message.textContent =
+        "Compte créé avec succès ! Bienvenue sur Skoochy Gourdes et Dollar.";
+    } catch (erreur) {
+      const messages = {
+        "auth/email-already-in-use": "Cette adresse e-mail possède déjà un compte.",
+        "auth/invalid-email": "Veuillez saisir une adresse e-mail valide.",
+        "auth/weak-password": "Choisissez un mot de passe plus sécurisé.",
+        "auth/operation-not-allowed": "Activez Email/Password dans Firebase Authentication."
+      };
+
+      message.textContent =
+        messages[erreur.code] || "Impossible de créer le compte. Vérifiez les informations et réessayez.";
+    }
+  });
+}
+  </script>
 </body>
 </html>
