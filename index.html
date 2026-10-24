@@ -362,14 +362,52 @@
       </div>
     </section>
 
-    <section id="account" class="section">
-      <h2 data-i18n="accountTitle">Mon compte</h2>
-      <div class="card">
-        <p class="muted" data-i18n="accountComing">
-          L'inscription, la connexion et les accès premium seront
-          intégrés dans la partie 2.
-        </p>
-      </div>
+    
+<section id="account" class="section">
+  <h2>Mon compte Skoochy</h2>
+
+  <div class="card" id="authPanel">
+    <div class="field">
+      <label for="authName">Nom complet</label>
+      <input id="authName" type="text" autocomplete="name"
+             placeholder="Votre nom complet">
+    </div>
+
+    <div class="field">
+      <label for="authEmail">Adresse e-mail</label>
+      <input id="authEmail" type="email" autocomplete="email"
+             placeholder="nom@exemple.com">
+    </div>
+
+    <div class="field">
+      <label for="authPassword">Mot de passe</label>
+      <input id="authPassword" type="password"
+             autocomplete="new-password"
+             minlength="8" placeholder="8 caractères minimum">
+    </div>
+
+    <div class="field">
+      <label for="authMode">Action</label>
+      <select id="authMode">
+        <option value="register">Créer un compte</option>
+        <option value="login">Se connecter</option>
+      </select>
+    </div>
+
+    <button class="gold-btn" id="authSubmit">
+      Continuer
+    </button>
+
+    <p id="authMessage" class="muted" aria-live="polite"></p>
+  </div>
+
+  <div class="card" id="profilePanel" hidden>
+    <h3>Bienvenue sur Skoochy Finance</h3>
+    <p id="profileEmail" class="muted"></p>
+    <p id="profileAccess">Accès : gratuit</p>
+    <button id="logoutButton">Se déconnecter</button>
+  </div>
+</section>
     </section>
   </main>
 
