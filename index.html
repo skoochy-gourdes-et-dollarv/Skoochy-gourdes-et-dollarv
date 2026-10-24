@@ -879,45 +879,55 @@ calculateConversion();
     authSubmit.disabled = true;
     authSubmit.textContent = "Veuillez patienter…";
     showMessage("");
+    
+try {
+  if (registering) {
+    const credential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
-    try {
-      if (registering) {
-        const credential = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-
-        
-
-        await updateProfile(credential.user, {
-          displayName: name
-        });
-
-        await sendEmailVerification(credential.user);
-
-        showMessage(
-          "Compte créé. Vérifiez votre adresse e-mail avant de vous connecter."
-        );
-      } else {
-        const credential = await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-
-        if (!credential.user.emailVerified) {
-          showMessage(
-            "Veuillez vérifier votre adresse e-mail avant de vous connecter.",
-            true
-          );
-          await signOut(auth);
-          return;
-        }
-
-        showMessage("Connexion réussie.");
-      }
+    await updateProfile(credential.user, {
+      displayName: name
     });
+
+    await sendEmailVerification(credential.user);
+
+    showMessage(
+      "Compte créé. Vérifiez votre adresse e-mail avant de vous connecter."
+    );
+
+    await signOut(auth);
+  } else {
+    const credential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    if (!credential.user.emailVerified) {
+      showMessage(
+        "Veuillez vérifier votre adresse e-mail avant de vous connecter.",
+        true
+      );
+      await signOut(auth);
+      return;
+    }
+
+    showMessage("Connexion réussie.");
+  }
+
+  authPassword.value = "";
+
+} catch (error) {
+  showMessage(translateError(error), true);
+
+} finally {
+  authSubmit.disabled = false;
+  authSubmit.textContent = "Continuer";
+   }
+ }); 
 
   onAuthStateChanged(auth, user => {
     if (user) {
