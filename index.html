@@ -824,5 +824,79 @@
 
   authName.parentElement.hidden = authMode.value !== "register";
 </script>
+  
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+
+  const ids = [
+    "fxBalance", "fxRisk", "fxEntry", "fxStop",
+    "fxTarget", "fxPipSize", "fxPipValue"
+  ];
+
+  function calculateForex() {
+    const balance = Number($("fxBalance").value);
+    const riskPercent = Number($("fxRisk").value);
+    const entry = Number($("fxEntry").value);
+    const stop = Number($("fxStop").value);
+    const target = Number($("fxTarget").value);
+    const pipSize = Number($("fxPipSize").value);
+    const pipValue = Number($("fxPipValue").value);
+
+    const message = $("fxMessage");
+    const outputIds = [
+      "fxRiskAmount", "fxStopPips", "fxLotSize",
+      "fxPotentialGain", "fxRR"
+    ];
+
+    if (
+      ids.some(id => $(id) && $(id).value.trim() === "") ||
+      !ids.every(id => $(id) && Number.isFinite(Number($(id).value))) ||
+      balance <= 0 ||
+      riskPercent < 0.1 ||
+      riskPercent > 5 ||
+      entry <= 0 ||
+      stop <= 0 ||
+      target <= 0 ||
+      pipSize <= 0 ||
+      pipValue <= 0 ||
+      entry === stop
+    ) {
+      outputIds.forEach(id => $(id).textContent = "—");
+      message.textContent =
+        "Vérifiez les valeurs. Le risque doit être entre 0,1 % et 5 %, et le stop-loss doit être différent du prix d'entrée.";
+      return;
+    }
+
+    const stopPips = Math.abs(entry - stop) / pipSize;
+    const targetPips = Math.abs(target - entry) / pipSize;
+    const riskAmount = balance * riskPercent / 100;
+    const lotSize = riskAmount / (stopPips * pipValue);
+    const potentialGain = targetPips * pipValue * lotSize;
+    const ratio = targetPips / stopPips;
+
+    const money = value =>
+      value.toLocaleString("fr-FR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+
+    $("fxRiskAmount").textContent = "$" + money(riskAmount);
+    $("fxStopPips").textContent = money(stopPips) + " pips";
+    $("fxLotSize").textContent = money(lotSize) + " lot";
+    $("fxPotentialGain").textContent = "$" + money(potentialGain);
+    $("fxRR").textContent = "1 : " + money(ratio);
+
+    message.textContent =
+      "Estimation uniquement, hors frais et glissement. Vérifiez la valeur du pip pour votre paire et votre compte.";
+  }
+
+  const button = $("fxCalculate");
+  if (button) {
+    button.addEventListener("click", calculateForex);
+    calculateForex();
+  }
+})();
+</script>
 </body>
 </html>
