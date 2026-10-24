@@ -1,1079 +1,559 @@
 <!DOCTYPE html>
-<html lang="ht">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101c35">
-  <meta name="description" content="Skoochy Gourdes et Dollar - Konvètisè lajan gratis.">
-  <title>Skoochy Gourdes et Dollar</title>
+  <meta name="theme-color" content="#0b1220">
+  <meta name="description" content="Skoochy Finance : conversion de devises, calculateurs Forex, CFD, Crypto, P2P et formation financière.">
+  <title>Skoochy — Gourdes & Dollar</title>
 
   <style>
     :root {
-      --navy: #101c35;
-      --blue: #2457e6;
-      --cyan: #13b8a6;
-      --bg: #f3f6fc;
-      --white: #ffffff;
-      --text: #17233b;
-      --muted: #6b7890;
-      --border: #e1e7f0;
-      --danger: #c62828;
-      --radius: 18px;
+      --bg: #0b1220;
+      --panel: #131e30;
+      --panel2: #1b2940;
+      --gold: #e6bd58;
+      --text: #f4f7fc;
+      --muted: #a9b5c8;
+      --green: #35d39a;
+      --border: #293850;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
     }
 
-    button, input, select {
+    header {
+      padding: 18px 16px;
+      background: #101a2b;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--gold);
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    select, input, button {
       font: inherit;
+      border-radius: 9px;
+      padding: 11px;
+    }
+
+    select, input {
+      background: #0d1727;
+      color: var(--text);
+      border: 1px solid var(--border);
+      max-width: 100%;
     }
 
     button {
       cursor: pointer;
-    }
-
-    button:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
-
-    .topbar {
-      background: var(--navy);
-      color: white;
-      padding: 12px 5%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      font-size: 19px;
-      font-weight: 800;
-    }
-
-    .brand-icon {
-      display: grid;
-      place-items: center;
-      width: 42px;
-      height: 42px;
-      background: linear-gradient(135deg, var(--blue), var(--cyan));
-      border-radius: 13px;
-      color: white;
-      font-size: 22px;
-    }
-
-    .language-select {
-      padding: 9px 12px;
-      border: 1px solid #46536d;
-      border-radius: 10px;
-      color: white;
-      background: #1b2944;
-      max-width: 100%;
-    }
-
-    .navbar {
-      background: white;
-      padding: 12px 5%;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .navbar a {
-      text-decoration: none;
-      color: var(--text);
-      padding: 8px 12px;
-      border-radius: 9px;
-      font-size: 14px;
+      border: 0;
       font-weight: 700;
     }
 
-    .navbar a:hover {
-      background: #edf2ff;
-      color: var(--blue);
+    .gold-btn {
+      background: var(--gold);
+      color: #15191f;
     }
 
-    .container {
-      width: min(1100px, 92%);
-      margin: 28px auto;
+    nav {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      overflow-x: auto;
+      background: #0e1828;
+    }
+
+    nav button {
+      white-space: nowrap;
+      background: var(--panel2);
+      color: var(--text);
+    }
+
+    nav button.active {
+      background: var(--gold);
+      color: #15191f;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 18px;
     }
 
     .hero {
-      padding: 35px 25px;
-      border-radius: 24px;
-      color: white;
-      background: linear-gradient(120deg, #101c35, #2457e6);
-      margin-bottom: 24px;
+      padding: 26px 20px;
+      border: 1px solid #4b4128;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #1c2a40, #101827);
+      margin-bottom: 20px;
     }
 
     .hero h1 {
-      font-size: clamp(26px, 5vw, 42px);
-      line-height: 1.2;
-      margin: 0 0 12px;
+      margin-top: 0;
+      line-height: 1.25;
     }
 
-    .hero p {
-      max-width: 650px;
-      color: #e0e8ff;
-      margin: 0;
-    }
-
-    .hero-tag {
-      display: inline-block;
-      background: rgba(255,255,255,.14);
-      border-radius: 30px;
-      padding: 5px 12px;
-      margin-bottom: 15px;
-      font-size: 13px;
-    }
+    .gold { color: var(--gold); }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
     }
 
     .card {
-      background: white;
+      padding: 18px;
+      border-radius: 14px;
+      background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 23px;
-      margin-bottom: 20px;
-      box-shadow: 0 5px 20px rgba(16,28,53,.04);
       min-width: 0;
     }
 
-    .card h2 {
-      margin: 0 0 7px;
-      font-size: 21px;
-    }
+    .card h3 { margin-top: 0; }
 
     .muted {
       color: var(--muted);
-      font-size: 14px;
+      line-height: 1.6;
     }
 
     .field {
-      margin: 15px 0;
-    }
-
-    .field label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .field input,
-    .field select {
-      width: 100%;
-      min-width: 0;
-      padding: 12px;
-      border: 1px solid #ccd5e3;
-      border-radius: 10px;
-      background: white;
-      color: var(--text);
-      outline: none;
-    }
-
-    .field input:focus,
-    .field select:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(36,87,230,.12);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      display: grid;
       gap: 8px;
-      padding: 12px 17px;
-      border: 0;
-      border-radius: 11px;
-      background: var(--blue);
-      color: white;
-      font-weight: 700;
-      text-decoration: none;
+      margin: 14px 0;
     }
 
-    .btn:hover {
-      filter: brightness(.94);
-    }
-
-    .btn-secondary {
-      background: #eaf0ff;
-      color: var(--blue);
-    }
-
-    .btn-dark {
-      background: var(--navy);
-      color: white;
-    }
-
-    .btn-danger {
-      background: #fff0f0;
-      color: var(--danger);
-    }
-
-    .btn-full {
+    .field input, .field select {
       width: 100%;
     }
 
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 15px;
-    }
-
-    .result-box {
-      background: #eefbf8;
-      border: 1px solid #c8eee6;
-      padding: 18px;
-      border-radius: 14px;
-      margin-top: 17px;
-    }
-
-    .result-label {
-      font-size: 13px;
-      color: #356c65;
-    }
-
-    .result-value {
-      color: #087d6d;
-      font-size: clamp(25px, 5vw, 34px);
-      font-weight: 800;
+    .result {
+      margin-top: 12px;
+      padding: 13px;
+      background: #0d1727;
+      border-radius: 10px;
       overflow-wrap: anywhere;
     }
+
+    .section { display: none; }
+    .section.active { display: block; }
 
     .status {
-      font-size: 14px;
-      margin-top: 12px;
-      overflow-wrap: anywhere;
+      display: inline-block;
+      padding: 5px 9px;
+      background: #17382f;
+      color: var(--green);
+      border-radius: 20px;
+      font-size: 12px;
     }
 
-    .status:empty {
-      display: none;
-    }
-
-    .status.error {
-      color: var(--danger);
-    }
-
-    .status.success {
-      color: #087d6d;
-    }
-
-    .balance-value {
-      font-size: 30px;
-      font-weight: 800;
-      overflow-wrap: anywhere;
-    }
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 15px;
-    }
-
-    .stat {
-      padding: 15px;
-      border-radius: 13px;
-      background: #f3f6fc;
-      min-width: 0;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 20px;
-      overflow-wrap: anywhere;
-    }
-
-    .notice {
-      padding: 13px;
-      background: #fff8e7;
-      border: 1px solid #f0dfb2;
-      color: #74551b;
-      border-radius: 11px;
-      font-size: 13px;
-      margin-top: 14px;
-    }
-
-    .footer {
-      background: var(--navy);
-      color: #dce5fa;
+    footer {
       text-align: center;
       padding: 25px 15px;
-      margin-top: 35px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 30px;
       font-size: 13px;
-    }
-
-    [hidden] {
-      display: none !important;
-    }
-
-    @media (max-width: 650px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .topbar {
-        padding: 12px 4%;
-      }
-
-      .navbar {
-        padding: 10px 4%;
-      }
-
-      .container {
-        width: 94%;
-        margin: 18px auto;
-      }
-
-      .hero {
-        padding: 26px 19px;
-      }
-
-      .card {
-        padding: 18px;
-      }
     }
   </style>
 </head>
+
 <body>
+  <header>
+    <div class="topbar">
+      <div>
+        <div class="brand">Skoochy Finance</div>
+        <div class="subtitle" data-i18n="subtitle">
+          Gourdes, dollar et marchés financiers
+        </div>
+      </div>
 
-  <header class="topbar">
-    <div class="brand">
-      <div class="brand-icon">S</div>
-      <span>Skoochy Gourdes et Dollar</span>
-    </div>
-
-    <label>
-      <span id="languageLabel" hidden>Langue</span>
-      <select id="languageSelect" class="language-select"
-              aria-label="Choisir la langue">
-      <option value="fr" selected>Français</option>
-      <option value="ht">Kreyòl ayisyen</option>
-      <option value="en">English</option>
-      <option value="es">Español</option>
+      <select id="languageSelect" aria-label="Choisir la langue">
+        <option value="fr">Français</option>
+        <option value="ht">Kreyòl ayisyen</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
       </select>
-    </label>
+    </div>
   </header>
 
-  <nav class="navbar">
-    <a href="#accueil" id="navHome">Akèy</a>
-    <a href="#convertisseur" id="navConverter">Konvètisè</a>
-    <a href="#compte-utilisateur" id="navAccount">Kreye kont</a>
-    <a href="#espace-personnel" id="navProfile">Espas pèsonèl</a>
+  <nav id="mainNav">
+    <button class="active" data-page="home" data-i18n="navHome">Accueil</button>
+    <button data-page="converter" data-i18n="navConverter">Conversion</button>
+    <button data-page="forex" data-i18n="navForex">Forex</button>
+    <button data-page="crypto" data-i18n="navCrypto">Crypto</button>
+    <button data-page="cfd" data-i18n="navCFD">CFD</button>
+    <button data-page="p2p" data-i18n="navP2P">P2P</button>
+    <button data-page="learn" data-i18n="navLearn">Formation</button>
+    <button data-page="account" data-i18n="navAccount">Mon compte</button>
   </nav>
-  
-  <main class="container">
 
-    <section class="hero" id="accueil">
-      <span class="hero-tag" id="heroTag">Sèvis gratis</span>
-      <h1 id="heroTitle">Konvèti goud ak dola pi fasil</h1>
-      <p id="heroDescription">
-        Yon zouti senp pou kalkile valè lajan ou, jere pwofil ou epi itilize espas pèsonèl ou.
-      </p>
-    </section>
-
-    <section class="grid" id="convertisseur">
-
-      <article class="card">
-        <h2 id="converterTitle">Konvètisè lajan</h2>
-        <p class="muted" id="converterDescription">
-          Antre kantite lajan an epi chwazi direksyon konvèsyon an.
+  <main>
+    <section id="home" class="section active">
+      <div class="hero">
+        <span class="status" data-i18n="freeAccess">Accès gratuit disponible</span>
+        <h1 data-i18n="heroTitle">
+          Gérez vos calculs financiers avec précision.
+        </h1>
+        <p class="muted" data-i18n="heroText">
+          Convertissez vos devises, calculez vos positions et découvrez
+          les marchés Forex, CFD, Crypto et P2P.
         </p>
+        <button class="gold-btn" data-go="converter" data-i18n="start">
+          Commencer
+        </button>
+      </div>
 
-        <div class="field">
-          <label for="amount" id="amountLabel">Kantite lajan</label>
-          <input id="amount" type="number" min="0" step="any"
-                 placeholder="Egzanp: 100" inputmode="decimal">
-        </div>
-
-        <div class="field">
-          <label for="conversionDirection" id="directionLabel">
-            Direksyon
-          </label>
-          <select id="conversionDirection">
-            <option value="USD_HTG">USD → HTG</option>
-            <option value="HTG_USD">HTG → USD</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="exchangeRate" id="rateLabel">
-            To echanj (1 USD = konbyen HTG?)
-          </label>
-          <input id="exchangeRate" type="number" min="0.000001"
-                 step="any" value="130" inputmode="decimal">
-          <p class="muted" id="rateHelp">
-            To 130 la se yon egzanp. Verifye to aktyèl la anvan ou sèvi avè l.
+      <div class="grid">
+        <article class="card">
+          <h3 data-i18n="card1Title">💱 Conversion</h3>
+          <p class="muted" data-i18n="card1Text">
+            Préparez vos conversions entre gourdes et dollars.
           </p>
-        </div>
+          <button data-go="converter" data-i18n="open">Ouvrir</button>
+        </article>
 
-        <button class="btn btn-full" id="convertButton" type="button">
-          Konvèti lajan
-        </button>
+        <article class="card">
+          <h3 data-i18n="card2Title">📊 Forex</h3>
+          <p class="muted" data-i18n="card2Text">
+            Découvrez les lots, les pips et la gestion du risque.
+          </p>
+          <button data-go="forex" data-i18n="open">Ouvrir</button>
+        </article>
 
-        <div class="result-box" aria-live="polite">
-          <div class="result-label" id="resultLabel">Rezilta</div>
-          <div class="result-value" id="conversionResult">—</div>
-          <div class="muted" id="conversionFormula"></div>
-        </div>
+        <article class="card">
+          <h3 data-i18n="card3Title">₿ Crypto</h3>
+          <p class="muted" data-i18n="card3Text">
+            Étudiez les crypto-actifs et leurs variations.
+          </p>
+          <button data-go="crypto" data-i18n="open">Ouvrir</button>
+        </article>
 
-        <p class="status" id="conversionMessage" role="status"></p>
-      </article>
+        <article class="card">
+          <h3 data-i18n="card4Title">🎓 Formation</h3>
+          <p class="muted" data-i18n="card4Text">
+            Apprenez les notions essentielles des marchés financiers.
+          </p>
+          <button data-go="learn" data-i18n="open">Ouvrir</button>
+        </article>
+      </div>
+    </section>
 
-      <article class="card">
-        <h2 id="toolsTitle">Zouti rapid</h2>
-        <p class="muted" id="toolsDescription">
-          Chwazi yon zouti pou fè kalkil ou pi fasil.
+    <section id="converter" class="section">
+      <h2 data-i18n="converterTitle">Convertisseur de devises</h2>
+      <div class="card">
+        <p class="muted" data-i18n="rateNotice">
+          Entrez vous-même le taux de change applicable.
         </p>
 
         <div class="field">
-          <label for="quickAmount" id="quickAmountLabel">
-            Kantite pou kalkile
-          </label>
-          <input id="quickAmount" type="number" min="0" step="any"
-                 placeholder="Antre yon kantite">
+          <label for="amount" data-i18n="amount">Montant</label>
+          <input id="amount" type="number" min="0" step="any" value="100">
         </div>
 
         <div class="field">
-          <label for="quickCurrency" id="quickCurrencyLabel">
-            Lajan
+          <label for="rate" data-i18n="rate">
+            Taux : 1 USD en HTG
           </label>
-          <select id="quickCurrency">
-            <option value="USD">USD — Dola ameriken</option>
-            <option value="HTG">HTG — Goud ayisyen</option>
+          <input id="rate" type="number" min="0.000001"
+                 step="any" value="130">
+        </div>
+
+        <div class="field">
+          <label for="direction" data-i18n="direction">Conversion</label>
+          <select id="direction">
+            <option value="usdhtg">USD → HTG</option>
+            <option value="htgusd">HTG → USD</option>
           </select>
         </div>
 
-        <button class="btn btn-secondary btn-full" id="quickCalculate"
-                type="button">
-          Kalkile
-        </button>
-
-        <div class="result-box">
-          <div class="result-label" id="quickResultLabel">
-            Rezilta kalkil la
-          </div>
-          <div class="result-value" id="quickResult">—</div>
+        <button class="gold-btn" id="calculateConversion"
+                data-i18n="calculate">Calculer</button>
+        <div class="result" id="conversionResult" aria-live="polite">
+          Résultat
         </div>
+      </div>
+    </section>
 
-        <p class="muted" id="quickHelp">
-          Zouti sa a montre kantite lajan ou antre a nan fòma lajan ki apwopriye.
+    <section id="forex" class="section">
+      <h2 data-i18n="forexTitle">Calculateur Forex</h2>
+      <div class="card">
+        <p class="muted" data-i18n="forexComing">
+          Le calculateur de lots, pips et risque sera intégré dans la
+          partie 3A.
         </p>
-      </article>
-
-    </section>
-
-    <section class="card" id="compte-utilisateur">
-      <h2 id="accountTitle">Kreye kont ou</h2>
-      <p class="muted" id="accountDescription">
-        Enskri gratis ak yon adrès imèl ak yon modpas.
-      </p>
-
-      <form id="registerForm">
-        <div class="field">
-          <label for="emailCompte" id="emailLabel">
-            Adrès imèl
-          </label>
-          <input id="emailCompte" type="email" autocomplete="email"
-                 required maxlength="254" placeholder="nom@exemple.com">
-        </div>
-
-        <div class="field">
-          <label for="motDePasseCompte" id="passwordLabel">
-            Modpas
-          </label>
-          <input id="motDePasseCompte" type="password"
-                 autocomplete="new-password" minlength="6"
-                 required placeholder="Omwen 6 karaktè">
-        </div>
-
-        <button class="btn btn-full" id="inscriptionCompte" type="submit">
-          Kreye kont mwen
-        </button>
-
-        <p class="status" id="messageCompte" role="status"
-           aria-live="polite"></p>
-      </form>
-
-      <div class="notice" id="accountNotice">
-        Pwoteje modpas ou. Pa itilize yon modpas ou itilize sou lòt kont.
       </div>
     </section>
 
-    <section class="card" id="espace-personnel">
-      <h2 id="profileTitle">Espas pèsonèl</h2>
-      <p class="muted" id="profileDescription">
-        Enfòmasyon pwofil ou sou aparèy sa a.
-      </p>
-
-      <div class="field">
-        <label for="userName" id="nameLabel">Non ou</label>
-        <input id="userName" type="text" maxlength="100"
-               autocomplete="name" placeholder="Antre non ou">
-      </div>
-
-      <div class="field">
-        <label for="userEmail" id="profileEmailLabel">Imèl pwofil</label>
-        <input id="userEmail" type="email" maxlength="254"
-               autocomplete="email" placeholder="Antre imèl ou">
-      </div>
-
-      <button class="btn btn-full" id="saveProfile" type="button">
-        Sove pwofil
-      </button>
-
-      <p class="status" id="profileMessage" role="status"
-         aria-live="polite"></p>
-
-      <div class="stat-grid">
-        <div class="stat">
-          <span class="muted" id="balanceLabel">Balans demonstrasyon</span>
-          <strong id="demoBalance">0,00 USD</strong>
-        </div>
-        <div class="stat">
-          <span class="muted" id="accountStatusLabel">Estati kont</span>
-          <strong id="accountStatus">Vizitè</strong>
-        </div>
-      </div>
-
-      <p class="muted" id="balanceHelp">
-        Balans sa a se yon demonstrasyon lokal. Li pa reprezante lajan reyèl
-        epi li pa konekte ak yon bank.
-      </p>
-
-      <div class="actions">
-        <button class="btn btn-secondary" id="resetProfile" type="button">
-          Reyajiste pwofil
-        </button>
-        <button class="btn btn-danger" id="logoutButton" type="button" hidden>
-          Dekonekte
-        </button>
+    <section id="crypto" class="section">
+      <h2 data-i18n="cryptoTitle">Crypto-actifs</h2>
+      <div class="card">
+        <p class="muted" data-i18n="cryptoComing">
+          Les outils de calcul et les leçons crypto seront intégrés
+          dans la partie 3B.
+        </p>
       </div>
     </section>
 
-    <section class="card" id="a-propos">
-      <h2 id="aboutTitle">Konsènan Skoochy</h2>
-      <p id="aboutDescription">
-        Skoochy Gourdes et Dollar se yon zouti gratis pou konvèsyon lajan ak jesyon pwofil demonstrasyon.
-      </p>
-      <p class="muted" id="securityDescription">
-        Enskripsyon an sèvi ak Firebase Authentication. Pwofil lokal la pa ranplase yon baz done sekirize.
-      </p>
+    <section id="cfd" class="section">
+      <h2 data-i18n="cfdTitle">Calculateur CFD</h2>
+      <div class="card">
+        <p class="muted" data-i18n="cfdComing">
+          Les calculs de position, de marge et de risque seront ajoutés
+          dans la partie 3B.
+        </p>
+      </div>
     </section>
 
+    <section id="p2p" class="section">
+      <h2 data-i18n="p2pTitle">Transactions P2P</h2>
+      <div class="card">
+        <p class="muted" data-i18n="p2pComing">
+          Le calculateur P2P et les conseils de sécurité seront ajoutés
+          dans la partie 3B.
+        </p>
+      </div>
+    </section>
+
+    <section id="learn" class="section">
+      <h2 data-i18n="learnTitle">Centre de formation</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Forex</h3>
+          <p class="muted">Paires de devises, lots, pips et risques.</p>
+        </article>
+        <article class="card">
+          <h3>CFD</h3>
+          <p class="muted">Effet de levier, marge et pertes possibles.</p>
+        </article>
+        <article class="card">
+          <h3>Crypto</h3>
+          <p class="muted">Blockchain, actifs numériques et volatilité.</p>
+        </article>
+        <article class="card">
+          <h3>P2P</h3>
+          <p class="muted">Échanges entre particuliers et prévention des fraudes.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="account" class="section">
+      <h2 data-i18n="accountTitle">Mon compte</h2>
+      <div class="card">
+        <p class="muted" data-i18n="accountComing">
+          L'inscription, la connexion et les accès premium seront
+          intégrés dans la partie 2.
+        </p>
+      </div>
+    </section>
   </main>
 
-  <footer class="footer">
-    <p>
-      © <span id="year">2026</span>
-      Skoochy Gourdes et Dollar.
-      <span id="footerText">Tout dwa rezève.</span>
-    </p>
-    <p id="footerDisclaimer">
-      Zouti gratis. Verifye to echanj la anvan nenpòt tranzaksyon.
-    </p>
+  <footer>
+    Skoochy Finance © 2026 — 
+    <span data-i18n="footerText">
+      Outils éducatifs. Les marchés financiers comportent des risques.
+    </span>
   </footer>
-  
-<script>
-(function () {
-"use strict";
 
-const translations = {
-  
-if (languageSelect) {
-ht: {
-navHome:"Akèy", navConverter:"Konvètisè",
-navAccount:"Kreye kont", navProfile:"Espas pèsonèl",
-heroTag:"Senp • Rapid • Gratis",
-heroTitle:"Konvèti dola ak goud fasil",
-heroDescription:"Yon zouti pou kalkile dola ak goud.",
-convertButton:"Konvèti kounye a",
-quickCalculate:"Kalkile",
-registerButton:"Kreye kont gratis",
-saveProfile:"Sove enfòmasyon yo",
-resetProfile:"Efase enfòmasyon lokal yo",
-logoutButton:"Dekonekte",
-accountStatus:"Ou poko konekte.",
-footerText:"Skoochy Gourdes et Dollar",
-conversionMessage:"Rezilta sa a se yon demonstrasyon.",
-conversionError:"Antre yon montan ak yon pousantaj ki valab.",
-profileSaved:"Enfòmasyon yo sove.",
-profileReset:"Enfòmasyon yo efase.",
-quickError:"Antre yon montan ki valab.",
-registerLoading:"Tanpri tann...",
-registerSuccess:"Kont ou kreye avèk siksè!",
-registerEmailUsed:"Imèl sa a deja itilize.",
-registerInvalidEmail:"Imèl la pa valab.",
-registerWeakPassword:"Modpas la dwe gen omwen 6 karaktè.",
-registerDisabled:"Aktive Email/Password nan Firebase.",
-registerNetwork:"Verifye koneksyon entènèt ou.",
-registerError:"Erè. Verifye konfigirasyon Firebase.",
-firebaseUnavailable:"Firebase poko pare.",
-loggedIn:"Ou konekte.",
-loggedOut:"Ou dekonekte.",
-logoutError:"Dekoneksyon an pa mache."
-},
-fr: {
-navHome:"Accueil", navConverter:"Convertisseur",
-navAccount:"Créer un compte", navProfile:"Espace personnel",
-heroTag:"Simple • Rapide • Gratuit",
-heroTitle:"Convertissez dollars et gourdes",
-heroDescription:"Un outil pour calculer dollars et gourdes.",
-convertButton:"Convertir maintenant",
-quickCalculate:"Calculer",
-registerButton:"Créer un compte gratuit",
-saveProfile:"Enregistrer",
-resetProfile:"Effacer les informations locales",
-logoutButton:"Déconnexion",
-accountStatus:"Vous n’êtes pas connecté.",
-footerText:"Skoochy Gourdes et Dollar",
-conversionMessage:"Ce résultat est une démonstration.",
-conversionError:"Entrez un montant et un taux valides.",
-profileSaved:"Informations enregistrées.",
-profileReset:"Informations effacées.",
-quickError:"Entrez un montant valide.",
-registerLoading:"Veuillez patienter...",
-registerSuccess:"Compte créé avec succès !",
-registerEmailUsed:"Cet e-mail est déjà utilisé.",
-registerInvalidEmail:"E-mail invalide.",
-registerWeakPassword:"6 caractères minimum.",
-registerDisabled:"Activez Email/Password dans Firebase.",
-registerNetwork:"Vérifiez votre connexion Internet.",
-registerError:"Erreur. Vérifiez Firebase.",
-firebaseUnavailable:"Firebase n’est pas prêt.",
-loggedIn:"Vous êtes connecté.",
-loggedOut:"Vous êtes déconnecté.",
-logoutError:"Déconnexion impossible."
-},
-en: {
-navHome:"Home", navConverter:"Converter",
-navAccount:"Create account", navProfile:"Personal area",
-heroTag:"Simple • Fast • Free",
-heroTitle:"Convert dollars and gourdes",
-heroDescription:"A tool to calculate dollars and gourdes.",
-convertButton:"Convert now",
-quickCalculate:"Calculate",
-registerButton:"Create free account",
-saveProfile:"Save information",
-resetProfile:"Clear local information",
-logoutButton:"Log out",
-accountStatus:"You are not signed in.",
-footerText:"Skoochy Gourdes et Dollar",
-conversionMessage:"This is a demonstration result.",
-conversionError:"Enter a valid amount and rate.",
-profileSaved:"Information saved.",
-profileReset:"Information cleared.",
-quickError:"Enter a valid amount.",
-registerLoading:"Please wait...",
-registerSuccess:"Account created successfully!",
-registerEmailUsed:"This email is already in use.",
-registerInvalidEmail:"Invalid email.",
-registerWeakPassword:"At least 6 characters.",
-registerDisabled:"Enable Email/Password in Firebase.",
-registerNetwork:"Check your internet connection.",
-registerError:"Error. Check Firebase settings.",
-firebaseUnavailable:"Firebase is not ready.",
-loggedIn:"You are signed in.",
-loggedOut:"You are signed out.",
-logoutError:"Could not sign out."
-},
-es: {
-navHome:"Inicio", navConverter:"Convertidor",
-navAccount:"Crear cuenta", navProfile:"Área personal",
-heroTag:"Simple • Rápido • Gratis",
-heroTitle:"Convierte dólares y gourdes",
-heroDescription:"Una herramienta para calcular dólares y gourdes.",
-convertButton:"Convertir ahora",
-quickCalculate:"Calcular",
-registerButton:"Crear cuenta gratis",
-saveProfile:"Guardar información",
-resetProfile:"Borrar información local",
-logoutButton:"Cerrar sesión",
-accountStatus:"No has iniciado sesión.",
-footerText:"Skoochy Gourdes et Dollar",
-conversionMessage:"Este es un resultado de demostración.",
-conversionError:"Introduce una cantidad y un tipo válidos.",
-profileSaved:"Información guardada.",
-profileReset:"Información borrada.",
-quickError:"Introduce una cantidad válida.",
-registerLoading:"Espera, por favor...",
-registerSuccess:"¡Cuenta creada correctamente!",
-registerEmailUsed:"Este correo ya está en uso.",
-registerInvalidEmail:"Correo inválido.",
-registerWeakPassword:"Mínimo 6 caracteres.",
-registerDisabled:"Activa Email/Password en Firebase.",
-registerNetwork:"Comprueba tu conexión a Internet.",
-registerError:"Error. Verifica Firebase.",
-firebaseUnavailable:"Firebase no está listo.",
-loggedIn:"Has iniciado sesión.",
-loggedOut:"Has cerrado sesión.",
-logoutError:"No se pudo cerrar la sesión."
-}
-};
+  <script>
+    "use strict";
 
-const languageSelect = document.getElementById("languageSelect");
+    const translations = {
+      fr: {
+        subtitle: "Gourdes, dollar et marchés financiers",
+        navHome: "Accueil", navConverter: "Conversion",
+        navForex: "Forex", navCrypto: "Crypto", navCFD: "CFD",
+        navP2P: "P2P", navLearn: "Formation", navAccount: "Mon compte",
+        freeAccess: "Accès gratuit disponible",
+        heroTitle: "Gérez vos calculs financiers avec précision.",
+        heroText: "Convertissez vos devises, calculez vos positions et découvrez les marchés Forex, CFD, Crypto et P2P.",
+        start: "Commencer", open: "Ouvrir",
+        card1Title: "💱 Conversion", card1Text: "Préparez vos conversions entre gourdes et dollars.",
+        card2Title: "📊 Forex", card2Text: "Découvrez les lots, les pips et la gestion du risque.",
+        card3Title: "₿ Crypto", card3Text: "Étudiez les crypto-actifs et leurs variations.",
+        card4Title: "🎓 Formation", card4Text: "Apprenez les notions essentielles des marchés financiers.",
+        converterTitle: "Convertisseur de devises",
+        rateNotice: "Entrez vous-même le taux de change applicable.",
+        amount: "Montant", rate: "Taux : 1 USD en HTG",
+        direction: "Conversion", calculate: "Calculer",
+        forexTitle: "Calculateur Forex", forexComing: "Le calculateur de lots, pips et risque sera intégré dans la partie 3A.",
+        cryptoTitle: "Crypto-actifs", cryptoComing: "Les outils de calcul et les leçons crypto seront intégrés dans la partie 3B.",
+        cfdTitle: "Calculateur CFD", cfdComing: "Les calculs de position, de marge et de risque seront ajoutés dans la partie 3B.",
+        p2pTitle: "Transactions P2P", p2pComing: "Le calculateur P2P et les conseils de sécurité seront ajoutés dans la partie 3B.",
+        learnTitle: "Centre de formation", accountTitle: "Mon compte",
+        accountComing: "L'inscription, la connexion et les accès premium seront intégrés dans la partie 2.",
+        footerText: "Outils éducatifs. Les marchés financiers comportent des risques."
+      },
 
-window.getSkoochyMessage = function(key) {
-const lang = languageSelect && translations[languageSelect.value]
-? translations[languageSelect.value] : translations.ht;
-return lang[key] || translations.ht[key] || key;
-};
+      ht: {
+        subtitle: "Goud, dola ak mache finansye",
+        navHome: "Akèy", navConverter: "Konvèsyon",
+        navForex: "Forex", navCrypto: "Kripto", navCFD: "CFD",
+        navP2P: "P2P", navLearn: "Fòmasyon", navAccount: "Kont mwen",
+        freeAccess: "Gen aksè gratis",
+        heroTitle: "Fè kalkil finansye ou yo avèk presizyon.",
+        heroText: "Konvèti lajan, kalkile pozisyon epi aprann sou Forex, CFD, Kripto ak P2P.",
+        start: "Kòmanse", open: "Louvri",
+        card1Title: "💱 Konvèsyon", card1Text: "Konvèti goud ak dola.",
+        card2Title: "📊 Forex", card2Text: "Aprann lot, pip ak jesyon risk.",
+        card3Title: "₿ Kripto", card3Text: "Aprann sou kripto ak chanjman pri yo.",
+        card4Title: "🎓 Fòmasyon", card4Text: "Aprann prensip mache finansye yo.",
+        converterTitle: "Konvètisè lajan",
+        rateNotice: "Antre to echanj ou vle itilize a.",
+        amount: "Kantite", rate: "To : 1 USD an HTG",
+        direction: "Konvèsyon", calculate: "Kalkile",
+        forexTitle: "Kalkilatris Forex", forexComing: "Kalkilatris lot, pip ak risk ap vini nan pati 3A.",
+        cryptoTitle: "Kripto", cryptoComing: "Kalkilatris ak leson kripto ap vini nan pati 3B.",
+        cfdTitle: "Kalkilatris CFD", cfdComing: "Kalkil pozisyon ak risk ap vini nan pati 3B.",
+        p2pTitle: "Echanj P2P", p2pComing: "Kalkilatris P2P ak konsèy sekirite ap vini nan pati 3B.",
+        learnTitle: "Sant fòmasyon", accountTitle: "Kont mwen",
+        accountComing: "Enskripsyon, koneksyon ak aksè prim ap vini nan pati 2.",
+        footerText: "Zouti edikatif. Mache finansye yo gen risk."
+      },
 
-function translatePage() {
-const lang = languageSelect && translations[languageSelect.value]
-? translations[languageSelect.value] : translations.ht;
+      en: {
+        subtitle: "Gourdes, dollars and financial markets",
+        navHome: "Home", navConverter: "Convert",
+        navForex: "Forex", navCrypto: "Crypto", navCFD: "CFD",
+        navP2P: "P2P", navLearn: "Learning", navAccount: "My account",
+        freeAccess: "Free access available",
+        heroTitle: "Manage your financial calculations with precision.",
+        heroText: "Convert currencies, calculate positions and learn about Forex, CFDs, crypto and P2P.",
+        start: "Get started", open: "Open",
+        card1Title: "💱 Currency conversion", card1Text: "Convert gourdes and dollars.",
+        card2Title: "📊 Forex", card2Text: "Learn about lots, pips and risk management.",
+        card3Title: "₿ Crypto", card3Text: "Explore crypto assets and price changes.",
+        card4Title: "🎓 Learning", card4Text: "Learn essential financial market concepts.",
+        converterTitle: "Currency converter",
+        rateNotice: "Enter the exchange rate you want to use.",
+        amount: "Amount", rate: "Rate: 1 USD in HTG",
+        direction: "Conversion", calculate: "Calculate",
+        forexTitle: "Forex calculator", forexComing: "The lot, pip and risk calculator will be added in part 3A.",
+        cryptoTitle: "Crypto assets", cryptoComing: "Crypto tools and lessons will be added in part 3B.",
+        cfdTitle: "CFD calculator", cfdComing: "Position and risk calculations will be added in part 3B.",
+        p2pTitle: "P2P transactions", p2pComing: "The P2P calculator and safety tips will be added in part 3B.",
+        learnTitle: "Learning center", accountTitle: "My account",
+        accountComing: "Registration, login and premium access will be added in part 2.",
+        footerText: "Educational tools. Financial markets involve risk."
+      },
 
-Object.keys(lang).forEach(function(key) {
-const el = document.getElementById(key);
-if (el) el.textContent = lang[key];
-});
-}
+      es: {
+        subtitle: "Gourdes, dólares y mercados financieros",
+        navHome: "Inicio", navConverter: "Conversión",
+        navForex: "Forex", navCrypto: "Cripto", navCFD: "CFD",
+        navP2P: "P2P", navLearn: "Formación", navAccount: "Mi cuenta",
+        freeAccess: "Acceso gratuito disponible",
+        heroTitle: "Gestiona tus cálculos financieros con precisión.",
+        heroText: "Convierte divisas, calcula posiciones y aprende sobre Forex, CFD, cripto y P2P.",
+        start: "Comenzar", open: "Abrir",
+        card1Title: "💱 Conversión", card1Text: "Convierte gourdes y dólares.",
+        card2Title: "📊 Forex", card2Text: "Aprende sobre lotes, pips y gestión del riesgo.",
+        card3Title: "₿ Cripto", card3Text: "Explora criptoactivos y sus variaciones.",
+        card4Title: "🎓 Formación", card4Text: "Aprende los conceptos esenciales de los mercados.",
+        converterTitle: "Conversor de divisas",
+        rateNotice: "Introduce el tipo de cambio que deseas utilizar.",
+        amount: "Importe", rate: "Tipo: 1 USD en HTG",
+        direction: "Conversión", calculate: "Calcular",
+        forexTitle: "Calculadora Forex", forexComing: "La calculadora de lotes, pips y riesgo llegará en la parte 3A.",
+        cryptoTitle: "Criptoactivos", cryptoComing: "Las herramientas y lecciones cripto llegarán en la parte 3B.",
+        cfdTitle: "Calculadora CFD", cfdComing: "Los cálculos de posición y riesgo llegarán en la parte 3B.",
+        p2pTitle: "Transacciones P2P", p2pComing: "La calculadora P2P y los consejos de seguridad llegarán en la parte 3B.",
+        learnTitle: "Centro de formación", accountTitle: "Mi cuenta",
+        accountComing: "El registro, el acceso y las funciones premium llegarán en la parte 2.",
+        footerText: "Herramientas educativas. Los mercados financieros implican riesgos."
+      }
+    };
 
+    function setLanguage(language) {
+      const dictionary = translations[language] || translations.fr;
 
-if (languageSelect) {
-  languageSelect.addEventListener("change", function () {
-    translatePage();
-  });
+      document.documentElement.lang = language;
+      document.querySelectorAll("[data-i18n]").forEach(element => {
+        const key = element.dataset.i18n;
+        if (dictionary[key] !== undefined) {
+          element.textContent = dictionary[key];
+        }
+      });
 
-  translatePage();
-}
-
-window.translateSkoochyPage = translatePage;
-
-function money(amount, currency) {
-return new Intl.NumberFormat("en-US", {
-style:"currency", currency:currency
-}).format(amount);
-}
-
-function message(id, text) {
-const el = document.getElementById(id);
-if (el) el.textContent = text;
-}
-
-const year = document.getElementById("year");
-if (year) year.textContent = new Date().getFullYear();
-
-translatePage();
-</script>
-<script>
-(function () {
-"use strict";
-
-function money(amount, currency) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: currency
-  }).format(amount);
-}
-
-function showMessage(id, text) {
-  const element = document.getElementById(id);
-  if (element) element.textContent = text;
-}
-
-function getText(key) {
-  return window.getSkoochyMessage
-    ? window.getSkoochyMessage(key)
-    : key;
-}
-
-// KONVETISE DOLA AK GOUD
-const convertButton = document.getElementById("convertButton");
-
-if (convertButton) {
-  convertButton.addEventListener("click", function () {
-    const amount = Number(
-      document.getElementById("amount").value
-    );
-
-    const rate = Number(
-      document.getElementById("exchangeRate").value
-    );
-
-    const direction =
-      document.getElementById("conversionDirection").value;
-
-    if (!Number.isFinite(amount) || amount < 0 ||
-        !Number.isFinite(rate) || rate <= 0) {
-      showMessage("conversionResult", getText("conversionError"));
-      return;
+      document.getElementById("languageSelect").value = language;
     }
 
-    let result;
-    let currency;
+    document.getElementById("languageSelect").addEventListener("change", event => {
+      setLanguage(event.target.value);
+    });
 
-    if (direction === "USD_HTG") {
-      result = amount * rate;
-      currency = "HTG";
-    } else {
-      result = amount / rate;
-      currency = "USD";
+    function showPage(pageId) {
+      const target = document.getElementById(pageId);
+      if (!target) return;
+
+      document.querySelectorAll(".section").forEach(section => {
+        section.classList.toggle("active", section.id === pageId);
+      });
+
+      document.querySelectorAll("#mainNav button[data-page]").forEach(button => {
+        button.classList.toggle("active", button.dataset.page === pageId);
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    showMessage("conversionResult", money(result, currency));
-    showMessage("conversionFormula",
-      "1 USD = " + rate + " HTG"
-    );
-    showMessage("conversionMessage",
-      getText("conversionMessage")
-    );
-  });
-}
+    document.querySelectorAll("[data-page]").forEach(button => {
+      button.addEventListener("click", () => showPage(button.dataset.page));
+    });
 
-// KALKILATRIS RAPID
-const quickButton = document.getElementById("quickCalculate");
+    document.querySelectorAll("[data-go]").forEach(button => {
+      button.addEventListener("click", () => showPage(button.dataset.go));
+    });
 
-if (quickButton) {
-  quickButton.addEventListener("click", function () {
-    const amount = Number(
-      document.getElementById("quickAmount").value
-    );
+    document.getElementById("calculateConversion").addEventListener("click", () => {
+      const amount = Number(document.getElementById("amount").value);
+      const rate = Number(document.getElementById("rate").value);
+      const direction = document.getElementById("direction").value;
+      const result = document.getElementById("conversionResult");
 
-    const currency =
-      document.getElementById("quickCurrency").value;
+      if (!Number.isFinite(amount) || amount < 0 ||
+          !Number.isFinite(rate) || rate <= 0) {
+        result.textContent = "Veuillez saisir un montant valide et un taux supérieur à zéro.";
+        return;
+      }
 
-    if (!Number.isFinite(amount) || amount < 0) {
-      showMessage("quickResult", getText("quickError"));
-      return;
-    }
+      const converted = direction === "usdhtg"
+        ? amount * rate
+        : amount / rate;
 
-    showMessage("quickResult", money(amount, currency));
-  });
-}
+      const currency = direction === "usdhtg" ? "HTG" : "USD";
 
-// CHAJMAN PWOFIL KI TE SOVE
-const PROFILE_KEY = "skoochy_profile";
+      result.textContent = new Intl.NumberFormat("fr-FR", {
+        maximumFractionDigits: 4
+      }).format(converted) + " " + currency;
+    });
 
-try {
-  const profile = JSON.parse(
-    localStorage.getItem(PROFILE_KEY) || "null"
-  );
-
-  if (profile) {
-    const nameField = document.getElementById("userName");
-    const emailField = document.getElementById("userEmail");
-
-    if (nameField) nameField.value = profile.name || "";
-    if (emailField) emailField.value = profile.email || "";
-  }
-} catch (error) {}
-
-// SOVE PWOFIL
-const saveButton = document.getElementById("saveProfile");
-
-if (saveButton) {
-  saveButton.addEventListener("click", function () {
-    const name = document.getElementById("userName").value.trim();
-    const email = document.getElementById("userEmail").value.trim();
-
-    try {
-      localStorage.setItem(PROFILE_KEY, JSON.stringify({
-        name: name,
-        email: email
-      }));
-
-      showMessage("profileMessage", getText("profileSaved"));
-    } catch (error) {
-      showMessage("profileMessage",
-        "Pa kapab sove enfòmasyon yo."
-      );
-    }
-  });
-}
-
-// EFASE PWOFIL KI SOVE SOU APAREY LA
-const resetButton = document.getElementById("resetProfile");
-
-if (resetButton) {
-  resetButton.addEventListener("click", function () {
-    try {
-      localStorage.removeItem(PROFILE_KEY);
-    } catch (error) {}
-
-    document.getElementById("userName").value = "";
-    document.getElementById("userEmail").value = "";
-
-    showMessage("profileMessage", getText("profileReset"));
-  });
-}
-
-// BALANS DEMONSTRASYON
-let balance = 0;
-
-try {
-  const savedBalance = localStorage.getItem(
-    "skoochy_demo_balance"
-  );
-
-  if (savedBalance !== null &&
-      Number.isFinite(Number(savedBalance))) {
-    balance = Number(savedBalance);
-  }
-} catch (error) {}
-
-showMessage("demoBalance", money(balance, "USD"));
-
-})();
-</script>
-<script type="module">
-import {
-  initializeApp,
-  getApps,
-  getApp
-} from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
-
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-
-// KONFIGIRASYON FIREBASE
-const firebaseConfig = {
-  apiKey: "AIzaSyAfw5iUv-sYqXqPiZwqSufzjz_ASLu_xDk",
-  authDomain: "skoochy-gourdes-et-dollar.firebaseapp.com",
-  projectId: "skoochy-gourdes-et-dollar",
-  storageBucket: "skoochy-gourdes-et-dollar.firebasestorage.app",
-  messagingSenderId: "309603649435",
-  appId: "1:309603649435:web:e85bc815ca33f3f712833e"
-};
-
-const app = getApps().length
-  ? getApp()
-  : initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-window.skoochyFirebaseReady = true;
-
-function getText(key) {
-  return window.getSkoochyMessage
-    ? window.getSkoochyMessage(key)
-    : key;
-}
-
-function showMessage(id, text) {
-  const element = document.getElementById(id);
-  if (element) element.textContent = text;
-}
-
-// KREYE KONT
-const form = document.getElementById("registerForm");
-
-if (form) {
-  form.addEventListener("submit", async function(event) {
-    event.preventDefault();
-
-    const email = document.getElementById("emailCompte").value.trim();
-    const password = document.getElementById("motDePasseCompte").value;
-    const button = document.getElementById("inscriptionCompte");
-
-    if (!email || !password) {
-      showMessage("messageCompte", getText("registerInvalidEmail"));
-      return;
-    }
-
-    if (password.length < 6) {
-      showMessage("messageCompte", getText("registerWeakPassword"));
-      return;
-    }
-
-    if (button) button.disabled = true;
-
-    try {
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      showMessage("messageCompte", getText("registerSuccess"));
-
-      const emailField = document.getElementById("userEmail");
-      if (emailField) emailField.value = result.user.email || email;
-
-      try {
-        localStorage.setItem("skoochy_profile", JSON.stringify({
-          name: document.getElementById("userName").value.trim(),
-          email: result.user.email || email
-        }));
-      } catch (error) {}
-
-      document.getElementById("motDePasseCompte").value = "";
-
-    } catch (error) {
-      const errors = {
-        "auth/email-already-in-use": "registerEmailUsed",
-        "auth/invalid-email": "registerInvalidEmail",
-        "auth/weak-password": "registerWeakPassword",
-        "auth/operation-not-allowed": "registerDisabled",
-        "auth/network-request-failed": "registerNetwork"
-      };
-
-      showMessage(
-        "messageCompte",
-        getText(errors[error.code] || "registerError")
-      );
-
-    } finally {
-      if (button) button.disabled = false;
-    }
-  });
-}
-
-// VERIFYE SI ITILIZATE A KONEKTE
-onAuthStateChanged(auth, function(user) {
-  const button = document.getElementById("logoutButton");
-
-  if (user) {
-    showMessage("accountStatus", getText("loggedIn"));
-    if (button) button.hidden = false;
-  } else {
-    showMessage("accountStatus", getText("loggedOut"));
-    if (button) button.hidden = true;
-  }
-});
-
-// DEKONEKTE
-const logoutButton = document.getElementById("logoutButton");
-
-if (logoutButton) {
-  logoutButton.addEventListener("click", async function() {
-    try {
-      await signOut(auth);
-      showMessage("messageCompte", getText("loggedOut"));
-    } catch (error) {
-      showMessage("messageCompte", getText("logoutError"));
-    }
-  });
-}
-</script>
+    setLanguage("fr");
+  </script>
 </body>
 </html>
