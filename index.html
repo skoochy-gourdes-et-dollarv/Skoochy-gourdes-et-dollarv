@@ -934,7 +934,42 @@ calculateConversion();
       );
     }
   });
+  
+  const editNameButton =
+  document.getElementById("editNameButton");
 
+editNameButton.addEventListener("click", async () => {
+  const user = auth.currentUser;
+
+  if (!user) {
+    alert("Veuillez vous connecter.");
+    return;
+  }
+
+  const newName = prompt("Entrez votre nouveau nom :");
+
+  if (newName === null) return;
+
+  const name = newName.trim();
+
+  if (!name) {
+    alert("Le nom ne peut pas être vide.");
+    return;
+  }
+
+  try {
+    await updateProfile(user, {
+      displayName: name
+    });
+
+    document.getElementById("profileName").textContent =
+      "Nom : " + name;
+
+    alert("Nom modifié avec succès.");
+  } catch (error) {
+    alert("Impossible de modifier le nom. Réessayez.");
+  }
+});
   authName.parentElement.hidden = authMode.value !== "register";
 </script>
   
