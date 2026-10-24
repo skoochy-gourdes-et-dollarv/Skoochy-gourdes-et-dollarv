@@ -908,6 +908,8 @@ calculateConversion();
       profilePanel.hidden = false;
       profileEmail.textContent =
         "Compte connecté : " + user.email;
+      profileName.textContent =
+        "Nom : " + (user.displayName || "Client");
       profileAccess.textContent = "Accès : gratuit";
     } else {
       authPanel.hidden = false;
