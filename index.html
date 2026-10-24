@@ -705,28 +705,54 @@
       button.addEventListener("click", () => showPage(button.dataset.go));
     });
 
-    document.getElementById("calculateConversion").addEventListener("click", () => {
-      const amount = Number(document.getElementById("amount").value);
-      const rate = Number(document.getElementById("rate").value);
-      const direction = document.getElementById("direction").value;
-      const result = document.getElementById("conversionResult");
+    
+function calculateConversion() {
+  const amountInput = document.getElementById("amount");
+  const rateInput = document.getElementById("rate");
+  const directionInput = document.getElementById("direction");
+  const result = document.getElementById("conversionResult");
 
-      if (!Number.isFinite(amount) || amount < 0 ||
-          !Number.isFinite(rate) || rate <= 0) {
-        result.textContent = "Veuillez saisir un montant valide et un taux supérieur à zéro.";
-        return;
-      }
+  const amountText = amountInput.value.trim();
+  const rateText = rateInput.value.trim();
+  const amount = Number(amountText);
+  const rate = Number(rateText);
+  const direction = directionInput.value;
 
-      const converted = direction === "usdhtg"
-        ? amount * rate
-        : amount / rate;
+  if (
+    amountText === "" ||
+    rateText === "" ||
+    !Number.isFinite(amount) ||
+    amount < 0 ||
+    !Number.isFinite(rate) ||
+    rate <= 0
+  ) {
+    result.textContent =
+      "Veuillez saisir un montant valide et un taux supérieur à zéro.";
+    return;
+  }
 
-      const currency = direction === "usdhtg" ? "HTG" : "USD";
+  const converted = direction === "usdhtg"
+    ? amount * rate
+    : amount / rate;
 
-      result.textContent = new Intl.NumberFormat("fr-FR", {
-        maximumFractionDigits: 4
-      }).format(converted) + " " + currency;
-    });
+  const currency = direction === "usdhtg" ? "HTG" : "USD";
+
+  result.textContent =
+    new Intl.NumberFormat("fr-FR", {
+      maximumFractionDigits: 4
+    }).format(converted) + " " + currency;
+}
+
+document.getElementById("calculateConversion")
+  .addEventListener("click", calculateConversion);
+
+["amount", "rate", "direction"].forEach(id => {
+  const field = document.getElementById(id);
+  field.addEventListener("input", calculateConversion);
+  field.addEventListener("change", calculateConversion);
+});
+
+calculateConversion();
 
     setLanguage("fr");
   </script>
