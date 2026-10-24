@@ -888,6 +888,25 @@ calculateConversion();
           password
         );
 
+        
+const credential = await signInWithEmailAndPassword(
+  auth,
+  email,
+  password
+);
+
+if (!credential.user.emailVerified) {
+  showMessage(
+    "Veuillez vérifier votre adresse e-mail avant de vous connecter.",
+    true
+  );
+
+  await signOut(auth);
+  return;
+}
+
+showMessage("Connexion réussie.");
+
         await updateProfile(credential.user, {
           displayName: name
         });
