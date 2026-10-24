@@ -877,7 +877,11 @@
     const entry = Number($("fxEntry").value);
     const stop = Number($("fxStop").value);
     const target = Number($("fxTarget").value);
-    const pipSize = Number($("fxPipSize").value);
+
+    const pair = $("fxPair").value;
+    const pipSize = pair.endsWith("JPY") ? 0.01 : 0.0001;
+    $("fxPipSize").value = String(pipSize);
+    
     const pipValue = Number($("fxPipValue").value);
 
     const message = $("fxMessage");
