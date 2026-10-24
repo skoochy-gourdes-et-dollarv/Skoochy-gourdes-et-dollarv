@@ -933,7 +933,20 @@
   }
 
   const button = $("fxCalculate");
-  if (button) {
+   ids.forEach(id => {
+  const field = $(id);
+  if (field) {
+    field.addEventListener("input", calculateForex);
+    field.addEventListener("change", calculateForex);
+  }
+});
+
+const pairSelect = $("fxPair");
+if (pairSelect) {
+  pairSelect.addEventListener("change", calculateForex);
+}
+  
+ if (button) {
     button.addEventListener("click", calculateForex);
     calculateForex();
   }
