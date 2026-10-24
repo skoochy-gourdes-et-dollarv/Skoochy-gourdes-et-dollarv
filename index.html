@@ -889,6 +889,8 @@ calculateConversion();
         await updateProfile(credential.user, {
           displayName: name
         });
+        
+        await sendEmailVerification(credential.user);
 
         showMessage("Compte créé avec succès.");
       } else {
