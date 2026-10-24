@@ -593,5 +593,180 @@
 
     setLanguage("fr");
   </script>
+  
+<script type="module">
+  import { initializeApp, getApp }
+    from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCtjZ3vTKl9e27qnQx-KwinSCdHM1U4rdc",
+    authDomain: "skoochy-gourdes-et-dollarv.firebaseapp.com",
+    projectId: "skoochy-gourdes-et-dollarv",
+    storageBucket: "skoochy-gourdes-et-dollarv.firebasestorage.app",
+    messagingSenderId: "380459035444",
+    appId: "1:380459035444:web:a439ef727c2e7300e6d361",
+    measurementId: "G-W7JZJQ00GF"
+  };
+
+  // Réutilise Firebase s'il est déjà initialisé.
+  const app = (() => {
+    try {
+      return getApp();
+    } catch {
+      return initializeApp(firebaseConfig);
+    }
+  })();
+
+  const auth = getAuth(app);
+
+  const authPanel = document.getElementById("authPanel");
+  const profilePanel = document.getElementById("profilePanel");
+  const authName = document.getElementById("authName");
+  const authEmail = document.getElementById("authEmail");
+  const authPassword = document.getElementById("authPassword");
+  const authMode = document.getElementById("authMode");
+  const authSubmit = document.getElementById("authSubmit");
+  const authMessage = document.getElementById("authMessage");
+  const profileEmail = document.getElementById("profileEmail");
+  const profileAccess = document.getElementById("profileAccess");
+  const logoutButton = document.getElementById("logoutButton");
+
+  function showMessage(message, isError = false) {
+    authMessage.textContent = message;
+    authMessage.style.color = isError ? "#ff8585" : "#35d39a";
+  }
+
+  function translateError(error) {
+    const messages = {
+      "auth/email-already-in-use":
+        "Cette adresse e-mail possède déjà un compte.",
+      "auth/invalid-email":
+        "Veuillez saisir une adresse e-mail valide.",
+      "auth/weak-password":
+        "Le mot de passe est trop faible. Utilisez au moins 8 caractères.",
+      "auth/invalid-credential":
+        "E-mail ou mot de passe incorrect.",
+      "auth/user-not-found":
+        "Aucun compte trouvé. Créez un compte.",
+      "auth/wrong-password":
+        "Mot de passe incorrect.",
+      "auth/too-many-requests":
+        "Trop de tentatives. Réessayez plus tard.",
+      "auth/network-request-failed":
+        "Connexion Internet impossible. Vérifiez votre réseau.",
+      "auth/operation-not-allowed":
+        "Activez Email/Password dans Firebase Authentication."
+    };
+
+    return messages[error.code] ||
+      "Une erreur est survenue. Vérifiez les informations et réessayez.";
+  }
+
+  authMode.addEventListener("change", () => {
+    const registering = authMode.value === "register";
+    authName.parentElement.hidden = !registering;
+    authPassword.autocomplete = registering
+      ? "new-password"
+      : "current-password";
+    showMessage("");
+  });
+
+  authSubmit.addEventListener("click", async () => {
+    const email = authEmail.value.trim();
+    const password = authPassword.value;
+    const registering = authMode.value === "register";
+    const name = authName.value.trim();
+
+    if (!email || !password) {
+      showMessage(
+        "Veuillez saisir votre adresse e-mail et votre mot de passe.",
+        true
+      );
+      return;
+    }
+
+    if (registering && !name) {
+      showMessage("Veuillez saisir votre nom complet.", true);
+      return;
+    }
+
+    if (registering && password.length < 8) {
+      showMessage(
+        "Le mot de passe doit contenir au moins 8 caractères.",
+        true
+      );
+      return;
+    }
+
+    authSubmit.disabled = true;
+    authSubmit.textContent = "Veuillez patienter…";
+    showMessage("");
+
+    try {
+      if (registering) {
+        const credential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        await updateProfile(credential.user, {
+          displayName: name
+        });
+
+        showMessage("Compte créé avec succès.");
+      } else {
+        await signInWithEmailAndPassword(auth, email, password);
+        showMessage("Connexion réussie.");
+      }
+
+      authPassword.value = "";
+    } catch (error) {
+      showMessage(translateError(error), true);
+    } finally {
+      authSubmit.disabled = false;
+      authSubmit.textContent = "Continuer";
+    }
+  });
+
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      authPanel.hidden = true;
+      profilePanel.hidden = false;
+      profileEmail.textContent =
+        "Compte connecté : " + user.email;
+      profileAccess.textContent = "Accès : gratuit";
+    } else {
+      authPanel.hidden = false;
+      profilePanel.hidden = true;
+      authName.parentElement.hidden =
+        authMode.value !== "register";
+    }
+  });
+
+  logoutButton.addEventListener("click", async () => {
+    try {
+      await signOut(auth);
+      showMessage("Vous êtes déconnecté.");
+      authPassword.value = "";
+    } catch {
+      showMessage(
+        "Impossible de vous déconnecter. Réessayez.",
+        true
+      );
+    }
+  });
+
+  authName.parentElement.hidden = authMode.value !== "register";
+</script>
 </body>
 </html>
