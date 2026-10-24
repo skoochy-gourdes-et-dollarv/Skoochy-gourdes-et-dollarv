@@ -996,5 +996,65 @@ if (pairSelect) {
   }
 })();
 </script>
+  
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+
+  function calculateP2P() {
+    const amount = Number($("p2pAmount").value);
+    const rate = Number($("p2pRate").value);
+    const feePercent = Number($("p2pFee").value);
+
+    const grossOutput = $("p2pGross");
+    const feesOutput = $("p2pFees");
+    const netOutput = $("p2pNet");
+    const message = $("p2pMessage");
+
+    if (
+      $("p2pAmount").value.trim() === "" ||
+      $("p2pRate").value.trim() === "" ||
+      $("p2pFee").value.trim() === "" ||
+      !Number.isFinite(amount) ||
+      !Number.isFinite(rate) ||
+      !Number.isFinite(feePercent) ||
+      amount <= 0 ||
+      rate <= 0 ||
+      feePercent < 0 ||
+      feePercent > 10
+    ) {
+      grossOutput.textContent = "—";
+      feesOutput.textContent = "—";
+      netOutput.textContent = "—";
+      message.textContent =
+        "Entrez un montant et un taux positifs. Les frais doivent être entre 0 et 10 %.";
+      return;
+    }
+
+    const gross = amount * rate;
+    const fees = gross * feePercent / 100;
+    const net = gross - fees;
+
+    const money = (value) =>
+      value.toLocaleString("fr-FR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+
+    grossOutput.textContent = money(gross) + " HTG";
+    feesOutput.textContent = money(fees) + " HTG";
+    netOutput.textContent = money(net) + " HTG";
+
+    message.textContent =
+      "Estimation uniquement. Vérifiez le taux réel et les frais avant toute transaction.";
+  }
+
+  const button = $("p2pCalculate");
+
+  if (button) {
+    button.addEventListener("click", calculateP2P);
+  }
+})();
+</script>
 </body>
 </html>
