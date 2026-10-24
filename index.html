@@ -556,10 +556,6 @@
     </section>
   </main>
    
-<!-- ==============================
-     SKOOCHY FINANCE — PARTIE 3B
-     OUTILS DE CALCUL ET LEÇONS CRYPTO
-================================== -->
 
 <section id="outils-calcul" class="section">
   <div class="container">
@@ -920,7 +916,7 @@
   });
 })();
 </script>
-<!-- FIN DE LA PARTIE 3B -->
+  
   <footer>
     Skoochy Finance © 2026 — 
     <span data-i18n="footerText">
@@ -1514,6 +1510,170 @@ if (pairSelect) {
   if (button) {
     button.addEventListener("click", calculateP2P);
   }
+})();
+</script>
+
+<section id="crypto-actifs" class="crypto-panel" hidden>
+  <header class="crypto-header">
+    <h2>₿ Crypto-actifs</h2>
+    <p>Découvrez l'univers des actifs numériques.</p>
+    <button type="button" onclick="closeCryptoActifs()">
+      Fermer
+    </button>
+  </header>
+
+  <div class="crypto-warning">
+    <strong>Information importante</strong>
+    <p>Cette section est éducative. Les prix peuvent varier et
+    les crypto-actifs comportent des risques de perte.</p>
+  </div>
+
+  <div class="crypto-grid">
+    <article class="crypto-card">
+      <h3>Bitcoin (BTC)</h3>
+      <p>Comprendre la première cryptomonnaie et son réseau.</p>
+      <button type="button"
+        onclick="showCryptoLesson('btc')">Apprendre</button>
+    </article>
+
+    <article class="crypto-card">
+      <h3>Ethereum (ETH)</h3>
+      <p>Découvrir la blockchain Ethereum et les contrats intelligents.</p>
+      <button type="button"
+        onclick="showCryptoLesson('eth')">Apprendre</button>
+    </article>
+
+    <article class="crypto-card">
+      <h3>Stablecoins</h3>
+      <p>Comprendre les jetons conçus pour suivre la valeur d'un actif.</p>
+      <button type="button"
+        onclick="showCryptoLesson('stable')">Apprendre</button>
+    </article>
+
+    <article class="crypto-card">
+      <h3>Blockchain</h3>
+      <p>Découvrir comment fonctionne un registre distribué.</p>
+      <button type="button"
+        onclick="showCryptoLesson('chain')">Apprendre</button>
+    </article>
+
+    <article class="crypto-card">
+      <h3>Sécurité numérique</h3>
+      <p>Apprendre à protéger ses informations et reconnaître les arnaques.</p>
+      <button type="button"
+        onclick="showCryptoLesson('security')">Apprendre</button>
+    </article>
+
+    <article class="crypto-card">
+      <h3>Marché crypto</h3>
+      <p>Étudier la volatilité, les variations de prix et les risques.</p>
+      <button type="button"
+        onclick="showCryptoLesson('market')">Apprendre</button>
+    </article>
+  </div>
+
+  <div id="crypto-lesson-content" class="crypto-lesson-content"
+    aria-live="polite">
+    <h3>Bienvenue dans Crypto-actifs</h3>
+    <p>Sélectionnez une leçon pour commencer.</p>
+  </div>
+</section>
+
+<style>
+.crypto-panel {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 18px;
+  color: var(--text-color, #172033);
+}
+.crypto-header,
+.crypto-card,
+.crypto-lesson-content,
+.crypto-warning {
+  padding: 16px;
+  margin-bottom: 14px;
+  border: 1px solid #d7dfeb;
+  border-radius: 14px;
+  background: var(--card-bg, #fff);
+}
+.crypto-warning {
+  border-left: 4px solid #e6a23c;
+}
+.crypto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.crypto-card button,
+.crypto-header button {
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.crypto-card p,
+.crypto-lesson-content p {
+  line-height: 1.6;
+}
+</style>
+
+<script>
+(function () {
+  "use strict";
+
+  const lessons = {
+    btc: {
+      title: "Bitcoin (BTC)",
+      text: "Bitcoin est un actif numérique utilisant son propre réseau blockchain. Son prix peut varier fortement. Aucun rendement n'est garanti."
+    },
+    eth: {
+      title: "Ethereum (ETH)",
+      text: "Ethereum est un réseau blockchain qui permet notamment d'utiliser des contrats intelligents. Ether (ETH) est son actif natif."
+    },
+    stable: {
+      title: "Stablecoins",
+      text: "Les stablecoins cherchent à suivre la valeur d'un actif, par exemple le dollar. Leur valeur et leur sécurité ne sont pas garanties."
+    },
+    chain: {
+      title: "Blockchain",
+      text: "Une blockchain est un registre partagé qui enregistre des transactions selon les règles d'un réseau."
+    },
+    security: {
+      title: "Sécurité numérique",
+      text: "Ne partagez jamais vos clés privées ni votre phrase de récupération. Méfiez-vous des faux supports techniques et des promesses de profits garantis."
+    },
+    market: {
+      title: "Marché crypto",
+      text: "Les prix peuvent monter ou baisser rapidement. Les performances passées ne garantissent pas les résultats futurs."
+    }
+  };
+
+  window.openCryptoActifs = function () {
+    const panel = document.getElementById("crypto-actifs");
+    if (!panel) return;
+    panel.hidden = false;
+    panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  window.closeCryptoActifs = function () {
+    const panel = document.getElementById("crypto-actifs");
+    if (panel) panel.hidden = true;
+  };
+
+  window.showCryptoLesson = function (key) {
+    const lesson = lessons[key];
+    const content = document.getElementById("crypto-lesson-content");
+    if (!lesson || !content) return;
+
+    const title = document.createElement("h3");
+    title.textContent = lesson.title;
+
+    const paragraph = document.createElement("p");
+    paragraph.textContent = lesson.text;
+
+    content.replaceChildren(title, paragraph);
+    content.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  };
 })();
 </script>
 </body>
