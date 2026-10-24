@@ -551,7 +551,372 @@
 </section>
     </section>
   </main>
+   
+<!-- ==============================
+     SKOOCHY FINANCE — PARTIE 3B
+     OUTILS DE CALCUL ET LEÇONS CRYPTO
+================================== -->
 
+<section id="outils-calcul" class="section">
+  <div class="container">
+    <h2>Outils de calcul financier</h2>
+    <p>Des outils simples pour apprendre à gérer et convertir votre argent.</p>
+
+    <div class="tool-card">
+      <h3>Convertisseur USD / HTG</h3>
+      <label for="sf-rate">Taux de change (1 USD = combien de HTG ?)</label>
+      <input id="sf-rate" type="number" min="0.01" step="0.01"
+        value="130" placeholder="Entrez le taux">
+
+      <label for="sf-amount">Montant à convertir</label>
+      <input id="sf-amount" type="number" min="0" step="any"
+        value="1" placeholder="Entrez un montant">
+
+      <div class="tool-actions">
+        <button type="button" id="sf-usd-htg">USD → HTG</button>
+        <button type="button" id="sf-htg-usd">HTG → USD</button>
+      </div>
+
+      <p id="sf-conversion-result" aria-live="polite">
+        Entrez un montant et un taux de change.
+      </p>
+      <small>Le taux affiché est un exemple modifiable, pas un taux de marché en direct.</small>
+    </div>
+
+    <div class="tool-card">
+      <h3>Calculatrice rapide</h3>
+      <label for="sf-number-a">Premier nombre</label>
+      <input id="sf-number-a" type="number" step="any" placeholder="Nombre A">
+
+      <label for="sf-operation">Opération</label>
+      <select id="sf-operation">
+        <option value="add">Addition (+)</option>
+        <option value="subtract">Soustraction (−)</option>
+        <option value="multiply">Multiplication (×)</option>
+        <option value="divide">Division (÷)</option>
+        <option value="percent">Pourcentage de A par rapport à B (%)</option>
+      </select>
+
+      <label for="sf-number-b">Deuxième nombre</label>
+      <input id="sf-number-b" type="number" step="any" placeholder="Nombre B">
+
+      <button type="button" id="sf-calculate">Calculer</button>
+      <p id="sf-calculator-result" aria-live="polite">Le résultat apparaîtra ici.</p>
+    </div>
+
+    <div class="tool-card">
+      <h3>Calculateur de trading Forex</h3>
+      <p>Estimez le risque théorique d'une opération. Ce calcul ne prédit pas les gains.</p>
+
+      <label for="sf-capital">Capital de démonstration (USD)</label>
+      <input id="sf-capital" type="number" min="0.01" step="any" value="100">
+
+      <label for="sf-risk">Risque par opération (%) — entre 0,1 et 5</label>
+      <input id="sf-risk" type="number" min="0.1" max="5" step="0.1" value="1">
+
+      <label for="sf-stop">Distance du stop-loss (pips)</label>
+      <input id="sf-stop" type="number" min="0.1" step="any" value="20">
+
+      <label for="sf-pip-value">Valeur d'un pip par lot standard (USD)</label>
+      <input id="sf-pip-value" type="number" min="0.01" step="any" value="10">
+
+      <button type="button" id="sf-forex-calculate">Calculer le risque</button>
+      <div id="sf-forex-result" aria-live="polite">
+        Renseignez les valeurs pour obtenir une estimation.
+      </div>
+      <small>Estimation simplifiée pour l'apprentissage. La valeur du pip varie selon la paire et la devise du compte. Les frais et le glissement ne sont pas inclus.</small>
+    </div>
+
+    <div class="tool-card">
+      <h3>Calculateur P2P</h3>
+      <p>Estimez la valeur d'un échange entre deux devises selon le taux que vous saisissez.</p>
+
+      <label for="sf-p2p-amount">Montant envoyé (USD)</label>
+      <input id="sf-p2p-amount" type="number" min="0" step="any" value="10">
+
+      <label for="sf-p2p-rate">Taux P2P proposé (HTG pour 1 USD)</label>
+      <input id="sf-p2p-rate" type="number" min="0.01" step="any" value="130">
+
+      <label for="sf-p2p-fee">Frais (%)</label>
+      <input id="sf-p2p-fee" type="number" min="0" max="100" step="0.1" value="0">
+
+      <button type="button" id="sf-p2p-calculate">Estimer la conversion</button>
+      <div id="sf-p2p-result" aria-live="polite">Le montant estimé apparaîtra ici.</div>
+      <small>Vérifiez l'identité du partenaire, les frais et les conditions avant tout échange réel. Ce calculateur n'exécute aucune transaction.</small>
+    </div>
+  </div>
+</section>
+
+<section id="lecons-crypto" class="section">
+  <div class="container">
+    <h2>Leçons de cryptomonnaies</h2>
+    <p>Apprenez les bases à votre rythme, sans investir d'argent réel.</p>
+
+    <details class="crypto-lesson">
+      <summary>Leçon 1 — Qu'est-ce que la cryptomonnaie ?</summary>
+      <p>Une cryptomonnaie est un actif numérique qui utilise des techniques cryptographiques. Certaines fonctionnent sur des réseaux décentralisés.</p>
+      <p>Exemples : Bitcoin et Ether. Leur prix peut fortement varier et il est possible de perdre de l'argent.</p>
+    </details>
+
+    <details class="crypto-lesson">
+      <summary>Leçon 2 — Comprendre la blockchain</summary>
+      <p>Une blockchain est un registre numérique partagé entre plusieurs participants d'un réseau. Les transactions sont regroupées en blocs reliés entre eux.</p>
+      <p>Une transaction confirmée peut être difficile, voire impossible, à annuler.</p>
+    </details>
+
+    <details class="crypto-lesson">
+      <summary>Leçon 3 — Les portefeuilles numériques</summary>
+      <p>Un portefeuille crypto permet de gérer des clés donnant accès aux actifs numériques.</p>
+      <p>Ne partagez jamais votre phrase de récupération ni vos clés privées. Une personne qui les obtient peut prendre le contrôle de vos actifs.</p>
+    </details>
+
+    <details class="crypto-lesson">
+      <summary>Leçon 4 — Comprendre les stablecoins</summary>
+      <p>Les stablecoins sont conçus pour suivre la valeur d'un actif, souvent une monnaie comme le dollar américain.</p>
+      <p>Leur stabilité n'est pas garantie : il existe des risques liés à l'émetteur, aux réserves, à la plateforme et au réseau.</p>
+    </details>
+
+    <details class="crypto-lesson">
+      <summary>Leçon 5 — Reconnaître les arnaques</summary>
+      <ul>
+        <li>Méfiez-vous des promesses de profits garantis.</li>
+        <li>Ne transmettez jamais vos codes de connexion ou vos clés privées.</li>
+        <li>Vérifiez soigneusement les adresses et les sites officiels.</li>
+        <li>N'envoyez jamais d'argent sous la pression d'un inconnu.</li>
+      </ul>
+    </details>
+
+    <details class="crypto-lesson">
+      <summary>Leçon 6 — Trading et gestion du risque</summary>
+      <p>Le trading consiste à acheter et vendre des actifs dans l'espoir de profiter des variations de prix. Les résultats ne sont jamais garantis.</p>
+      <p>Commencez par l'apprentissage et les simulations. N'utilisez pas d'argent nécessaire à vos dépenses essentielles.</p>
+    </details>
+
+    <div class="tool-card">
+      <h3>Mini-quiz : vérifiez vos connaissances</h3>
+      <p>Quelle information ne faut-il jamais partager ?</p>
+      <label>
+        <input type="radio" name="sf-quiz" value="a">
+        Le nom d'une cryptomonnaie
+      </label>
+      <label>
+        <input type="radio" name="sf-quiz" value="b">
+        Sa phrase secrète de récupération
+      </label>
+      <label>
+        <input type="radio" name="sf-quiz" value="c">
+        Le prix affiché d'un actif
+      </label>
+      <button type="button" id="sf-quiz-check">Vérifier ma réponse</button>
+      <p id="sf-quiz-result" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<style>
+#outils-calcul .container,
+#lecons-crypto .container {
+  width: min(100% - 24px, 900px);
+  margin: 0 auto;
+}
+#outils-calcul .tool-card,
+#lecons-crypto .tool-card,
+#lecons-crypto .crypto-lesson {
+  padding: 16px;
+  margin: 14px 0;
+  border: 1px solid #d9e1ea;
+  border-radius: 14px;
+  background: var(--card-bg, #ffffff);
+  color: var(--text-color, #172033);
+}
+#outils-calcul label,
+#lecons-crypto .tool-card label {
+  display: block;
+  margin: 12px 0 6px;
+}
+#outils-calcul input,
+#outils-calcul select,
+#lecons-crypto input {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+#outils-calcul input:not([type="radio"]),
+#outils-calcul select {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+#outils-calcul button,
+#lecons-crypto button {
+  margin: 10px 6px 4px 0;
+  padding: 11px 15px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#lecons-crypto summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+#lecons-crypto .crypto-lesson p,
+#lecons-crypto .crypto-lesson li {
+  line-height: 1.6;
+}
+@media (max-width: 600px) {
+  #outils-calcul .tool-card,
+  #lecons-crypto .tool-card,
+  #lecons-crypto .crypto-lesson {
+    padding: 12px;
+  }
+  #outils-calcul button,
+  #lecons-crypto button {
+    max-width: 100%;
+  }
+}
+</style>
+
+<script>
+(function () {
+  "use strict";
+
+  const $ = id => document.getElementById(id);
+
+  function numberValue(id) {
+    return Number($(id).value);
+  }
+
+  function validPositive(...values) {
+    return values.every(v => Number.isFinite(v) && v > 0);
+  }
+
+  function formatNumber(value, digits = 2) {
+    return value.toLocaleString("fr-FR", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: digits
+    });
+  }
+
+  function convert(direction) {
+    const rate = numberValue("sf-rate");
+    const amount = numberValue("sf-amount");
+    const result = $("sf-conversion-result");
+
+    if (!validPositive(rate) ||
+        !Number.isFinite(amount) || amount < 0) {
+      result.textContent = "Veuillez saisir un montant valide et un taux positif.";
+      return;
+    }
+
+    const converted = direction === "usd-htg"
+      ? amount * rate
+      : amount / rate;
+
+    result.textContent = direction === "usd-htg"
+      ? `${formatNumber(amount)} USD = ${formatNumber(converted)} HTG`
+      : `${formatNumber(amount)} HTG = ${formatNumber(converted)} USD`;
+  }
+
+  $("sf-usd-htg").addEventListener("click", () => convert("usd-htg"));
+  $("sf-htg-usd").addEventListener("click", () => convert("htg-usd"));
+
+  $("sf-calculate").addEventListener("click", function () {
+    const a = numberValue("sf-number-a");
+    const b = numberValue("sf-number-b");
+    const op = $("sf-operation").value;
+    const result = $("sf-calculator-result");
+
+    if (!Number.isFinite(a) || !Number.isFinite(b)) {
+      result.textContent = "Veuillez saisir deux nombres valides.";
+      return;
+    }
+
+    let value;
+    switch (op) {
+      case "add": value = a + b; break;
+      case "subtract": value = a - b; break;
+      case "multiply": value = a * b; break;
+      case "divide":
+        if (b === 0) {
+          result.textContent = "Division par zéro impossible.";
+          return;
+        }
+        value = a / b;
+        break;
+      case "percent":
+        if (b === 0) {
+          result.textContent = "Le deuxième nombre ne peut pas être zéro.";
+          return;
+        }
+        value = (a / b) * 100;
+        result.textContent = `${formatNumber(value)} %`;
+        return;
+      default: return;
+    }
+
+    result.textContent = "Résultat : " + formatNumber(value, 8);
+  });
+
+  $("sf-forex-calculate").addEventListener("click", function () {
+    const capital = numberValue("sf-capital");
+    const risk = numberValue("sf-risk");
+    const stop = numberValue("sf-stop");
+    const pipValue = numberValue("sf-pip-value");
+    const result = $("sf-forex-result");
+
+    if (!validPositive(capital, risk, stop, pipValue) ||
+        risk < 0.1 || risk > 5) {
+      result.textContent =
+        "Vérifiez les valeurs. Le risque doit être compris entre 0,1 % et 5 %.";
+      return;
+    }
+
+    const riskAmount = capital * risk / 100;
+    const lotEstimate = riskAmount / (stop * pipValue);
+
+    result.textContent =
+      `Risque théorique : ${formatNumber(riskAmount)} USD. ` +
+      `Taille indicative : ${formatNumber(lotEstimate, 4)} lot(s) standard, ` +
+      "selon la valeur du pip indiquée.";
+  });
+
+  $("sf-p2p-calculate").addEventListener("click", function () {
+    const amount = numberValue("sf-p2p-amount");
+    const rate = numberValue("sf-p2p-rate");
+    const fee = numberValue("sf-p2p-fee");
+    const result = $("sf-p2p-result");
+
+    if (!Number.isFinite(amount) || amount < 0 ||
+        !validPositive(rate) ||
+        !Number.isFinite(fee) || fee < 0 || fee > 100) {
+      result.textContent = "Vérifiez le montant, le taux et les frais.";
+      return;
+    }
+
+    const gross = amount * rate;
+    const net = gross * (1 - fee / 100);
+
+    result.textContent =
+      `Montant brut : ${formatNumber(gross)} HTG. ` +
+      `Frais estimés : ${formatNumber(gross - net)} HTG. ` +
+      `Montant net estimé : ${formatNumber(net)} HTG.`;
+  });
+
+  $("sf-quiz-check").addEventListener("click", function () {
+    const selected = document.querySelector('input[name="sf-quiz"]:checked');
+    const result = $("sf-quiz-result");
+
+    if (!selected) {
+      result.textContent = "Choisissez une réponse.";
+    } else if (selected.value === "b") {
+      result.textContent = "Bonne réponse ! Ne partagez jamais votre phrase de récupération.";
+    } else {
+      result.textContent = "Essayez encore : protégez toujours vos informations secrètes.";
+    }
+  });
+})();
+</script>
+<!-- FIN DE LA PARTIE 3B -->
   <footer>
     Skoochy Finance © 2026 — 
     <span data-i18n="footerText">
