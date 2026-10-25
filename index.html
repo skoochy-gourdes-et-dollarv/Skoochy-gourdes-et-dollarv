@@ -911,59 +911,93 @@
         });
       });
 
-      function numberValue(id) {
-        const element = $(id);
-        if (!element || element.value.trim() === "") return NaN;
-        return Number(element.value);
-      }
+      
+function numberValue(id) {
+  const element = $(id);
+  if (!element || element.value.trim() === "") return NaN;
+  return Number(element.value);
+}
 
-      function money(value) {
-        return Number(value).toLocaleString("fr-FR", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 6
-        });
-      }
+function money(value) {
+  return Number(value).toLocaleString("fr-FR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 6
+  });
+}
 
-      function showMessage(id, message) {
-        const element = $(id);
-        if (element) element.textContent = message;
-      }
+function showMessage(id, message) {
+  const element = $(id);
+  if (element) element.textContent = message;
+}
 
-      // Convertisseur principal
-      const conversionButton = $("calculateConversion");
-      if (conversionButton) {
-        conversionButton.addEventListener("click", function () {
-          const amount = numberValue("amount");
-          const rate = numberValue("rate");
-          const direction = $("direction") ? $("direction").value : "usdhtg";
+// Convertisseur principal
+const conversionButton = $("calculateConversion");
 
-          if (!Number.isFinite(amount) || amount < 0 ||
-              !Number.isFinite(rate) || rate <= 0) {
-            showMessage("conversionResult", "Saisissez un montant valide et un taux supérieur à zéro.");
-            return;
-          }
+if (conversionButton) {
+  conversionButton.addEventListener("click", function () {
+    const amount = numberValue("amount");
+    const rate = numberValue("rate");
+    const direction = $("direction")
+      ? $("direction").value
+      : "usdhtg";
 
-          const result = direction === "htgusd" ? amount / rate : amount * rate;
-          showMessage("conversionResult", "Résultat estimé : " + money(result));
-        });
-      }
+    if (
+      !Number.isFinite(amount) ||
+      amount < 0 ||
+      !Number.isFinite(rate) ||
+      rate <= 0
+    ) {
+      showMessage(
+        "conversionResult",
+        "Saisissez un montant valide et un taux supérieur à zéro."
+      );
+      return;
+    }
 
-      // Convertisseur USD / HTG complémentaire
-      function calculateSimpleConversion(reverse) {
-        const amount = numberValue("sf-amount");
-        const rate = numberValue("sf-rate");
+    const result =
+      direction === "htgusd"
+        ? amount / rate
+        : amount * rate;
 
-        if (!Number.isFinite(amount) || amount < 0 ||
-            !Number.isFinite(rate) || rate <= 0) {
-          showMessage("sf-conversion-result", "Saisissez un montant et un taux valides.");
-          return;
-        }
+    showMessage(
+      "conversionResult",
+      "Résultat estimé : " + money(result)
+    );
+  });
+}
 
-        
-    const usdToHtg = $("sf-usd-htg");
-    const htgToUsd = $("sf-htg-usd");
+// Convertisseur USD / HTG complémentaire
+function calculateSimpleConversion(reverse) {
+  const amount = numberValue("sf-amount");
+  const rate = numberValue("sf-rate");
 
-   if (usdToHtg) {
+  if (
+    !Number.isFinite(amount) ||
+    amount < 0 ||
+    !Number.isFinite(rate) ||
+    rate <= 0
+  ) {
+    showMessage(
+      "sf-conversion-result",
+      "Saisissez un montant et un taux valides."
+    );
+    return;
+  }
+
+  const result = reverse
+    ? amount / rate
+    : amount * rate;
+
+  showMessage(
+    "sf-conversion-result",
+    "Résultat estimé : " + money(result)
+  );
+}
+
+const usdToHtg = $("sf-usd-htg");
+const htgToUsd = $("sf-htg-usd");
+
+if (usdToHtg) {
   usdToHtg.addEventListener("click", function () {
     calculateSimpleConversion(false);
   });
@@ -973,39 +1007,59 @@ if (htgToUsd) {
   htgToUsd.addEventListener("click", function () {
     calculateSimpleConversion(true);
   });
+}
+
+// Calculatrice générale
+const simpleCalcButton = $("sf-calculate");
+
+if (simpleCalcButton) {
+  simpleCalcButton.addEventListener("click", function () {
+    const a = numberValue("sf-number-a");
+    const b = numberValue("sf-number-b");
+    const operation = $("sf-operation")
+      ? $("sf-operation").value
+      : "+";
+
+    if (!Number.isFinite(a) || !Number.isFinite(b)) {
+      showMessage(
+        "sf-calculator-result",
+        "Saisissez deux nombres valides."
+      );
+      return;
+    }
+
+    let result;
+
+    if (operation === "+") {
+      result = a + b;
+    } else if (operation === "-") {
+      result = a - b;
+    } else if (operation === "*") {
+      result = a * b;
+    } else if (operation === "/") {
+      if (b === 0) {
+        showMessage(
+          "sf-calculator-result",
+          "La division par zéro est impossible."
+        );
+        return;
       }
 
-      // Calculatrice générale
-      const simpleCalcButton = $("sf-calculate");
-      if (simpleCalcButton) {
-        simpleCalcButton.addEventListener("click", function () {
-          const a = numberValue("sf-number-a");
-          const b = numberValue("sf-number-b");
-          const operation = $("sf-operation") ? $("sf-operation").value : "+";
+      result = a / b;
+    } else {
+      showMessage(
+        "sf-calculator-result",
+        "Opération non reconnue."
+      );
+      return;
+    }
 
-          if (!Number.isFinite(a) || !Number.isFinite(b)) {
-            showMessage("sf-calculator-result", "Saisissez deux nombres valides.");
-            return;
-          }
-
-          let result;
-          if (operation === "+") result = a + b;
-          else if (operation === "-") result = a - b;
-          else if (operation === "*") result = a * b;
-          else if (operation === "/") {
-            if (b === 0) {
-              showMessage("sf-calculator-result", "La division par zéro est impossible.");
-              return;
-            }
-            result = a / b;
-          } else {
-            showMessage("sf-calculator-result", "Opération non reconnue.");
-            return;
-          }
-
-          showMessage("sf-calculator-result", "Résultat : " + money(result));
-        });
-      }
+    showMessage(
+      "sf-calculator-result",
+      "Résultat : " + money(result)
+    );
+  });
+}
 
       // Calculateur Forex
       const fxButton = $("fxCalculate");
