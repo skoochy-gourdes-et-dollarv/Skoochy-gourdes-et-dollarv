@@ -265,6 +265,61 @@
       </div>
     </section>
 
+    
+<section id="trading" class="section">
+  <div class="card">
+    <h2>📈 Trading — Espace de pratique</h2>
+    <p class="muted">
+      Apprenez à analyser les marchés et à gérer vos positions
+      dans un environnement de démonstration.
+    </p>
+
+    <label for="tradeMarket">Marché</label>
+    <select id="tradeMarket">
+      <option value="EURUSD">Forex — EUR/USD</option>
+      <option value="BTCUSD">Crypto — BTC/USD</option>
+      <option value="NASDAQ">CFD — NASDAQ 100</option>
+    </select>
+
+    <label for="tradeDirection">Sens de la position</label>
+    <select id="tradeDirection">
+      <option value="buy">Achat (Long)</option>
+      <option value="sell">Vente (Short)</option>
+    </select>
+
+    <label for="tradeEntry">Prix d’entrée fictif</label>
+    <input id="tradeEntry" type="number" min="0.00001"
+      step="any" placeholder="Ex. 100">
+
+    <label for="tradeStop">Stop Loss (SL)</label>
+    <input id="tradeStop" type="number" min="0.00001"
+      step="any" placeholder="Ex. 98">
+
+    <label for="tradeTarget">Take Profit (TP)</label>
+    <input id="tradeTarget" type="number" min="0.00001"
+      step="any" placeholder="Ex. 104">
+
+    <label for="tradeQuantity">Quantité fictive</label>
+    <input id="tradeQuantity" type="number" min="0.01"
+      step="any" value="1">
+
+    <button type="button" id="analyzeTrade" class="gold-btn">
+      Analyser ma position
+    </button>
+
+    <div id="tradeAnalysis" class="card" aria-live="polite">
+      <p class="muted">
+        Remplissez les champs pour voir votre analyse.
+      </p>
+    </div>
+
+    <p class="muted">
+      Mode éducatif uniquement : les prix sont fictifs.
+      Aucun ordre réel n’est envoyé à un courtier.
+    </p>
+  </div>
+</section>
+
     <section id="converter" class="section">
       <h2 data-i18n="converterTitle">Convertisseur de devises</h2>
       <div class="card">
