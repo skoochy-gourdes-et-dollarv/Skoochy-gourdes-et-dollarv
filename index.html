@@ -1557,5 +1557,51 @@ if (pairSelect) {
   }
 })();
 </script>
+  ```
+<script>
+(function () {
+  "use strict";
+
+  const button = document.getElementById("cryptoCalculate");
+  if (!button) return;
+
+  button.addEventListener("click", function () {
+    const investment = Number(document.getElementById("cryptoInvestment").value);
+    const buyPrice = Number(document.getElementById("cryptoBuyPrice").value);
+    const sellPrice = Number(document.getElementById("cryptoSellPrice").value);
+    const feePercent = Number(document.getElementById("cryptoFee").value);
+
+    if (
+      !Number.isFinite(investment) || investment <= 0 ||
+      !Number.isFinite(buyPrice) || buyPrice <= 0 ||
+      !Number.isFinite(sellPrice) || sellPrice < 0 ||
+      !Number.isFinite(feePercent) || feePercent < 0 || feePercent > 100
+    ) {
+      alert("Veuillez saisir des valeurs valides.");
+      return;
+    }
+
+    const quantity = investment / buyPrice;
+    const saleValue = quantity * sellPrice;
+    const fees = (investment + saleValue) * feePercent / 100;
+    const profit = saleValue - investment - fees;
+    const percent = profit / investment * 100;
+    const money = value => "$" + value.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+
+    document.getElementById("cryptoQuantity").textContent =
+      quantity.toLocaleString("en-US", { maximumFractionDigits: 8 });
+    document.getElementById("cryptoSaleValue").textContent = money(saleValue);
+    document.getElementById("cryptoFees").textContent = money(fees);
+    document.getElementById("cryptoProfit").textContent = money(profit);
+    document.getElementById("cryptoPercent").textContent =
+      percent.toFixed(2) + "%";
+
+    document.getElementById("cryptoResults").hidden = false;
+  });
+})();
+</script>
 </body>
 </html>
