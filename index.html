@@ -932,81 +932,48 @@ const translations = {
 };
 
       
-function setLanguage(language) {
-  const selected = translations[language] ? language : "fr";
 
-  document.documentElement.lang = selected;
-  localStorage.setItem("skoochyLanguage", selected);
+const SUPPORTED_LANGUAGES = ["fr", "ht", "en", "es"];
+const DEFAULT_LANGUAGE = "fr";
 
-  document.querySelectorAll("[data-i18n]").forEach((element) => {
-    const key = element.getAttribute("data-i18n");
-    const translated = translations[selected][key];
+function getSavedLanguage() {
+  try {
+    const saved = localStorage.getItem("skoochy_language");
 
-    if (translated !== undefined) {
-      element.textContent = translated;
-    }
-  });
-
-  const selector = $("languageSelect");
-  if (selector && selector.value !== selected) {
-    selector.value = selected;
+    return SUPPORTED_LANGUAGES.includes(saved)
+      ? saved
+      : DEFAULT_LANGUAGE;
+  } catch {
+    return DEFAULT_LANGUAGE;
   }
 }
 
-window.setLanguage = setLanguage;
+let currentLanguage = getSavedLanguage();
 
-// Yon sèl selektè lang
-const languageSelect = $("languageSelect");
-
-if (languageSelect) {
-  languageSelect.addEventListener("change", function () {
-    setLanguage(this.value);
-  });
+function t(key) {
+  return (
+    translations[currentLanguage]?.[key] ??
+    translations[DEFAULT_LANGUAGE]?.[key] ??
+    key
+  );
 }
 
-// Lang franse pa defo, sof si gen yon lang ki te deja sove
-const savedLanguage = localStorage.getItem("skoochyLanguage");
-const initialLanguage =
-  savedLanguage && translations[savedLanguage]
-    ? savedLanguage
-    : "fr";
-
-setLanguage(initialLanguage);
-
-// Navigasyon ant paj yo
-function showPage(pageId) {
-  const target = $(pageId);
-
-  if (!target || !target.classList.contains("section")) {
+function setLanguage(language) {
+  if (!SUPPORTED_LANGUAGES.includes(language)) {
     return;
   }
 
-  document.querySelectorAll(".section").forEach((section) => {
-    section.classList.toggle("active", section.id === pageId);
-  });
+  currentLanguage = language;
 
-  document.querySelectorAll("[data-page]").forEach((button) => {
-    const isCurrent = button.getAttribute("data-page") === pageId;
-    button.classList.toggle("active", isCurrent);
-    button.setAttribute("aria-current", isCurrent ? "page" : "false");
-  });
+  try {
+    localStorage.setItem("skoochy_language", language);
+  } catch (error) {
+    console.warn("Impossible de sauvegarder la langue.", error);
+  }
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-window.showPage = showPage;
-
-document.querySelectorAll("[data-page]").forEach((button) => {
-  button.addEventListener("click", function () {
-    showPage(this.getAttribute("data-page"));
-  });
-});
-
-document.querySelectorAll("[data-go]").forEach((button) => {
-  button.addEventListener("click", function () {
-    showPage(this.getAttribute("data-go"));
-  });
-});
+  document.documentElement.lang = language;
+  renderApp();
+    }
 
       
 function numberValue(id) {
