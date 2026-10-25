@@ -1030,28 +1030,36 @@ if (simpleCalcButton) {
 
     let result;
 
-    if (operation === "+") {
-      result = a + b;
-    } else if (operation === "-") {
-      result = a - b;
-    } else if (operation === "*") {
-      result = a * b;
-    } else if (operation === "/") {
-      if (b === 0) {
+    switch (operation) {
+      case "+":
+        result = a + b;
+        break;
+
+      case "-":
+        result = a - b;
+        break;
+
+      case "*":
+        result = a * b;
+        break;
+
+      case "/":
+        if (b === 0) {
+          showMessage(
+            "sf-calculator-result",
+            "La division par zéro est impossible."
+          );
+          return;
+        }
+        result = a / b;
+        break;
+
+      default:
         showMessage(
           "sf-calculator-result",
-          "La division par zéro est impossible."
+          "Opération non reconnue."
         );
         return;
-      }
-
-      result = a / b;
-    } else {
-      showMessage(
-        "sf-calculator-result",
-        "Opération non reconnue."
-      );
-      return;
     }
 
     showMessage(
@@ -1060,7 +1068,6 @@ if (simpleCalcButton) {
     );
   });
 }
-
       // Calculateur Forex
       const fxButton = $("fxCalculate");
       if (fxButton) {
