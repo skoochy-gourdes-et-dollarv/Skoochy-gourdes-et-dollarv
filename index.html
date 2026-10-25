@@ -430,60 +430,80 @@
       </div>
     </section>
     
-    <section id="forex" class="section">
-      <div class="card">
-        <h2 data-i18n="forexTitle">Calculateur Forex</h2>
-        <p>Outil éducatif : estimez le risque et la taille de position. Aucun ordre réel n'est exécuté.</p>
+    
+<section id="forex" class="section">
+  <div class="card">
+    <h2 data-i18n="forexTitle">Calculateur Forex</h2>
 
-        <label for="fxPair">Paire de devises</label>
-        <select id="fxPair">
-          <option value="EURUSD">EUR/USD</option>
-          <option value="GBPUSD">GBP/USD</option>
-          <option value="USDJPY">USD/JPY</option>
-          <option value="USDCHF">USD/CHF</option>
-          <option value="AUDUSD">AUD/USD</option>
-          <option value="USDCAD">USD/CAD</option>
-          <option value="NZDUSD">NZD/USD</option>
-          <option value="EURGBP">EUR/GBP</option>
-          <option value="EURJPY">EUR/JPY</option>
-          <option value="GBPJPY">GBP/JPY</option>
-          <option value="USDHTG">USD/HTG</option>
-        </select>
+    <p data-i18n="forexDescription">
+      Outil éducatif : estimez le risque et la taille de position.
+      Aucun ordre réel n'est exécuté.
+    </p>
 
-        <label for="fxBalance">Capital du compte ($)</label>
-        <input id="fxBalance" type="number" min="0" step="any" placeholder="Ex. 1000">
+    <label for="fxPair" data-i18n="fxPairLabel">Paire de devises</label>
+    <select id="fxPair">
+      <option value="EURUSD">EUR/USD</option>
+      <option value="GBPUSD">GBP/USD</option>
+      <option value="USDJPY">USD/JPY</option>
+      <option value="USDCHF">USD/CHF</option>
+      <option value="AUDUSD">AUD/USD</option>
+      <option value="USDCAD">USD/CAD</option>
+      <option value="NZDUSD">NZD/USD</option>
+      <option value="EURGBP">EUR/GBP</option>
+      <option value="EURJPY">EUR/JPY</option>
+      <option value="GBPJPY">GBP/JPY</option>
+      <option value="USDHTG">USD/HTG</option>
+    </select>
 
-        <label for="fxRisk">Risque souhaité (%)</label>
-        <input id="fxRisk" type="number" min="0.1" max="5" step="0.1" value="1">
+    <label for="fxBalance" data-i18n="fxBalanceLabel">Capital du compte ($)</label>
+    <input id="fxBalance" type="number" min="0" step="any"
+      placeholder="Ex. 1000" data-i18n-placeholder="fxBalancePlaceholder">
 
-        <label for="fxEntry">Prix d'entrée</label>
-        <input id="fxEntry" type="number" min="0" step="any" placeholder="Prix d'entrée">
+    <label for="fxRisk" data-i18n="fxRiskLabel">Risque souhaité (%)</label>
+    <input id="fxRisk" type="number" min="0.1" max="5" step="0.1" value="1">
 
-        <label for="fxStop">Stop Loss</label>
-        <input id="fxStop" type="number" min="0" step="any" placeholder="Prix du Stop Loss">
+    <label for="fxEntry" data-i18n="fxEntryLabel">Prix d'entrée</label>
+    <input id="fxEntry" type="number" min="0" step="any"
+      placeholder="Prix d'entrée" data-i18n-placeholder="fxEntryPlaceholder">
 
-        <label for="fxTarget">Take Profit</label>
-        <input id="fxTarget" type="number" min="0" step="any" placeholder="Prix du Take Profit">
+    <label for="fxStop" data-i18n="fxStopLabel">Stop Loss</label>
+    <input id="fxStop" type="number" min="0" step="any"
+      placeholder="Prix du Stop Loss" data-i18n-placeholder="fxStopPlaceholder">
 
-        <label for="fxPipSize">Taille du pip</label>
-        <input id="fxPipSize" type="number" min="0.00000001" step="any" value="0.0001">
+    <label for="fxTarget" data-i18n="fxTargetLabel">Take Profit</label>
+    <input id="fxTarget" type="number" min="0" step="any"
+      placeholder="Prix du Take Profit" data-i18n-placeholder="fxTargetPlaceholder">
 
-        <label for="fxPipValue">Valeur estimée d'un pip par lot ($)</label>
-        <input id="fxPipValue" type="number" min="0.000001" step="any" value="10">
+    <label for="fxPipSize" data-i18n="fxPipSizeLabel">Taille du pip</label>
+    <input id="fxPipSize" type="number" min="0.00000001" step="any" value="0.0001">
 
-        <button id="fxCalculate" type="button">Calculer le risque</button>
+    <label for="fxPipValue" data-i18n="fxPipValueLabel">Valeur estimée d'un pip par lot ($)</label>
+    <input id="fxPipValue" type="number" min="0.000001" step="any" value="10">
 
-        <div id="fxMessage" class="result" aria-live="polite"></div>
-        <div id="fxResults" class="result" hidden>
-          <p>Montant du risque : <strong id="fxRiskAmount">—</strong></p>
-          <p>Distance du Stop Loss : <strong id="fxStopPips">—</strong></p>
-          <p>Taille estimée : <strong id="fxLotSize">—</strong></p>
-          <p>Gain potentiel estimé : <strong id="fxPotentialGain">—</strong></p>
-          <p>Ratio risque/rendement : <strong id="fxRR">—</strong></p>
-        </div>
-      </div>
-    </section>
+    <button id="fxCalculate" type="button" data-i18n="fxCalculateButton">
+      Calculer le risque
+    </button>
 
+    <div id="fxMessage" class="result" aria-live="polite"></div>
+
+    <div id="fxResults" class="result" hidden>
+      <p><span data-i18n="fxRiskAmountLabel">Montant du risque :</span>
+        <strong id="fxRiskAmount">—</strong></p>
+
+      <p><span data-i18n="fxStopPipsLabel">Distance du Stop Loss :</span>
+        <strong id="fxStopPips">—</strong></p>
+
+      <p><span data-i18n="fxLotSizeLabel">Taille estimée :</span>
+        <strong id="fxLotSize">—</strong></p>
+
+      <p><span data-i18n="fxPotentialGainLabel">Gain potentiel estimé :</span>
+        <strong id="fxPotentialGain">—</strong></p>
+
+      <p><span data-i18n="fxRRLabel">Ratio risque/rendement :</span>
+        <strong id="fxRR">—</strong></p>
+    </div>
+  </div>
+</section>
     <section id="crypto" class="section">
       <div class="card">
         <h2 data-i18n="cryptoTitle">Calculateur Crypto-actifs</h2>
