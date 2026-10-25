@@ -475,14 +475,70 @@
 
 
     <section id="cfd" class="section">
-      <h2 data-i18n="cfdTitle">Calculateur CFD</h2>
-      <div class="card">
-        <p class="muted" data-i18n="cfdComing">
-          Les calculs de position, de marge et de risque seront ajoutés
-          dans la partie 3B.
-        </p>
-      </div>
-    </section>
+  <h2 data-i18n="cfdTitle">Calculateur CFD</h2>
+
+  <div class="card">
+    <h3>Paramètres de la position</h3>
+    <p class="muted">
+      Outil éducatif : les résultats sont des estimations. Les CFD sont des produits
+      complexes à effet de levier et peuvent entraîner des pertes importantes.
+    </p>
+
+```
+<label for="cfdDirection">Sens de la position</label>
+<select id="cfdDirection">
+  <option value="buy">Achat (Long)</option>
+  <option value="sell">Vente (Short)</option>
+</select>
+
+<label for="cfdCapital">Capital disponible (USD)</label>
+<input id="cfdCapital" type="number" min="0" step="any" placeholder="Ex. : 1000">
+
+<label for="cfdEntry">Prix d'entrée</label>
+<input id="cfdEntry" type="number" min="0" step="any" placeholder="Ex. : 100">
+
+<label for="cfdExit">Prix de sortie estimé</label>
+<input id="cfdExit" type="number" min="0" step="any" placeholder="Ex. : 105">
+
+<label for="cfdUnits">Nombre d'unités</label>
+<input id="cfdUnits" type="number" min="0" step="any" placeholder="Ex. : 10">
+
+<label for="cfdLeverage">Effet de levier (1:x)</label>
+<select id="cfdLeverage">
+  <option value="1">1:1</option>
+  <option value="2">1:2</option>
+  <option value="5" selected>1:5</option>
+  <option value="10">1:10</option>
+  <option value="20">1:20</option>
+  <option value="30">1:30</option>
+</select>
+
+<label for="cfdFee">Frais estimés sur la position (USD)</label>
+<input id="cfdFee" type="number" min="0" step="any" value="0">
+
+<button type="button" id="cfdCalculate">Calculer la position</button>
+
+<div id="cfdResults" class="card" aria-live="polite" hidden>
+  <p>Valeur de la position : <strong id="cfdValue">—</strong></p>
+  <p>Marge estimée : <strong id="cfdMargin">—</strong></p>
+  <p>Résultat avant frais : <strong id="cfdGross">—</strong></p>
+  <p>Résultat après frais : <strong id="cfdNet">—</strong></p>
+  <p>Résultat par rapport au capital : <strong id="cfdPercent">—</strong></p>
+  <p id="cfdWarning" class="muted"></p>
+</div>
+```
+
+  </div>
+
+  <div class="card">
+    <h3>Comprendre les CFD</h3>
+    <p><strong>Position longue :</strong> le résultat augmente si le prix monte, avant frais.</p>
+    <p><strong>Position courte :</strong> le résultat augmente si le prix baisse, avant frais.</p>
+    <p><strong>Effet de levier :</strong> il permet une exposition supérieure à la marge, mais amplifie aussi les pertes.</p>
+    <p><strong>Marge :</strong> estimation indicative ; le courtier peut appliquer d'autres exigences et frais.</p>
+  </div>
+</section>
+
 
     
 <section id="p2p" class="section">
