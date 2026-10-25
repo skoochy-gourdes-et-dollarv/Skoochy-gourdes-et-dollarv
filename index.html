@@ -1816,6 +1816,71 @@ if (pairSelect) {
     document.getElementById("cfdResults").hidden = false;
   });
 })();
-  </script>
+  
+(function () {
+  "use strict";
+
+  const button = document.getElementById("analyzeTrade");
+  if (!button || button.dataset.ready === "true") return;
+  button.dataset.ready = "true";
+
+  button.addEventListener("click", function () {
+    const market = document.getElementById("tradeMarket").value;
+    const direction = document.getElementById("tradeDirection").value;
+    const entry = Number(document.getElementById("tradeEntry").value);
+    const stop = Number(document.getElementById("tradeStop").value);
+    const target = Number(document.getElementById("tradeTarget").value);
+    const quantity = Number(document.getElementById("tradeQuantity").value);
+    const output = document.getElementById("tradeAnalysis");
+
+    if (
+      !Number.isFinite(entry) || !Number.isFinite(stop) ||
+      !Number.isFinite(target) || !Number.isFinite(quantity) ||
+      entry <= 0 || stop <= 0 || target <= 0 || quantity <= 0
+    ) {
+      output.textContent = "Veuillez saisir des valeurs positives valides.";
+      return;
+    }
+
+    const valid = direction === "buy"
+      ? stop < entry && target > entry
+      : stop > entry && target < entry;
+
+    if (!valid) {
+      output.textContent =
+        "Niveaux invalides : vérifiez le Stop Loss et le Take Profit.";
+      return;
+    }
+
+    const risk = Math.abs(entry - stop) * quantity;
+    const reward = Math.abs(target - entry) * quantity;
+    const ratio = reward / risk;
+
+    output.replaceChildren();
+
+    const title = document.createElement("h3");
+    title.textContent = "Résultat de l'analyse";
+    output.appendChild(title);
+
+    [
+      "Marché : " + market,
+      "Position : " + (direction === "buy" ? "Achat (Long)" : "Vente (Short)"),
+      "Perte théorique au Stop Loss : " + risk.toFixed(2),
+      "Gain théorique au Take Profit : " + reward.toFixed(2),
+      "Rapport risque/rendement : 1:" + ratio.toFixed(2)
+    ].forEach(function (line) {
+      const p = document.createElement("p");
+      p.textContent = line;
+      output.appendChild(p);
+    });
+
+    const note = document.createElement("p");
+    note.className = "muted";
+    note.textContent =
+      "Simulation éducative hors frais, spread et glissement. Aucun ordre réel n'est envoyé.";
+    output.appendChild(note);
+  });
+})();  
+ </script>
  </body>
  </html>
