@@ -1,11 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0b1220">
-  <meta name="description" content="Skoochy Finance : conversion de devises, calculateurs Forex, CFD, Crypto, P2P et formation financière.">
-  <title>Skoochy — Gourdes & Dollar</title>
+  <meta name="description" content="Skoochy Finance : conversion de devises, outils éducatifs Forex, CFD, crypto-actifs et P2P.">
+  <title>Skoochy Finance — Gourdes & Dollar</title>
 
   <style>
     :root {
@@ -19,7 +20,9 @@
       --border: #293850;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -29,12 +32,22 @@
     }
 
     header {
-      padding: 18px 16px;
+      padding: 16px;
       background: #101a2b;
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 10;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      margin: auto;
     }
 
     .brand {
@@ -47,38 +60,6 @@
       font-size: 12px;
       color: var(--muted);
       margin-top: 5px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    select, input, button {
-      font: inherit;
-      border-radius: 9px;
-      padding: 11px;
-    }
-
-    select, input {
-      background: #0d1727;
-      color: var(--text);
-      border: 1px solid var(--border);
-      max-width: 100%;
-    }
-
-    button {
-      cursor: pointer;
-      border: 0;
-      font-weight: 700;
-    }
-
-    .gold-btn {
-      background: var(--gold);
-      color: #15191f;
     }
 
     nav {
@@ -96,6 +77,40 @@
     }
 
     nav button.active {
+      background: var(--gold);
+      color: #15191f;
+    }
+
+    select,
+    input,
+    button {
+      font: inherit;
+      border-radius: 9px;
+      padding: 11px;
+      max-width: 100%;
+    }
+
+    select,
+    input {
+      background: #0d1727;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      font-weight: 700;
+      background: var(--panel2);
+      color: var(--text);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    .gold-btn {
       background: var(--gold);
       color: #15191f;
     }
@@ -119,8 +134,6 @@
       line-height: 1.25;
     }
 
-    .gold { color: var(--gold); }
-
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -133,9 +146,12 @@
       background: var(--panel);
       border: 1px solid var(--border);
       min-width: 0;
+      margin: 12px 0;
     }
 
-    .card h3 { margin-top: 0; }
+    .card h3 {
+      margin-top: 0;
+    }
 
     .muted {
       color: var(--muted);
@@ -148,7 +164,8 @@
       margin: 14px 0;
     }
 
-    .field input, .field select {
+    .field input,
+    .field select {
       width: 100%;
     }
 
@@ -156,12 +173,19 @@
       margin-top: 12px;
       padding: 13px;
       background: #0d1727;
+      border: 1px solid var(--border);
       border-radius: 10px;
       overflow-wrap: anywhere;
+      line-height: 1.65;
     }
 
-    .section { display: none; }
-    .section.active { display: block; }
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
 
     .status {
       display: inline-block;
@@ -172,6 +196,33 @@
       font-size: 12px;
     }
 
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .warning {
+      color: #ffd78a;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    details {
+      padding: 14px;
+      margin: 12px 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
     footer {
       text-align: center;
       padding: 25px 15px;
@@ -179,6 +230,20 @@
       border-top: 1px solid var(--border);
       margin-top: 30px;
       font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 12px;
+      }
+
+      .card {
+        padding: 14px;
+      }
+
+      .hero {
+        padding: 20px 15px;
+      }
     }
   </style>
 </head>
@@ -193,16 +258,19 @@
         </div>
       </div>
 
-      <select id="languageSelect" aria-label="Choisir la langue">
-        <option value="fr">Français</option>
-        <option value="ht">Kreyòl ayisyen</option>
-        <option value="en">English</option>
-        <option value="es">Español</option>
-      </select>
+      <label>
+        <span class="muted" data-i18n="language">Langue</span>
+        <select id="languageSelect" aria-label="Choisir la langue">
+          <option value="fr">Français</option>
+          <option value="ht">Kreyòl ayisyen</option>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
+      </label>
     </div>
   </header>
 
-  <nav id="mainNav">
+  <nav id="mainNav" aria-label="Navigation principale">
     <button class="active" data-page="home" data-i18n="navHome">Accueil</button>
     <button data-page="converter" data-i18n="navConverter">Conversion</button>
     <button data-page="forex" data-i18n="navForex">Forex</button>
@@ -217,14 +285,18 @@
   <main>
     <section id="home" class="section active">
       <div class="hero">
-        <span class="status" data-i18n="freeAccess">Accès gratuit disponible</span>
+        <span class="status" data-i18n="freeAccess">
+          Accès gratuit disponible
+        </span>
+
         <h1 data-i18n="heroTitle">
           Gérez vos calculs financiers avec précision.
         </h1>
+
         <p class="muted" data-i18n="heroText">
-          Convertissez vos devises, calculez vos positions et découvrez
-          les marchés Forex, CFD, Crypto et P2P.
+          Convertissez vos devises, calculez vos positions et découvrez les marchés Forex, CFD, Crypto et P2P.
         </p>
+
         <button class="gold-btn" data-go="converter" data-i18n="start">
           Commencer
         </button>
@@ -264,63 +336,10 @@
         </article>
       </div>
     </section>
-    
-<section id="trading" class="section">
-  <div class="card">
-    <h2>📈 Trading — Espace de pratique</h2>
-    <p class="muted">
-      Apprenez à analyser les marchés et à gérer vos positions
-      dans un environnement de démonstration.
-    </p>
-
-    <label for="tradeMarket">Marché</label>
-    <select id="tradeMarket">
-      <option value="EURUSD">Forex — EUR/USD</option>
-      <option value="BTCUSD">Crypto — BTC/USD</option>
-      <option value="NASDAQ">CFD — NASDAQ 100</option>
-    </select>
-
-    <label for="tradeDirection">Sens de la position</label>
-    <select id="tradeDirection">
-      <option value="buy">Achat (Long)</option>
-      <option value="sell">Vente (Short)</option>
-    </select>
-
-    <label for="tradeEntry">Prix d’entrée fictif</label>
-    <input id="tradeEntry" type="number" min="0.00001"
-      step="any" placeholder="Ex. 100">
-
-    <label for="tradeStop">Stop Loss (SL)</label>
-    <input id="tradeStop" type="number" min="0.00001"
-      step="any" placeholder="Ex. 98">
-
-    <label for="tradeTarget">Take Profit (TP)</label>
-    <input id="tradeTarget" type="number" min="0.00001"
-      step="any" placeholder="Ex. 104">
-
-    <label for="tradeQuantity">Quantité fictive</label>
-    <input id="tradeQuantity" type="number" min="0.01"
-      step="any" value="1">
-
-    <button type="button" id="analyzeTrade" class="gold-btn">
-      Analyser ma position
-    </button>
-
-    <div id="tradeAnalysis" class="card" aria-live="polite">
-      <p class="muted">
-        Remplissez les champs pour voir votre analyse.
-      </p>
-    </div>
-
-    <p class="muted">
-      Mode éducatif uniquement : les prix sont fictifs.
-      Aucun ordre réel n’est envoyé à un courtier.
-    </p>
-  </div>
-</section>
 
     <section id="converter" class="section">
       <h2 data-i18n="converterTitle">Convertisseur de devises</h2>
+
       <div class="card">
         <p class="muted" data-i18n="rateNotice">
           Entrez vous-même le taux de change applicable.
@@ -328,15 +347,12 @@
 
         <div class="field">
           <label for="amount" data-i18n="amount">Montant</label>
-          <input id="amount" type="number" min="0" step="any" value="100">
+          <input id="amount" type="number" min="0" step="any" value="1">
         </div>
 
         <div class="field">
-          <label for="rate" data-i18n="rate">
-            Taux : 1 USD en HTG
-          </label>
-          <input id="rate" type="number" min="0.000001"
-                 step="any" value="130">
+          <label for="rate" data-i18n="rate">Taux : 1 USD en HTG</label>
+          <input id="rate" type="number" min="0.01" step="any" value="130">
         </div>
 
         <div class="field">
@@ -347,1586 +363,1122 @@
           </select>
         </div>
 
-        <button class="gold-btn" id="calculateConversion"
-                data-i18n="calculate">Calculer</button>
+        <button id="calculateConversion" class="gold-btn" data-i18n="calculate">
+          Calculer
+        </button>
+
         <div class="result" id="conversionResult" aria-live="polite">
-          Résultat
+          130 HTG
+        </div>
+
+        <p class="muted">
+          Le taux est un exemple modifiable, pas un taux de marché en direct.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Convertisseur supplémentaire USD / HTG</h3>
+
+        <div class="field">
+          <label for="sf-rate">Taux (HTG pour 1 USD)</label>
+          <input id="sf-rate" type="number" min="0.01" step="any" value="130">
+        </div>
+
+        <div class="field">
+          <label for="sf-amount">Montant à convertir</label>
+          <input id="sf-amount" type="number" min="0" step="any" value="1">
+        </div>
+
+        <button id="sf-usd-htg" type="button">USD → HTG</button>
+        <button id="sf-htg-usd" type="button">HTG → USD</button>
+
+        <p class="result" id="sf-conversion-result" aria-live="polite">
+          Entrez un montant et un taux de change.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Calculatrice rapide</h3>
+
+        <div class="field">
+          <label for="sf-number-a">Premier nombre</label>
+          <input id="sf-number-a" type="number" step="any">
+        </div>
+
+        <div class="field">
+          <label for="sf-operation">Opération</label>
+          <select id="sf-operation">
+            <option value="add">Addition (+)</option>
+            <option value="subtract">Soustraction (−)</option>
+            <option value="multiply">Multiplication (×)</option>
+            <option value="divide">Division (÷)</option>
+            <option value="percent">Pourcentage de A par rapport à B (%)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="sf-number-b">Deuxième nombre</label>
+          <input id="sf-number-b" type="number" step="any">
+        </div>
+
+        <button id="sf-calculate" type="button" class="gold-btn">
+          Calculer
+        </button>
+
+        <p id="sf-calculator-result" class="result" aria-live="polite">
+          Le résultat apparaîtra ici.
+        </p>
+      </div>
+    </section>
+    
+    <section id="forex" class="section">
+      <div class="card">
+        <h2 data-i18n="forexTitle">Calculateur Forex</h2>
+        <p>Outil éducatif : estimez le risque et la taille de position. Aucun ordre réel n'est exécuté.</p>
+
+        <label for="fxPair">Paire de devises</label>
+        <select id="fxPair">
+          <option value="EURUSD">EUR/USD</option>
+          <option value="GBPUSD">GBP/USD</option>
+          <option value="USDJPY">USD/JPY</option>
+          <option value="USDCHF">USD/CHF</option>
+          <option value="AUDUSD">AUD/USD</option>
+          <option value="USDCAD">USD/CAD</option>
+          <option value="NZDUSD">NZD/USD</option>
+          <option value="EURGBP">EUR/GBP</option>
+          <option value="EURJPY">EUR/JPY</option>
+          <option value="GBPJPY">GBP/JPY</option>
+          <option value="USDHTG">USD/HTG</option>
+        </select>
+
+        <label for="fxBalance">Capital du compte ($)</label>
+        <input id="fxBalance" type="number" min="0" step="any" placeholder="Ex. 1000">
+
+        <label for="fxRisk">Risque souhaité (%)</label>
+        <input id="fxRisk" type="number" min="0.1" max="5" step="0.1" value="1">
+
+        <label for="fxEntry">Prix d'entrée</label>
+        <input id="fxEntry" type="number" min="0" step="any" placeholder="Prix d'entrée">
+
+        <label for="fxStop">Stop Loss</label>
+        <input id="fxStop" type="number" min="0" step="any" placeholder="Prix du Stop Loss">
+
+        <label for="fxTarget">Take Profit</label>
+        <input id="fxTarget" type="number" min="0" step="any" placeholder="Prix du Take Profit">
+
+        <label for="fxPipSize">Taille du pip</label>
+        <input id="fxPipSize" type="number" min="0.00000001" step="any" value="0.0001">
+
+        <label for="fxPipValue">Valeur estimée d'un pip par lot ($)</label>
+        <input id="fxPipValue" type="number" min="0.000001" step="any" value="10">
+
+        <button id="fxCalculate" type="button">Calculer le risque</button>
+
+        <div id="fxMessage" class="result" aria-live="polite"></div>
+        <div id="fxResults" class="result" hidden>
+          <p>Montant du risque : <strong id="fxRiskAmount">—</strong></p>
+          <p>Distance du Stop Loss : <strong id="fxStopPips">—</strong></p>
+          <p>Taille estimée : <strong id="fxLotSize">—</strong></p>
+          <p>Gain potentiel estimé : <strong id="fxPotentialGain">—</strong></p>
+          <p>Ratio risque/rendement : <strong id="fxRR">—</strong></p>
         </div>
       </div>
     </section>
 
-    
-<section id="forex" class="section">
-  <h2>Calculateur Forex</h2>
-  <p class="muted">Outil éducatif : estimez votre risque et la taille de votre position.</p>
+    <section id="crypto" class="section">
+      <div class="card">
+        <h2 data-i18n="cryptoTitle">Calculateur Crypto-actifs</h2>
+        <p>Simulation éducative. Les prix doivent être saisis manuellement et ne sont pas des cotations en temps réel.</p>
 
-  <div class="grid">
-    <div class="card">
-      <h3>Paramètres du calcul</h3>
-       
-<label class="field">
-  <span>Paire Forex</span>
-  
-<select id="fxPair">
-  <optgroup label="Paires majeures">
-    <option value="EUR/USD">EUR/USD</option>
-    <option value="GBP/USD">GBP/USD</option>
-    <option value="USD/JPY">USD/JPY</option>
-    <option value="USD/CHF">USD/CHF</option>
-    <option value="AUD/USD">AUD/USD</option>
-    <option value="NZD/USD">NZD/USD</option>
-    <option value="USD/CAD">USD/CAD</option>
-  </optgroup>
-
-  <optgroup label="Paires croisées">
-    <option value="EUR/GBP">EUR/GBP</option>
-    <option value="EUR/JPY">EUR/JPY</option>
-    <option value="EUR/CHF">EUR/CHF</option>
-    <option value="EUR/CAD">EUR/CAD</option>
-    <option value="EUR/AUD">EUR/AUD</option>
-    <option value="EUR/NZD">EUR/NZD</option>
-    <option value="GBP/JPY">GBP/JPY</option>
-    <option value="GBP/CHF">GBP/CHF</option>
-    <option value="GBP/CAD">GBP/CAD</option>
-    <option value="GBP/AUD">GBP/AUD</option>
-    <option value="GBP/NZD">GBP/NZD</option>
-    <option value="AUD/JPY">AUD/JPY</option>
-    <option value="AUD/NZD">AUD/NZD</option>
-    <option value="AUD/CAD">AUD/CAD</option>
-    <option value="AUD/CHF">AUD/CHF</option>
-    <option value="CAD/JPY">CAD/JPY</option>
-    <option value="CAD/CHF">CAD/CHF</option>
-    <option value="CHF/JPY">CHF/JPY</option>
-    <option value="NZD/JPY">NZD/JPY</option>
-    <option value="NZD/CAD">NZD/CAD</option>
-    <option value="NZD/CHF">NZD/CHF</option>
-    <option value="GBP/EUR">GBP/EUR</option>
-  </optgroup>
-
-  <optgroup label="Paires exotiques">
-    <option value="USD/HTG">USD/HTG</option>
-    <option value="USD/MXN">USD/MXN</option>
-    <option value="USD/ZAR">USD/ZAR</option>
-    <option value="USD/TRY">USD/TRY</option>
-    <option value="USD/SGD">USD/SGD</option>
-    <option value="USD/HKD">USD/HKD</option>
-    <option value="USD/SEK">USD/SEK</option>
-    <option value="USD/NOK">USD/NOK</option>
-    <option value="EUR/TRY">EUR/TRY</option>
-    <option value="EUR/SEK">EUR/SEK</option>
-    <option value="EUR/NOK">EUR/NOK</option>
-    <option value="GBP/SGD">GBP/SGD</option>
-  </optgroup>
-</select>
-  
-  </select>
-    </label>
-      <label class="field">
-        <span>Solde du compte ($)</span>
-        <input id="fxBalance" type="number" min="0" step="0.01" value="100">
-      </label>
-
-      <label class="field">
-        <span>Risque (%)</span>
-        <input id="fxRisk" type="number" min="0.1" max="5" step="0.1" value="1">
-      </label>
-
-      <label class="field">
-        <span>Prix d'entrée</span>
-        <input id="fxEntry" type="number" min="0" step="any" value="1.1000">
-      </label>
-
-      <label class="field">
-        <span>Stop-loss</span>
-        <input id="fxStop" type="number" min="0" step="any" value="1.0950">
-      </label>
-
-      <label class="field">
-        <span>Objectif (take-profit)</span>
-        <input id="fxTarget" type="number" min="0" step="any" value="1.1100">
-      </label>
-
-      <label class="field">
-        <span>Taille d'un pip</span>
-        <select id="fxPipSize">
-          <option value="0.0001">0,0001 — la plupart des paires</option>
-          <option value="0.01">0,01 — paires en JPY</option>
+        <label for="cryptoCoin">Choisir un crypto-actif</label>
+        <select id="cryptoCoin">
+          <option value="BTC">Bitcoin (BTC)</option>
+          <option value="ETH">Ethereum (ETH)</option>
+          <option value="USDT">Tether (USDT)</option>
+          <option value="USDC">USD Coin (USDC)</option>
+          <option value="BNB">BNB</option>
+          <option value="SOL">Solana (SOL)</option>
+          <option value="XRP">XRP</option>
+          <option value="ADA">Cardano (ADA)</option>
+          <option value="DOGE">Dogecoin (DOGE)</option>
+          <option value="TRX">TRON (TRX)</option>
+          <option value="AVAX">Avalanche (AVAX)</option>
+          <option value="LINK">Chainlink (LINK)</option>
+          <option value="LTC">Litecoin (LTC)</option>
+          <option value="DOT">Polkadot (DOT)</option>
+          <option value="BCH">Bitcoin Cash (BCH)</option>
+          <option value="XLM">Stellar (XLM)</option>
+          <option value="TON">Toncoin (TON)</option>
+          <option value="SHIB">Shiba Inu (SHIB)</option>
+          <option value="SUI">Sui (SUI)</option>
+          <option value="NEAR">NEAR Protocol (NEAR)</option>
+          <option value="APT">Aptos (APT)</option>
+          <option value="ARB">Arbitrum (ARB)</option>
+          <option value="OP">Optimism (OP)</option>
+          <option value="UNI">Uniswap (UNI)</option>
+          <option value="AAVE">Aave (AAVE)</option>
+          <option value="ETC">Ethereum Classic (ETC)</option>
+          <option value="ATOM">Cosmos (ATOM)</option>
+          <option value="FIL">Filecoin (FIL)</option>
+          <option value="ICP">Internet Computer (ICP)</option>
+          <option value="HBAR">Hedera (HBAR)</option>
+          <option value="XMR">Monero (XMR)</option>
+          <option value="VET">VeChain (VET)</option>
+          <option value="ALGO">Algorand (ALGO)</option>
+          <option value="MKR">Maker (MKR)</option>
+          <option value="INJ">Injective (INJ)</option>
+          <option value="PEPE">Pepe (PEPE)</option>
+          <option value="CRO">Cronos (CRO)</option>
+          <option value="RENDER">Render (RENDER)</option>
+          <option value="OTHER">Autre crypto-actif</option>
         </select>
-      </label>
 
-      <label class="field">
-        <span>Valeur d'un pip pour 1 lot standard ($)</span>
-        <input id="fxPipValue" type="number" min="0.0001" step="any" value="10">
-      </label>
+        <label for="cryptoInvestment">Montant investi ($)</label>
+        <input id="cryptoInvestment" type="number" min="0" step="any" placeholder="Ex. 100">
 
-      <button type="button" id="fxCalculate">Calculer</button>
-    </div>
-     
-    <div class="card">
-      <h3>Résultats estimés</h3>
-      <p>Montant à risque : <strong id="fxRiskAmount">—</strong></p>
-      <p>Distance du stop-loss : <strong id="fxStopPips">—</strong></p>
-      <p>Taille estimée : <strong id="fxLotSize">—</strong></p>
-      <p>Gain potentiel estimé : <strong id="fxPotentialGain">—</strong></p>
-      <p>Ratio risque/rendement : <strong id="fxRR">—</strong></p>
-      <p id="fxMessage" class="muted">Entrez vos paramètres, puis cliquez sur Calculer.</p>
-    </div>
-  </div>
+        <label for="cryptoBuyPrice">Prix d'achat unitaire ($)</label>
+        <input id="cryptoBuyPrice" type="number" min="0" step="any" placeholder="Prix d'achat">
 
-  <p class="muted">
-    Avertissement : ce calcul est une estimation éducative. La valeur du pip dépend de la paire et de la devise du compte. Les spreads, commissions, glissements et conversions ne sont pas inclus. Le Forex comporte un risque élevé de perte.
-  </p>
-</section>
+        <label for="cryptoSellPrice">Prix de vente unitaire ($)</label>
+        <input id="cryptoSellPrice" type="number" min="0" step="any" placeholder="Prix de vente">
 
-<select id="cryptoCoin">
-  <optgroup label="Principales crypto-actifs">
-    <option value="BTC">Bitcoin (BTC)</option>
-    <option value="ETH">Ethereum (ETH)</option>
-    <option value="USDT">Tether (USDT)</option>
-    <option value="USDC">USD Coin (USDC)</option>
-    <option value="BNB">BNB (BNB)</option>
-    <option value="SOL">Solana (SOL)</option>
-    <option value="XRP">XRP (XRP)</option>
-    <option value="ADA">Cardano (ADA)</option>
-    <option value="DOGE">Dogecoin (DOGE)</option>
-    <option value="TRX">TRON (TRX)</option>
-  </optgroup>
+        <label for="cryptoFee">Frais estimés par opération (%)</label>
+        <input id="cryptoFee" type="number" min="0" max="20" step="0.1" value="0.5">
 
-  <optgroup label="Autres crypto-actifs">
-    <option value="AVAX">Avalanche (AVAX)</option>
-    <option value="LINK">Chainlink (LINK)</option>
-    <option value="LTC">Litecoin (LTC)</option>
-    <option value="DOT">Polkadot (DOT)</option>
-    <option value="BCH">Bitcoin Cash (BCH)</option>
-    <option value="XLM">Stellar (XLM)</option>
-    <option value="TON">Toncoin (TON)</option>
-    <option value="SHIB">Shiba Inu (SHIB)</option>
-    <option value="SUI">Sui (SUI)</option>
-    <option value="NEAR">NEAR Protocol (NEAR)</option>
-    <option value="APT">Aptos (APT)</option>
-    <option value="ARB">Arbitrum (ARB)</option>
-    <option value="OP">Optimism (OP)</option>
-    <option value="UNI">Uniswap (UNI)</option>
-    <option value="AAVE">Aave (AAVE)</option>
-    <option value="ETC">Ethereum Classic (ETC)</option>
-    <option value="ATOM">Cosmos (ATOM)</option>
-    <option value="FIL">Filecoin (FIL)</option>
-    <option value="ICP">Internet Computer (ICP)</option>
-    <option value="HBAR">Hedera (HBAR)</option>
-    <option value="XMR">Monero (XMR)</option>
-    <option value="VET">VeChain (VET)</option>
-    <option value="ALGO">Algorand (ALGO)</option>
-    <option value="MKR">Maker (MKR)</option>
-    <option value="INJ">Injective (INJ)</option>
-    <option value="PEPE">Pepe (PEPE)</option>
-    <option value="CRO">Cronos (CRO)</option>
-    <option value="RENDER">Render (RENDER)</option>
-  </optgroup>
+        <button id="cryptoCalculate" type="button">Calculer le résultat</button>
 
-  <option value="OTHER">Autre crypto-actif</option>
-</select>
-
-   </select>
-    <label for="cryptoInvestment">Montant investi (USD)</label>
-    <input id="cryptoInvestment" type="number" min="0" step="any" placeholder="Ex. : 100">
-
-    <label for="cryptoBuyPrice">Prix d'achat par unité (USD)</label>
-    <input id="cryptoBuyPrice" type="number" min="0" step="any" placeholder="Ex. : 50000">
-
-    <label for="cryptoSellPrice">Prix de vente par unité (USD)</label>
-    <input id="cryptoSellPrice" type="number" min="0" step="any" placeholder="Ex. : 55000">
-
-    <label for="cryptoFee">Frais estimés (%)</label>
-    <input id="cryptoFee" type="number" min="0" max="100" step="any" value="1">
-
-    <button type="button" id="cryptoCalculate">Calculer</button>
-
-    <div id="cryptoResults" class="card" aria-live="polite" hidden>
-      <p>Quantité estimée : <strong id="cryptoQuantity">—</strong></p>
-      <p>Valeur de revente avant frais : <strong id="cryptoSaleValue">—</strong></p>
-      <p>Frais estimés : <strong id="cryptoFees">—</strong></p>
-      <p>Résultat net estimé : <strong id="cryptoProfit">—</strong></p>
-      <p>Variation : <strong id="cryptoPercent">—</strong></p>
-    </div>
-    <p class="muted">
-      Calcul indicatif uniquement. Les prix, frais et résultats réels peuvent différer.
-      Les crypto-actifs sont volatils et peuvent entraîner des pertes.
-    </p>
-  </div>
-
-  <div class="card">
-    <h3>Leçon 1 — Comprendre les crypto-actifs</h3>
-    <p>Bitcoin (BTC) et Ethereum (ETH) sont des crypto-actifs. Leur prix peut varier fortement.</p>
-    <h3>Leçon 2 — Achat et vente</h3>
-    <p>La quantité estimée correspond au montant investi divisé par le prix d'achat, avant prise en compte des frais d'achat.</p>
-    <h3>Leçon 3 — Risque et frais</h3>
-    <p>Les frais réduisent le résultat. Un gain n'est jamais garanti, et une perte est possible.</p>
-  </div>
-</section>
+        <div id="cryptoResults" class="result" hidden aria-live="polite">
+          <p>Quantité estimée : <strong id="cryptoQuantity">—</strong></p>
+          <p>Valeur de vente : <strong id="cryptoSaleValue">—</strong></p>
+          <p>Frais estimés : <strong id="cryptoFees">—</strong></p>
+          <p>Profit ou perte estimé(e) : <strong id="cryptoProfit">—</strong></p>
+          <p>Variation : <strong id="cryptoPercent">—</strong></p>
+        </div>
+      </div>
+    </section>
     
-<select id="cfdInstrument">
-  <optgroup label="Indices boursiers">
-    <option value="NAS100">NASDAQ 100 (NAS100)</option>
-    <option value="US500">S&amp;P 500 (US500)</option>
-    <option value="US30">Dow Jones (US30)</option>
-    <option value="GER40">DAX 40 (GER40)</option>
-    <option value="UK100">FTSE 100 (UK100)</option>
-    <option value="FRA40">CAC 40 (FRA40)</option>
-    <option value="JP225">Nikkei 225 (JP225)</option>
-    <option value="AUS200">ASX 200 (AUS200)</option>
-  </optgroup>
+    <section id="cfd" class="section">
+      <div class="card">
+        <h2 data-i18n="cfdTitle">Calculateur CFD</h2>
+        <p>Simulation éducative uniquement. Les CFD et l'effet de levier comportent un risque élevé de perte. Aucun ordre réel n'est envoyé.</p>
 
-  <optgroup label="Métaux précieux">
-    <option value="XAUUSD">Or (XAU/USD)</option>
-    <option value="XAGUSD">Argent (XAG/USD)</option>
-    <option value="XPTUSD">Platine (XPT/USD)</option>
-    <option value="XPDUSD">Palladium (XPD/USD)</option>
-  </optgroup>
+        <label for="cfdInstrument">Instrument</label>
+        <select id="cfdInstrument">
+          <optgroup label="Indices boursiers">
+            <option value="NAS100">NASDAQ 100 (NAS100)</option>
+            <option value="US500">S&amp;P 500 (US500)</option>
+            <option value="US30">Dow Jones (US30)</option>
+            <option value="GER40">DAX 40 (GER40)</option>
+            <option value="UK100">FTSE 100 (UK100)</option>
+            <option value="FRA40">CAC 40 (FRA40)</option>
+            <option value="JP225">Nikkei 225 (JP225)</option>
+            <option value="AUS200">ASX 200 (AUS200)</option>
+          </optgroup>
+          <optgroup label="Métaux">
+            <option value="XAUUSD">Or (XAU/USD)</option>
+            <option value="XAGUSD">Argent (XAG/USD)</option>
+            <option value="XPTUSD">Platine (XPT/USD)</option>
+            <option value="XPDUSD">Palladium (XPD/USD)</option>
+          </optgroup>
+          <optgroup label="Énergie">
+            <option value="WTI">Pétrole WTI</option>
+            <option value="BRENT">Pétrole Brent</option>
+            <option value="NATGAS">Gaz naturel</option>
+          </optgroup>
+          <optgroup label="Actions américaines">
+            <option value="AAPL">Apple (AAPL)</option>
+            <option value="MSFT">Microsoft (MSFT)</option>
+            <option value="NVDA">NVIDIA (NVDA)</option>
+            <option value="AMZN">Amazon (AMZN)</option>
+            <option value="TSLA">Tesla (TSLA)</option>
+            <option value="GOOGL">Alphabet (GOOGL)</option>
+            <option value="META">Meta (META)</option>
+            <option value="NFLX">Netflix (NFLX)</option>
+            <option value="AMD">AMD</option>
+            <option value="INTC">Intel (INTC)</option>
+            <option value="JPM">JPMorgan (JPM)</option>
+            <option value="WMT">Walmart (WMT)</option>
+          </optgroup>
+          <optgroup label="Forex">
+            <option value="EURUSD">EUR/USD</option>
+            <option value="GBPUSD">GBP/USD</option>
+            <option value="USDJPY">USD/JPY</option>
+            <option value="USDCHF">USD/CHF</option>
+            <option value="AUDUSD">AUD/USD</option>
+            <option value="USDCAD">USD/CAD</option>
+            <option value="NZDUSD">NZD/USD</option>
+            <option value="EURGBP">EUR/GBP</option>
+            <option value="EURJPY">EUR/JPY</option>
+            <option value="GBPJPY">GBP/JPY</option>
+            <option value="USDHTG">USD/HTG</option>
+          </optgroup>
+        </select>
 
-  <optgroup label="Énergie">
-    <option value="WTI">Pétrole WTI</option>
-    <option value="BRENT">Pétrole Brent</option>
-    <option value="NATGAS">Gaz naturel</option>
-  </optgroup>
+        <label for="cfdDirection">Sens de la position</label>
+        <select id="cfdDirection">
+          <option value="buy">Achat (Long)</option>
+          <option value="sell">Vente (Short)</option>
+        </select>
 
-  <optgroup label="Actions américaines">
-    <option value="AAPL">Apple (AAPL)</option>
-    <option value="MSFT">Microsoft (MSFT)</option>
-    <option value="NVDA">NVIDIA (NVDA)</option>
-    <option value="AMZN">Amazon (AMZN)</option>
-    <option value="TSLA">Tesla (TSLA)</option>
-    <option value="GOOGL">Alphabet / Google (GOOGL)</option>
-    <option value="META">Meta (META)</option>
-    <option value="NFLX">Netflix (NFLX)</option>
-    <option value="AMD">AMD (AMD)</option>
-    <option value="INTC">Intel (INTC)</option>
-    <option value="JPM">JPMorgan Chase (JPM)</option>
-    <option value="WMT">Walmart (WMT)</option>
-  </optgroup>
+        <label for="cfdCapital">Capital disponible ($)</label>
+        <input id="cfdCapital" type="number" min="0" step="any" placeholder="Ex. 500">
 
-  <optgroup label="Paires Forex">
-    <option value="EURUSD">EUR/USD</option>
-    <option value="GBPUSD">GBP/USD</option>
-    <option value="USDJPY">USD/JPY</option>
-    <option value="USDCHF">USD/CHF</option>
-    <option value="AUDUSD">AUD/USD</option>
-    <option value="USDCAD">USD/CAD</option>
-    <option value="NZDUSD">NZD/USD</option>
-    <option value="EURGBP">EUR/GBP</option>
-    <option value="EURJPY">EUR/JPY</option>
-    <option value="GBPJPY">GBP/JPY</option>
-    <option value="USDHTG">USD/HTG (gourde haïtienne)</option>
-  </optgroup>
-</select>
-  
-  </select>
-<label for="cfdCapital">Capital disponible (USD)</label>
-<input id="cfdCapital" type="number" min="0" step="any" placeholder="Ex. : 1000">
+        <label for="cfdEntry">Prix d'entrée</label>
+        <input id="cfdEntry" type="number" min="0" step="any" placeholder="Prix d'entrée">
 
-<label for="cfdEntry">Prix d'entrée</label>
-<input id="cfdEntry" type="number" min="0" step="any" placeholder="Ex. : 100">
+        <label for="cfdExit">Prix de sortie estimé</label>
+        <input id="cfdExit" type="number" min="0" step="any" placeholder="Prix de sortie">
 
-<label for="cfdExit">Prix de sortie estimé</label>
-<input id="cfdExit" type="number" min="0" step="any" placeholder="Ex. : 105">
+        <label for="cfdUnits">Quantité d'unités</label>
+        <input id="cfdUnits" type="number" min="0" step="any" value="1">
 
-<label for="cfdUnits">Nombre d'unités</label>
-<input id="cfdUnits" type="number" min="0" step="any" placeholder="Ex. : 10">
+        <label for="cfdLeverage">Effet de levier simulé (1 à 100)</label>
+        <input id="cfdLeverage" type="number" min="1" max="100" step="1" value="1">
 
-<label for="cfdLeverage">Effet de levier (1:x)</label>
-<select id="cfdLeverage">
-  <option value="1">1:1</option>
-  <option value="2">1:2</option>
-  <option value="5" selected>1:5</option>
-  <option value="10">1:10</option>
-  <option value="20">1:20</option>
-  <option value="30">1:30</option>
-</select>
+        <label for="cfdFee">Frais estimés totaux ($)</label>
+        <input id="cfdFee" type="number" min="0" step="any" value="0">
 
-<label for="cfdFee">Frais estimés sur la position (USD)</label>
-<input id="cfdFee" type="number" min="0" step="any" value="0">
+        <button id="cfdCalculate" type="button">Calculer la position</button>
 
-<button type="button" id="cfdCalculate">Calculer la position</button>
-
-<div id="cfdResults" class="card" aria-live="polite" hidden>
-  <p>Valeur de la position : <strong id="cfdValue">—</strong></p>
-  <p>Marge estimée : <strong id="cfdMargin">—</strong></p>
-  <p>Résultat avant frais : <strong id="cfdGross">—</strong></p>
-  <p>Résultat après frais : <strong id="cfdNet">—</strong></p>
-  <p>Résultat par rapport au capital : <strong id="cfdPercent">—</strong></p>
-  <p id="cfdWarning" class="muted"></p>
-</div>
-
-
-  </div>
-
-  <div class="card">
-    <h3>Comprendre les CFD</h3>
-    <p><strong>Position longue :</strong> le résultat augmente si le prix monte, avant frais.</p>
-    <p><strong>Position courte :</strong> le résultat augmente si le prix baisse, avant frais.</p>
-    <p><strong>Effet de levier :</strong> il permet une exposition supérieure à la marge, mais amplifie aussi les pertes.</p>
-    <p><strong>Marge :</strong> estimation indicative ; le courtier peut appliquer d'autres exigences et frais.</p>
-  </div>
-</section>
-
-
+        <div id="cfdWarning" class="result" aria-live="polite"></div>
+        <div id="cfdResults" class="result" hidden>
+          <p>Valeur de la position : <strong id="cfdValue">—</strong></p>
+          <p>Marge théorique requise : <strong id="cfdMargin">—</strong></p>
+          <p>Gain ou perte avant frais : <strong id="cfdGross">—</strong></p>
+          <p>Résultat après frais : <strong id="cfdNet">—</strong></p>
+          <p>Variation par rapport au capital : <strong id="cfdPercent">—</strong></p>
+        </div>
+      </div>
+    </section>
     
-<section id="p2p" class="section">
-  <h2 data-i18n="p2pTitle">Transactions P2P</h2>
+    <section id="trading" class="section">
+      <div class="card">
+        <h2 data-i18n="tradingTitle">Trading — Simulation éducative</h2>
+        <p>Cette section sert à étudier un scénario théorique. Elle ne passe aucun ordre réel et ne garantit aucun résultat.</p>
 
-  <div class="card">
-    <h3>Calculateur P2P</h3>
-    <p class="muted">Estimez le montant de votre transaction.</p>
+        <label for="tradeMarket">Marché simulé</label>
+        <select id="tradeMarket">
+          <option value="EURUSD">Forex — EUR/USD</option>
+          <option value="BTCUSD">Crypto — BTC/USD</option>
+          <option value="NASDAQ">Indice — NASDAQ</option>
+        </select>
 
-    <label class="field">
-      <span>Type de transaction</span>
-      <select id="p2pType">
-        <option value="buy">Acheter</option>
-        <option value="sell">Vendre</option>
-      </select>
-    </label>
+        <label for="tradeDirection">Sens de la position</label>
+        <select id="tradeDirection">
+          <option value="buy">Achat (Long)</option>
+          <option value="sell">Vente (Short)</option>
+        </select>
 
-    <label class="field">
-      <span>Montant (USD)</span>
-      <input id="p2pAmount" type="number" min="0" step="0.01" placeholder="100">
-    </label>
+        <label for="tradeEntry">Prix d'entrée théorique</label>
+        <input id="tradeEntry" type="number" min="0" step="any" placeholder="Prix d'entrée">
 
-    <label class="field">
-      <span>Taux (HTG pour 1 USD)</span>
-      <input id="p2pRate" type="number" min="0" step="0.01" placeholder="130">
-    </label>
+        <label for="tradeStop">Stop Loss théorique</label>
+        <input id="tradeStop" type="number" min="0" step="any" placeholder="Prix du Stop Loss">
 
-    <label class="field">
-      <span>Frais (%)</span>
-      <input id="p2pFee" type="number" min="0" max="10" step="0.1" value="1">
-    </label>
+        <label for="tradeTarget">Take Profit théorique</label>
+        <input id="tradeTarget" type="number" min="0" step="any" placeholder="Prix du Take Profit">
 
-    <button type="button" id="p2pCalculate">Calculer</button>
+        <label for="tradeQuantity">Quantité simulée</label>
+        <input id="tradeQuantity" type="number" min="0" step="any" value="1">
 
-    <div class="card">
-      <p>Montant brut : <strong id="p2pGross">—</strong></p>
-      <p>Frais estimés : <strong id="p2pFees">—</strong></p>
-      <p>Montant net : <strong id="p2pNet">—</strong></p>
-      <p id="p2pMessage" class="muted">
-        Entrez les valeurs pour calculer.
-      </p>
-    </div>
-  </div>
+        <button id="analyzeTrade" type="button">Analyser le scénario</button>
+        <div id="tradeAnalysis" class="result" aria-live="polite"></div>
+      </div>
+    </section>
 
-  <div class="card">
-    <h3>Conseils de sécurité P2P</h3>
-    <ul>
-      <li>Vérifiez le taux et les frais avant toute transaction.</li>
-      <li>Ne partagez jamais votre mot de passe ni vos codes de vérification.</li>
-      <li>Ne confirmez pas un paiement avant d'avoir vérifié sa réception.</li>
-      <li>Utilisez uniquement des moyens de paiement et plateformes fiables.</li>
-    </ul>
-  </div>
-</section>
+    <section id="p2p" class="section">
+      <div class="card">
+        <h2 data-i18n="p2pTitle">Calculateur P2P</h2>
+        <p>Estimez le montant brut, les frais et le montant net d'une transaction hypothétique.</p>
+
+        <label for="p2pType">Type de conversion</label>
+        <select id="p2pType">
+          <option value="buy">Achat — montant en devise de référence</option>
+          <option value="sell">Vente — montant en devise de référence</option>
+        </select>
+
+        <label for="p2pAmount">Montant de départ</label>
+        <input id="p2pAmount" type="number" min="0" step="any" placeholder="Saisir le montant">
+
+        <label for="p2pRate">Taux de conversion</label>
+        <input id="p2pRate" type="number" min="0" step="any" placeholder="Saisir le taux">
+
+        <label for="p2pFee">Frais estimés (%)</label>
+        <input id="p2pFee" type="number" min="0" max="100" step="any" value="0">
+
+        <button id="p2pCalculate" type="button">Calculer la transaction</button>
+
+        <div id="p2pMessage" class="result" aria-live="polite"></div>
+        <div id="p2pResults" class="result" hidden>
+          <p>Montant brut : <strong id="p2pGross">—</strong></p>
+          <p>Frais estimés : <strong id="p2pFees">—</strong></p>
+          <p>Montant net estimé : <strong id="p2pNet">—</strong></p>
+        </div>
+      </div>
+    </section>
 
     <section id="learn" class="section">
-      <h2 data-i18n="learnTitle">Centre de formation</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>Forex</h3>
-          <p class="muted">Paires de devises, lots, pips et risques.</p>
-        </article>
-        <article class="card">
-          <h3>CFD</h3>
-          <p class="muted">Effet de levier, marge et pertes possibles.</p>
-        </article>
-        <article class="card">
-          <h3>Crypto</h3>
-          <p class="muted">Blockchain, actifs numériques et volatilité.</p>
-        </article>
-        <article class="card">
-          <h3>P2P</h3>
-          <p class="muted">Échanges entre particuliers et prévention des fraudes.</p>
-        </article>
+      <div class="card">
+        <h2 data-i18n="learnTitle">Centre d'apprentissage financier</h2>
+        <p>Apprenez les bases avant d'utiliser des outils financiers. Les exemples ci-dessous sont éducatifs.</p>
+
+        <details>
+          <summary>1. Qu'est-ce que le Forex ?</summary>
+          <p>Le Forex est le marché où les devises sont échangées. Les taux fluctuent et les pertes sont possibles.</p>
+        </details>
+
+        <details>
+          <summary>2. Qu'est-ce qu'un crypto-actif ?</summary>
+          <p>Un crypto-actif est un actif numérique. Son prix peut être très volatil et les pertes peuvent être importantes.</p>
+        </details>
+
+        <details>
+          <summary>3. Qu'est-ce qu'un CFD ?</summary>
+          <p>Un CFD est un contrat sur la différence de prix d'un actif. Il peut utiliser un effet de levier et présente un risque élevé.</p>
+        </details>
+
+        <details>
+          <summary>4. Qu'est-ce que le Stop Loss ?</summary>
+          <p>Le Stop Loss est un niveau de prix prévu pour limiter une perte potentielle. Il ne garantit pas toujours le prix exact d'exécution.</p>
+        </details>
+
+        <details>
+          <summary>5. Qu'est-ce que le Take Profit ?</summary>
+          <p>Le Take Profit est un niveau de prix prévu pour clôturer une position avec un gain potentiel. Le résultat réel n'est pas garanti.</p>
+        </details>
+
+        <details>
+          <summary>6. Pourquoi gérer le risque ?</summary>
+          <p>La gestion du risque aide à comprendre les pertes possibles avant de prendre une décision. N'investissez jamais de l'argent que vous ne pouvez pas vous permettre de perdre.</p>
+        </details>
+      </div>
+
+      <div class="card">
+        <h2>Quiz : connaissances financières</h2>
+        <p>Quel est le principal risque lié à l'utilisation d'un effet de levier élevé ?</p>
+
+        <select id="sf-quiz">
+          <option value="">Choisir une réponse</option>
+          <option value="a">Il supprime tout risque de perte.</option>
+          <option value="b">Il peut amplifier les gains et les pertes.</option>
+          <option value="c">Il garantit un profit.</option>
+        </select>
+
+        <button id="sf-quiz-check" type="button">Vérifier ma réponse</button>
+        <div id="sf-quiz-result" class="result" aria-live="polite"></div>
       </div>
     </section>
-
     
-<section id="account" class="section">
-  <h2>Mon compte Skoochy</h2>
+    <script>
+    (function () {
+      "use strict";
 
-  <div class="card" id="authPanel">
-    <div class="field">
-      <label for="authName">Nom complet</label>
-      <input id="authName" type="text" autocomplete="name"
-             placeholder="Votre nom complet">
-    </div>
+      const $ = (id) => document.getElementById(id);
 
-    <div class="field">
-      <label for="authEmail">Adresse e-mail</label>
-      <input id="authEmail" type="email" autocomplete="email"
-             placeholder="nom@exemple.com">
-    </div>
-
-    <div class="field">
-      <label for="authPassword">Mot de passe</label>
-      <input id="authPassword" type="password"
-             autocomplete="new-password"
-             minlength="8" placeholder="8 caractères minimum">
-    </div>
-
-    <div class="field">
-      <label for="authMode">Action</label>
-      <select id="authMode">
-        <option value="register">Créer un compte</option>
-        <option value="login">Se connecter</option>
-      </select>
-    </div>
-
-    <button class="gold-btn" id="authSubmit">
-      Continuer
-    </button>
-
-    <p id="authMessage" class="muted" aria-live="polite"></p>
-  </div>
-
-  <div class="card" id="profilePanel" hidden>
-    <h3>Bienvenue sur Skoochy Finance</h3>
-    <p id="profileName" class="muted"></p>
-    <button type="button" id="editNameButton">
-     Modifier mon nom
-    </button>
-    <p id="profileEmail" class="muted"></p>
-    <p id="profileAccess">Accès : gratuit</p>
-    <button id="logoutButton">Se déconnecter</button>
-  </div>
-</section>
-    </section>
-  </main>
-   
-
-<section id="outils-calcul" class="section">
-  <div class="container">
-    <h2>Outils de calcul financier</h2>
-    <p>Des outils simples pour apprendre à gérer et convertir votre argent.</p>
-
-    <div class="tool-card">
-      <h3>Convertisseur USD / HTG</h3>
-      <label for="sf-rate">Taux de change (1 USD = combien de HTG ?)</label>
-      <input id="sf-rate" type="number" min="0.01" step="0.01"
-        value="130" placeholder="Entrez le taux">
-
-      <label for="sf-amount">Montant à convertir</label>
-      <input id="sf-amount" type="number" min="0" step="any"
-        value="1" placeholder="Entrez un montant">
-
-      <div class="tool-actions">
-        <button type="button" id="sf-usd-htg">USD → HTG</button>
-        <button type="button" id="sf-htg-usd">HTG → USD</button>
-      </div>
-
-      <p id="sf-conversion-result" aria-live="polite">
-        Entrez un montant et un taux de change.
-      </p>
-      <small>Le taux affiché est un exemple modifiable, pas un taux de marché en direct.</small>
-    </div>
-
-    <div class="tool-card">
-      <h3>Calculatrice rapide</h3>
-      <label for="sf-number-a">Premier nombre</label>
-      <input id="sf-number-a" type="number" step="any" placeholder="Nombre A">
-
-      <label for="sf-operation">Opération</label>
-      <select id="sf-operation">
-        <option value="add">Addition (+)</option>
-        <option value="subtract">Soustraction (−)</option>
-        <option value="multiply">Multiplication (×)</option>
-        <option value="divide">Division (÷)</option>
-        <option value="percent">Pourcentage de A par rapport à B (%)</option>
-      </select>
-
-      <label for="sf-number-b">Deuxième nombre</label>
-      <input id="sf-number-b" type="number" step="any" placeholder="Nombre B">
-
-      <button type="button" id="sf-calculate">Calculer</button>
-      <p id="sf-calculator-result" aria-live="polite">Le résultat apparaîtra ici.</p>
-    </div>
-
-    <div class="tool-card">
-      <h3>Calculateur de trading Forex</h3>
-      <p>Estimez le risque théorique d'une opération. Ce calcul ne prédit pas les gains.</p>
-
-      <label for="sf-capital">Capital de démonstration (USD)</label>
-      <input id="sf-capital" type="number" min="0.01" step="any" value="100">
-
-      <label for="sf-risk">Risque par opération (%) — entre 0,1 et 5</label>
-      <input id="sf-risk" type="number" min="0.1" max="5" step="0.1" value="1">
-
-      <label for="sf-stop">Distance du stop-loss (pips)</label>
-      <input id="sf-stop" type="number" min="0.1" step="any" value="20">
-
-      <label for="sf-pip-value">Valeur d'un pip par lot standard (USD)</label>
-      <input id="sf-pip-value" type="number" min="0.01" step="any" value="10">
-
-      <button type="button" id="sf-forex-calculate">Calculer le risque</button>
-      <div id="sf-forex-result" aria-live="polite">
-        Renseignez les valeurs pour obtenir une estimation.
-      </div>
-      <small>Estimation simplifiée pour l'apprentissage. La valeur du pip varie selon la paire et la devise du compte. Les frais et le glissement ne sont pas inclus.</small>
-    </div>
-
-    <div class="tool-card">
-      <h3>Calculateur P2P</h3>
-      <p>Estimez la valeur d'un échange entre deux devises selon le taux que vous saisissez.</p>
-
-      <label for="sf-p2p-amount">Montant envoyé (USD)</label>
-      <input id="sf-p2p-amount" type="number" min="0" step="any" value="10">
-
-      <label for="sf-p2p-rate">Taux P2P proposé (HTG pour 1 USD)</label>
-      <input id="sf-p2p-rate" type="number" min="0.01" step="any" value="130">
-
-      <label for="sf-p2p-fee">Frais (%)</label>
-      <input id="sf-p2p-fee" type="number" min="0" max="100" step="0.1" value="0">
-
-      <button type="button" id="sf-p2p-calculate">Estimer la conversion</button>
-      <div id="sf-p2p-result" aria-live="polite">Le montant estimé apparaîtra ici.</div>
-      <small>Vérifiez l'identité du partenaire, les frais et les conditions avant tout échange réel. Ce calculateur n'exécute aucune transaction.</small>
-    </div>
-  </div>
-</section>
-
-<section id="lecons-crypto" class="section">
-  <div class="container">
-    <h2>Leçons de cryptomonnaies</h2>
-    <p>Apprenez les bases à votre rythme, sans investir d'argent réel.</p>
-
-    <details class="crypto-lesson">
-      <summary>Leçon 1 — Qu'est-ce que la cryptomonnaie ?</summary>
-      <p>Une cryptomonnaie est un actif numérique qui utilise des techniques cryptographiques. Certaines fonctionnent sur des réseaux décentralisés.</p>
-      <p>Exemples : Bitcoin et Ether. Leur prix peut fortement varier et il est possible de perdre de l'argent.</p>
-    </details>
-
-    <details class="crypto-lesson">
-      <summary>Leçon 2 — Comprendre la blockchain</summary>
-      <p>Une blockchain est un registre numérique partagé entre plusieurs participants d'un réseau. Les transactions sont regroupées en blocs reliés entre eux.</p>
-      <p>Une transaction confirmée peut être difficile, voire impossible, à annuler.</p>
-    </details>
-
-    <details class="crypto-lesson">
-      <summary>Leçon 3 — Les portefeuilles numériques</summary>
-      <p>Un portefeuille crypto permet de gérer des clés donnant accès aux actifs numériques.</p>
-      <p>Ne partagez jamais votre phrase de récupération ni vos clés privées. Une personne qui les obtient peut prendre le contrôle de vos actifs.</p>
-    </details>
-
-    <details class="crypto-lesson">
-      <summary>Leçon 4 — Comprendre les stablecoins</summary>
-      <p>Les stablecoins sont conçus pour suivre la valeur d'un actif, souvent une monnaie comme le dollar américain.</p>
-      <p>Leur stabilité n'est pas garantie : il existe des risques liés à l'émetteur, aux réserves, à la plateforme et au réseau.</p>
-    </details>
-
-    <details class="crypto-lesson">
-      <summary>Leçon 5 — Reconnaître les arnaques</summary>
-      <ul>
-        <li>Méfiez-vous des promesses de profits garantis.</li>
-        <li>Ne transmettez jamais vos codes de connexion ou vos clés privées.</li>
-        <li>Vérifiez soigneusement les adresses et les sites officiels.</li>
-        <li>N'envoyez jamais d'argent sous la pression d'un inconnu.</li>
-      </ul>
-    </details>
-
-    <details class="crypto-lesson">
-      <summary>Leçon 6 — Trading et gestion du risque</summary>
-      <p>Le trading consiste à acheter et vendre des actifs dans l'espoir de profiter des variations de prix. Les résultats ne sont jamais garantis.</p>
-      <p>Commencez par l'apprentissage et les simulations. N'utilisez pas d'argent nécessaire à vos dépenses essentielles.</p>
-    </details>
-
-    <div class="tool-card">
-      <h3>Mini-quiz : vérifiez vos connaissances</h3>
-      <p>Quelle information ne faut-il jamais partager ?</p>
-      <label>
-        <input type="radio" name="sf-quiz" value="a">
-        Le nom d'une cryptomonnaie
-      </label>
-      <label>
-        <input type="radio" name="sf-quiz" value="b">
-        Sa phrase secrète de récupération
-      </label>
-      <label>
-        <input type="radio" name="sf-quiz" value="c">
-        Le prix affiché d'un actif
-      </label>
-      <button type="button" id="sf-quiz-check">Vérifier ma réponse</button>
-      <p id="sf-quiz-result" aria-live="polite"></p>
-    </div>
-  </div>
-</section>
-
-<style>
-#outils-calcul .container,
-#lecons-crypto .container {
-  width: min(100% - 24px, 900px);
-  margin: 0 auto;
-}
-#outils-calcul .tool-card,
-#lecons-crypto .tool-card,
-#lecons-crypto .crypto-lesson {
-  padding: 16px;
-  margin: 14px 0;
-  border: 1px solid #d9e1ea;
-  border-radius: 14px;
-  background: var(--card-bg, #ffffff);
-  color: var(--text-color, #172033);
-}
-#outils-calcul label,
-#lecons-crypto .tool-card label {
-  display: block;
-  margin: 12px 0 6px;
-}
-#outils-calcul input,
-#outils-calcul select,
-#lecons-crypto input {
-  box-sizing: border-box;
-  max-width: 100%;
-}
-#outils-calcul input:not([type="radio"]),
-#outils-calcul select {
-  width: 100%;
-  padding: 11px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-}
-#outils-calcul button,
-#lecons-crypto button {
-  margin: 10px 6px 4px 0;
-  padding: 11px 15px;
-  border: 0;
-  border-radius: 8px;
-  cursor: pointer;
-}
-#lecons-crypto summary {
-  cursor: pointer;
-  font-weight: 600;
-}
-#lecons-crypto .crypto-lesson p,
-#lecons-crypto .crypto-lesson li {
-  line-height: 1.6;
-}
-@media (max-width: 600px) {
-  #outils-calcul .tool-card,
-  #lecons-crypto .tool-card,
-  #lecons-crypto .crypto-lesson {
-    padding: 12px;
-  }
-  #outils-calcul button,
-  #lecons-crypto button {
-    max-width: 100%;
-  }
-}
-</style>
-
-<script>
-(function () {
-  "use strict";
-
-  const $ = id => document.getElementById(id);
-
-  function numberValue(id) {
-    return Number($(id).value);
-  }
-
-  function validPositive(...values) {
-    return values.every(v => Number.isFinite(v) && v > 0);
-  }
-
-  function formatNumber(value, digits = 2) {
-    return value.toLocaleString("fr-FR", {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: digits
-    });
-  }
-
-  function convert(direction) {
-    const rate = numberValue("sf-rate");
-    const amount = numberValue("sf-amount");
-    const result = $("sf-conversion-result");
-
-    if (!validPositive(rate) ||
-        !Number.isFinite(amount) || amount < 0) {
-      result.textContent = "Veuillez saisir un montant valide et un taux positif.";
-      return;
-    }
-
-    const converted = direction === "usd-htg"
-      ? amount * rate
-      : amount / rate;
-
-    result.textContent = direction === "usd-htg"
-      ? `${formatNumber(amount)} USD = ${formatNumber(converted)} HTG`
-      : `${formatNumber(amount)} HTG = ${formatNumber(converted)} USD`;
-  }
-
-  $("sf-usd-htg").addEventListener("click", () => convert("usd-htg"));
-  $("sf-htg-usd").addEventListener("click", () => convert("htg-usd"));
-
-  $("sf-calculate").addEventListener("click", function () {
-    const a = numberValue("sf-number-a");
-    const b = numberValue("sf-number-b");
-    const op = $("sf-operation").value;
-    const result = $("sf-calculator-result");
-
-    if (!Number.isFinite(a) || !Number.isFinite(b)) {
-      result.textContent = "Veuillez saisir deux nombres valides.";
-      return;
-    }
-
-    let value;
-    switch (op) {
-      case "add": value = a + b; break;
-      case "subtract": value = a - b; break;
-      case "multiply": value = a * b; break;
-      case "divide":
-        if (b === 0) {
-          result.textContent = "Division par zéro impossible.";
-          return;
+      const translations = {
+        fr: {
+          navHome: "Accueil",
+          navConverter: "Convertisseur",
+          navForex: "Forex",
+          navCrypto: "Crypto-actifs",
+          navCFD: "CFD",
+          navTrading: "Trading",
+          navP2P: "P2P",
+          navLearn: "Apprentissage",
+          navAccount: "Mon compte",
+          homeTitle: "Bienvenue sur Skoochy Finance",
+          forexTitle: "Calculateur Forex",
+          cryptoTitle: "Calculateur Crypto-actifs",
+          cfdTitle: "Calculateur CFD",
+          tradingTitle: "Trading — Simulation éducative",
+          p2pTitle: "Calculateur P2P",
+          learnTitle: "Centre d'apprentissage financier"
+        },
+        ht: {
+          navHome: "Akèy",
+          navConverter: "Konvètisè",
+          navForex: "Forex",
+          navCrypto: "Kripto-aktif",
+          navCFD: "CFD",
+          navTrading: "Trading",
+          navP2P: "P2P",
+          navLearn: "Aprantisaj",
+          navAccount: "Kont mwen",
+          homeTitle: "Byenveni sou Skoochy Finance",
+          forexTitle: "Kalkilatris Forex",
+          cryptoTitle: "Kalkilatris kripto-aktif",
+          cfdTitle: "Kalkilatris CFD",
+          tradingTitle: "Trading — Similasyon edikatif",
+          p2pTitle: "Kalkilatris P2P",
+          learnTitle: "Sant aprantisaj finansye"
+        },
+        en: {
+          navHome: "Home",
+          navConverter: "Converter",
+          navForex: "Forex",
+          navCrypto: "Crypto assets",
+          navCFD: "CFD",
+          navTrading: "Trading",
+          navP2P: "P2P",
+          navLearn: "Learning",
+          navAccount: "My account",
+          homeTitle: "Welcome to Skoochy Finance",
+          forexTitle: "Forex Calculator",
+          cryptoTitle: "Crypto Asset Calculator",
+          cfdTitle: "CFD Calculator",
+          tradingTitle: "Trading — Educational Simulation",
+          p2pTitle: "P2P Calculator",
+          learnTitle: "Financial Learning Center"
+        },
+        es: {
+          navHome: "Inicio",
+          navConverter: "Convertidor",
+          navForex: "Forex",
+          navCrypto: "Criptoactivos",
+          navCFD: "CFD",
+          navTrading: "Trading",
+          navP2P: "P2P",
+          navLearn: "Aprendizaje",
+          navAccount: "Mi cuenta",
+          homeTitle: "Bienvenido a Skoochy Finance",
+          forexTitle: "Calculadora Forex",
+          cryptoTitle: "Calculadora de criptoactivos",
+          cfdTitle: "Calculadora CFD",
+          tradingTitle: "Trading — Simulación educativa",
+          p2pTitle: "Calculadora P2P",
+          learnTitle: "Centro de aprendizaje financiero"
         }
-        value = a / b;
-        break;
-      case "percent":
-        if (b === 0) {
-          result.textContent = "Le deuxième nombre ne peut pas être zéro.";
-          return;
+      };
+
+      function setLanguage(language) {
+        const selected = translations[language] ? language : "fr";
+
+        document.documentElement.lang = selected;
+
+        document.querySelectorAll("[data-i18n]").forEach((element) => {
+          const key = element.getAttribute("data-i18n");
+          const translated = translations[selected][key];
+
+          if (translated) {
+            element.textContent = translated;
+          }
+        });
+
+        const selector = $("languageSelect");
+        if (selector && selector.value !== selected) {
+          selector.value = selected;
         }
-        value = (a / b) * 100;
-        result.textContent = `${formatNumber(value)} %`;
-        return;
-      default: return;
-    }
-
-    result.textContent = "Résultat : " + formatNumber(value, 8);
-  });
-
-  $("sf-forex-calculate").addEventListener("click", function () {
-    const capital = numberValue("sf-capital");
-    const risk = numberValue("sf-risk");
-    const stop = numberValue("sf-stop");
-    const pipValue = numberValue("sf-pip-value");
-    const result = $("sf-forex-result");
-
-    if (!validPositive(capital, risk, stop, pipValue) ||
-        risk < 0.1 || risk > 5) {
-      result.textContent =
-        "Vérifiez les valeurs. Le risque doit être compris entre 0,1 % et 5 %.";
-      return;
-    }
-
-    const riskAmount = capital * risk / 100;
-    const lotEstimate = riskAmount / (stop * pipValue);
-
-    result.textContent =
-      `Risque théorique : ${formatNumber(riskAmount)} USD. ` +
-      `Taille indicative : ${formatNumber(lotEstimate, 4)} lot(s) standard, ` +
-      "selon la valeur du pip indiquée.";
-  });
-
-  $("sf-p2p-calculate").addEventListener("click", function () {
-    const amount = numberValue("sf-p2p-amount");
-    const rate = numberValue("sf-p2p-rate");
-    const fee = numberValue("sf-p2p-fee");
-    const result = $("sf-p2p-result");
-
-    if (!Number.isFinite(amount) || amount < 0 ||
-        !validPositive(rate) ||
-        !Number.isFinite(fee) || fee < 0 || fee > 100) {
-      result.textContent = "Vérifiez le montant, le taux et les frais.";
-      return;
-    }
-
-    const gross = amount * rate;
-    const net = gross * (1 - fee / 100);
-
-    result.textContent =
-      `Montant brut : ${formatNumber(gross)} HTG. ` +
-      `Frais estimés : ${formatNumber(gross - net)} HTG. ` +
-      `Montant net estimé : ${formatNumber(net)} HTG.`;
-  });
-
-  $("sf-quiz-check").addEventListener("click", function () {
-    const selected = document.querySelector('input[name="sf-quiz"]:checked');
-    const result = $("sf-quiz-result");
-
-    if (!selected) {
-      result.textContent = "Choisissez une réponse.";
-    } else if (selected.value === "b") {
-      result.textContent = "Bonne réponse ! Ne partagez jamais votre phrase de récupération.";
-    } else {
-      result.textContent = "Essayez encore : protégez toujours vos informations secrètes.";
-    }
-  });
-})();
-</script>
-  
-  <footer>
-    Skoochy Finance © 2026 — 
-    <span data-i18n="footerText">
-      Outils éducatifs. Les marchés financiers comportent des risques.
-    </span>
-  </footer>
-
-  <script>
-    "use strict";
-
-    const translations = {
-      fr: {
-        subtitle: "Gourdes, dollar et marchés financiers",
-        navHome: "Accueil", navConverter: "Conversion",
-        navForex: "Forex", navCrypto: "Crypto", navCFD: "CFD",
-        navP2P: "P2P", navLearn: "Formation", navAccount: "Mon compte",
-        freeAccess: "Accès gratuit disponible",
-        heroTitle: "Gérez vos calculs financiers avec précision.",
-        heroText: "Convertissez vos devises, calculez vos positions et découvrez les marchés Forex, CFD, Crypto et P2P.",
-        start: "Commencer", open: "Ouvrir",
-        card1Title: "💱 Conversion", card1Text: "Préparez vos conversions entre gourdes et dollars.",
-        card2Title: "📊 Forex", card2Text: "Découvrez les lots, les pips et la gestion du risque.",
-        card3Title: "₿ Crypto", card3Text: "Étudiez les crypto-actifs et leurs variations.",
-        card4Title: "🎓 Formation", card4Text: "Apprenez les notions essentielles des marchés financiers.",
-        converterTitle: "Convertisseur de devises",
-        rateNotice: "Entrez vous-même le taux de change applicable.",
-        amount: "Montant", rate: "Taux : 1 USD en HTG",
-        direction: "Conversion", calculate: "Calculer",
-        forexTitle: "Calculateur Forex", forexComing: "Le calculateur de lots, pips et risque sera intégré dans la partie 3A.",
-        cryptoTitle: "Crypto-actifs", cryptoComing: "Les outils de calcul et les leçons crypto seront intégrés dans la partie 3B.",
-        cfdTitle: "Calculateur CFD", cfdComing: "Les calculs de position, de marge et de risque seront ajoutés dans la partie 3B.",
-        p2pTitle: "Transactions P2P", p2pComing: "Le calculateur P2P et les conseils de sécurité seront ajoutés dans la partie 3B.",
-        learnTitle: "Centre de formation", accountTitle: "Mon compte",
-        accountComing: "L'inscription, la connexion et les accès premium seront intégrés dans la partie 2.",
-        footerText: "Outils éducatifs. Les marchés financiers comportent des risques."
-      },
-
-      ht: {
-        subtitle: "Goud, dola ak mache finansye",
-        navHome: "Akèy", navConverter: "Konvèsyon",
-        navForex: "Forex", navCrypto: "Kripto", navCFD: "CFD",
-        navP2P: "P2P", navLearn: "Fòmasyon", navAccount: "Kont mwen",
-        freeAccess: "Gen aksè gratis",
-        heroTitle: "Fè kalkil finansye ou yo avèk presizyon.",
-        heroText: "Konvèti lajan, kalkile pozisyon epi aprann sou Forex, CFD, Kripto ak P2P.",
-        start: "Kòmanse", open: "Louvri",
-        card1Title: "💱 Konvèsyon", card1Text: "Konvèti goud ak dola.",
-        card2Title: "📊 Forex", card2Text: "Aprann lot, pip ak jesyon risk.",
-        card3Title: "₿ Kripto", card3Text: "Aprann sou kripto ak chanjman pri yo.",
-        card4Title: "🎓 Fòmasyon", card4Text: "Aprann prensip mache finansye yo.",
-        converterTitle: "Konvètisè lajan",
-        rateNotice: "Antre to echanj ou vle itilize a.",
-        amount: "Kantite", rate: "To : 1 USD an HTG",
-        direction: "Konvèsyon", calculate: "Kalkile",
-        forexTitle: "Kalkilatris Forex", forexComing: "Kalkilatris lot, pip ak risk ap vini nan pati 3A.",
-        cryptoTitle: "Kripto", cryptoComing: "Kalkilatris ak leson kripto ap vini nan pati 3B.",
-        cfdTitle: "Kalkilatris CFD", cfdComing: "Kalkil pozisyon ak risk ap vini nan pati 3B.",
-        p2pTitle: "Echanj P2P", p2pComing: "Kalkilatris P2P ak konsèy sekirite ap vini nan pati 3B.",
-        learnTitle: "Sant fòmasyon", accountTitle: "Kont mwen",
-        accountComing: "Enskripsyon, koneksyon ak aksè prim ap vini nan pati 2.",
-        footerText: "Zouti edikatif. Mache finansye yo gen risk."
-      },
-
-      en: {
-        subtitle: "Gourdes, dollars and financial markets",
-        navHome: "Home", navConverter: "Convert",
-        navForex: "Forex", navCrypto: "Crypto", navCFD: "CFD",
-        navP2P: "P2P", navLearn: "Learning", navAccount: "My account",
-        freeAccess: "Free access available",
-        heroTitle: "Manage your financial calculations with precision.",
-        heroText: "Convert currencies, calculate positions and learn about Forex, CFDs, crypto and P2P.",
-        start: "Get started", open: "Open",
-        card1Title: "💱 Currency conversion", card1Text: "Convert gourdes and dollars.",
-        card2Title: "📊 Forex", card2Text: "Learn about lots, pips and risk management.",
-        card3Title: "₿ Crypto", card3Text: "Explore crypto assets and price changes.",
-        card4Title: "🎓 Learning", card4Text: "Learn essential financial market concepts.",
-        converterTitle: "Currency converter",
-        rateNotice: "Enter the exchange rate you want to use.",
-        amount: "Amount", rate: "Rate: 1 USD in HTG",
-        direction: "Conversion", calculate: "Calculate",
-        forexTitle: "Forex calculator", forexComing: "The lot, pip and risk calculator will be added in part 3A.",
-        cryptoTitle: "Crypto assets", cryptoComing: "Crypto tools and lessons will be added in part 3B.",
-        cfdTitle: "CFD calculator", cfdComing: "Position and risk calculations will be added in part 3B.",
-        p2pTitle: "P2P transactions", p2pComing: "The P2P calculator and safety tips will be added in part 3B.",
-        learnTitle: "Learning center", accountTitle: "My account",
-        accountComing: "Registration, login and premium access will be added in part 2.",
-        footerText: "Educational tools. Financial markets involve risk."
-      },
-
-      es: {
-        subtitle: "Gourdes, dólares y mercados financieros",
-        navHome: "Inicio", navConverter: "Conversión",
-        navForex: "Forex", navCrypto: "Cripto", navCFD: "CFD",
-        navP2P: "P2P", navLearn: "Formación", navAccount: "Mi cuenta",
-        freeAccess: "Acceso gratuito disponible",
-        heroTitle: "Gestiona tus cálculos financieros con precisión.",
-        heroText: "Convierte divisas, calcula posiciones y aprende sobre Forex, CFD, cripto y P2P.",
-        start: "Comenzar", open: "Abrir",
-        card1Title: "💱 Conversión", card1Text: "Convierte gourdes y dólares.",
-        card2Title: "📊 Forex", card2Text: "Aprende sobre lotes, pips y gestión del riesgo.",
-        card3Title: "₿ Cripto", card3Text: "Explora criptoactivos y sus variaciones.",
-        card4Title: "🎓 Formación", card4Text: "Aprende los conceptos esenciales de los mercados.",
-        converterTitle: "Conversor de divisas",
-        rateNotice: "Introduce el tipo de cambio que deseas utilizar.",
-        amount: "Importe", rate: "Tipo: 1 USD en HTG",
-        direction: "Conversión", calculate: "Calcular",
-        forexTitle: "Calculadora Forex", forexComing: "La calculadora de lotes, pips y riesgo llegará en la parte 3A.",
-        cryptoTitle: "Criptoactivos", cryptoComing: "Las herramientas y lecciones cripto llegarán en la parte 3B.",
-        cfdTitle: "Calculadora CFD", cfdComing: "Los cálculos de posición y riesgo llegarán en la parte 3B.",
-        p2pTitle: "Transacciones P2P", p2pComing: "La calculadora P2P y los consejos de seguridad llegarán en la parte 3B.",
-        learnTitle: "Centro de formación", accountTitle: "Mi cuenta",
-        accountComing: "El registro, el acceso y las funciones premium llegarán en la parte 2.",
-        footerText: "Herramientas educativas. Los mercados financieros implican riesgos."
       }
-    };
 
-    function setLanguage(language) {
-      const dictionary = translations[language] || translations.fr;
+      window.setLanguage = setLanguage;
 
-      document.documentElement.lang = language;
-      document.querySelectorAll("[data-i18n]").forEach(element => {
-        const key = element.dataset.i18n;
-        if (dictionary[key] !== undefined) {
-          element.textContent = dictionary[key];
+      const languageSelect = $("languageSelect");
+      if (languageSelect) {
+        languageSelect.addEventListener("change", function () {
+          setLanguage(this.value);
+        });
+      }
+
+      function showPage(pageId) {
+        const target = $(pageId);
+        if (!target || !target.classList.contains("section")) {
+          return;
         }
+
+        document.querySelectorAll(".section").forEach((section) => {
+          section.classList.toggle("active", section.id === pageId);
+        });
+
+        document.querySelectorAll("[data-page]").forEach((button) => {
+          const isCurrent = button.getAttribute("data-page") === pageId;
+          button.classList.toggle("active", isCurrent);
+          button.setAttribute("aria-current", isCurrent ? "page" : "false");
+        });
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      window.showPage = showPage;
+
+      document.querySelectorAll("[data-page]").forEach((button) => {
+        button.addEventListener("click", function () {
+          showPage(this.getAttribute("data-page"));
+        });
       });
 
-      document.getElementById("languageSelect").value = language;
-    }
-
-    document.getElementById("languageSelect").addEventListener("change", event => {
-      setLanguage(event.target.value);
-    });
-
-    function showPage(pageId) {
-      const target = document.getElementById(pageId);
-      if (!target) return;
-
-      document.querySelectorAll(".section").forEach(section => {
-        section.classList.toggle("active", section.id === pageId);
+      document.querySelectorAll("[data-go]").forEach((button) => {
+        button.addEventListener("click", function () {
+          showPage(this.getAttribute("data-go"));
+        });
       });
 
-      document.querySelectorAll("#mainNav button[data-page]").forEach(button => {
-        button.classList.toggle("active", button.dataset.page === pageId);
-      });
+      function numberValue(id) {
+        const element = $(id);
+        if (!element || element.value.trim() === "") return NaN;
+        return Number(element.value);
+      }
 
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+      function money(value) {
+        return Number(value).toLocaleString("fr-FR", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 6
+        });
+      }
 
-    document.querySelectorAll("[data-page]").forEach(button => {
-      button.addEventListener("click", () => showPage(button.dataset.page));
-    });
+      function showMessage(id, message) {
+        const element = $(id);
+        if (element) element.textContent = message;
+      }
 
-    document.querySelectorAll("[data-go]").forEach(button => {
-      button.addEventListener("click", () => showPage(button.dataset.go));
-    });
+      // Convertisseur principal
+      const conversionButton = $("calculateConversion");
+      if (conversionButton) {
+        conversionButton.addEventListener("click", function () {
+          const amount = numberValue("amount");
+          const rate = numberValue("rate");
+          const direction = $("direction") ? $("direction").value : "usdhtg";
 
+          if (!Number.isFinite(amount) || amount < 0 ||
+              !Number.isFinite(rate) || rate <= 0) {
+            showMessage("conversionResult", "Saisissez un montant valide et un taux supérieur à zéro.");
+            return;
+          }
+
+          const result = direction === "htgusd" ? amount / rate : amount * rate;
+          showMessage("conversionResult", "Résultat estimé : " + money(result));
+        });
+      }
+
+      // Convertisseur USD / HTG complémentaire
+      function calculateSimpleConversion(reverse) {
+        const amount = numberValue("sf-amount");
+        const rate = numberValue("sf-rate");
+
+        if (!Number.isFinite(amount) || amount < 0 ||
+            !Number.isFinite(rate) || rate <= 0) {
+          showMessage("sf-conversion-result", "Saisissez un montant et un taux valides.");
+          return;
+        }
+
+        const result = reverse ? amount / rate : amount * rate;
+        showMessage("sf-conversion-result", "Résultat estimé : " + money(result));
+      }
+
+      const usdToHtg = $("sf-usd-htg");
+      if (usdToHtg) {
+        usdToHtg.addEventListener("click", () => calculateSimpleConversion(false));
+      }
+
+      const htgToUsd = $("sf-htg-usd");
+      if (htgToUsd) {
+        htgToUsd.addEventListener("click", () => calculateSimpleConversion(true));
+      }
+
+      // Calculatrice générale
+      const simpleCalcButton = $("sf-calculate");
+      if (simpleCalcButton) {
+        simpleCalcButton.addEventListener("click", function () {
+          const a = numberValue("sf-number-a");
+          const b = numberValue("sf-number-b");
+          const operation = $("sf-operation") ? $("sf-operation").value : "+";
+
+          if (!Number.isFinite(a) || !Number.isFinite(b)) {
+            showMessage("sf-calculator-result", "Saisissez deux nombres valides.");
+            return;
+          }
+
+          let result;
+          if (operation === "+") result = a + b;
+          else if (operation === "-") result = a - b;
+          else if (operation === "*") result = a * b;
+          else if (operation === "/") {
+            if (b === 0) {
+              showMessage("sf-calculator-result", "La division par zéro est impossible.");
+              return;
+            }
+            result = a / b;
+          } else {
+            showMessage("sf-calculator-result", "Opération non reconnue.");
+            return;
+          }
+
+          showMessage("sf-calculator-result", "Résultat : " + money(result));
+        });
+      }
+
+      // Calculateur Forex
+      const fxButton = $("fxCalculate");
+      if (fxButton) {
+        fxButton.addEventListener("click", function () {
+          const capital = numberValue("fxBalance");
+          const riskPercent = numberValue("fxRisk");
+          const entry = numberValue("fxEntry");
+          const stop = numberValue("fxStop");
+          const target = numberValue("fxTarget");
+          const pipSize = numberValue("fxPipSize");
+          const pipValue = numberValue("fxPipValue");
+
+          if (![capital, riskPercent, entry, stop, target, pipSize, pipValue].every(Number.isFinite) ||
+              capital <= 0 || riskPercent <= 0 || riskPercent > 5 ||
+              entry <= 0 || stop <= 0 || target <= 0 ||
+              pipSize <= 0 || pipValue <= 0 || entry === stop || entry === target) {
+            showMessage("fxMessage", "Vérifiez les valeurs. Le capital, les prix et les tailles doivent être valides.");
+            if ($("fxResults")) $("fxResults").hidden = true;
+            return;
+          }
+
+          const stopPips = Math.abs(entry - stop) / pipSize;
+          const targetPips = Math.abs(target - entry) / pipSize;
+          const riskAmount = capital * riskPercent / 100;
+          const lotSize = riskAmount / (stopPips * pipValue);
+          const potentialGain = targetPips * pipValue * lotSize;
+          const ratio = potentialGain / riskAmount;
+
+          showMessage("fxMessage", "Estimation théorique uniquement.");
+          if ($("fxRiskAmount")) $("fxRiskAmount").textContent = money(riskAmount) + " $";
+          if ($("fxStopPips")) $("fxStopPips").textContent = money(stopPips);
+          if ($("fxLotSize")) $("fxLotSize").textContent = money(lotSize) + " lot(s) théorique(s)";
+          if ($("fxPotentialGain")) $("fxPotentialGain").textContent = money(potentialGain) + " $";
+          if ($("fxRR")) $("fxRR").textContent = "1 : " + money(ratio);
+          if ($("fxResults")) $("fxResults").hidden = false;
+        });
+      }
+
+      // Calculateur Crypto
+      const cryptoButton = $("cryptoCalculate");
+      if (cryptoButton) {
+        cryptoButton.addEventListener("click", function () {
+          const investment = numberValue("cryptoInvestment");
+          const buyPrice = numberValue("cryptoBuyPrice");
+          const sellPrice = numberValue("cryptoSellPrice");
+          const feePercent = numberValue("cryptoFee");
+
+          if (![investment, buyPrice, sellPrice, feePercent].every(Number.isFinite) ||
+              investment <= 0 || buyPrice <= 0 || sellPrice < 0 ||
+              feePercent < 0 || feePercent > 20) {
+            showMessage("cryptoResults", "Vérifiez le montant, les prix et les frais.");
+            if ($("cryptoResults")) $("cryptoResults").hidden = true;
+            return;
+          }
+
+          const quantity = investment / buyPrice;
+          const saleValue = quantity * sellPrice;
+          const buyFee = investment * feePercent / 100;
+          const sellFee = saleValue * feePercent / 100;
+          const totalFees = buyFee + sellFee;
+          const profit = saleValue - investment - totalFees;
+          const percent = profit / investment * 100;
+
+          if ($("cryptoQuantity")) $("cryptoQuantity").textContent = quantity.toLocaleString("fr-FR", { maximumFractionDigits: 8 });
+          if ($("cryptoSaleValue")) $("cryptoSaleValue").textContent = money(saleValue) + " $";
+          if ($("cryptoFees")) $("cryptoFees").textContent = money(totalFees) + " $";
+          if ($("cryptoProfit")) $("cryptoProfit").textContent = money(profit) + " $";
+          if ($("cryptoPercent")) $("cryptoPercent").textContent = money(percent) + " %";
+          if ($("cryptoResults")) $("cryptoResults").hidden = false;
+        });
+      }
+
+      // Calculateur CFD
+      const cfdButton = $("cfdCalculate");
+      if (cfdButton) {
+        cfdButton.addEventListener("click", function () {
+          const capital = numberValue("cfdCapital");
+          const entry = numberValue("cfdEntry");
+          const exitPrice = numberValue("cfdExit");
+          const units = numberValue("cfdUnits");
+          const leverage = numberValue("cfdLeverage");
+          const fee = numberValue("cfdFee");
+          const direction = $("cfdDirection") ? $("cfdDirection").value : "buy";
+
+          if (![capital, entry, exitPrice, units, leverage, fee].every(Number.isFinite) ||
+              capital <= 0 || entry <= 0 || exitPrice < 0 || units <= 0 ||
+              leverage < 1 || leverage > 100 || fee < 0) {
+            showMessage("cfdWarning", "Vérifiez le capital, les prix, la quantité, le levier et les frais.");
+            if ($("cfdResults")) $("cfdResults").hidden = true;
+            return;
+          }
+
+          const positionValue = entry * units;
+          const margin = positionValue / leverage;
+          const priceChange = direction === "sell" ? entry - exitPrice : exitPrice - entry;
+          const gross = priceChange * units;
+          const net = gross - fee;
+          const percent = capital > 0 ? net / capital * 100 : 0;
+
+          if (margin > capital) {
+            showMessage("cfdWarning", "Attention : la marge théorique dépasse le capital disponible.");
+          } else {
+            showMessage("cfdWarning", "Simulation théorique : les frais, le spread et le slippage réels peuvent différer.");
+          }
+
+          if ($("cfdValue")) $("cfdValue").textContent = money(positionValue) + " $";
+          if ($("cfdMargin")) $("cfdMargin").textContent = money(margin) + " $";
+          if ($("cfdGross")) $("cfdGross").textContent = money(gross) + " $";
+          if ($("cfdNet")) $("cfdNet").textContent = money(net) + " $";
+          if ($("cfdPercent")) $("cfdPercent").textContent = money(percent) + " %";
+          if ($("cfdResults")) $("cfdResults").hidden = false;
+        });
+      }
+
+      // Trading — analyse éducative
+      const tradeButton = $("analyzeTrade");
+      if (tradeButton) {
+        tradeButton.addEventListener("click", function () {
+          const entry = numberValue("tradeEntry");
+          const stop = numberValue("tradeStop");
+          const target = numberValue("tradeTarget");
+          const quantity = numberValue("tradeQuantity");
+          const direction = $("tradeDirection") ? $("tradeDirection").value : "buy";
+
+          if (![entry, stop, target, quantity].every(Number.isFinite) ||
+              entry <= 0 || stop <= 0 || target <= 0 || quantity <= 0) {
+            showMessage("tradeAnalysis", "Saisissez des prix et une quantité valides.");
+            return;
+          }
+
+          const valid = direction === "buy"
+            ? stop < entry && target > entry
+            : stop > entry && target < entry;
+
+          if (!valid) {
+            showMessage("tradeAnalysis", "Pour un achat, le Stop Loss doit être sous l'entrée et le Take Profit au-dessus. Pour une vente, c'est l'inverse.");
+            return;
+          }
+
+          const risk = Math.abs(entry - stop) * quantity;
+          const reward = Math.abs(target - entry) * quantity;
+          const ratio = reward / risk;
+
+          showMessage(
+            "tradeAnalysis",
+            "Risque théorique : " + money(risk) +
+            " | Gain potentiel théorique : " + money(reward) +
+            " | Ratio rendement/risque : " + money(ratio) +
+            ". Aucun résultat n'est garanti."
+          );
+        });
+      }
+
+      // Calculateur P2P
+      const p2pButton = $("p2pCalculate");
+      if (p2pButton) {
+        p2pButton.addEventListener("click", function () {
+          const amount = numberValue("p2pAmount");
+          const rate = numberValue("p2pRate");
+          const feePercent = numberValue("p2pFee");
+
+          if (![amount, rate, feePercent].every(Number.isFinite) ||
+              amount <= 0 || rate <= 0 || feePercent < 0 || feePercent > 100) {
+            showMessage("p2pMessage", "Saisissez un montant, un taux et des frais valides.");
+            if ($("p2pResults")) $("p2pResults").hidden = true;
+            return;
+          }
+
+          const gross = amount * rate;
+          const fees = gross * feePercent / 100;
+          const net = gross - fees;
+
+          showMessage("p2pMessage", "Estimation uniquement ; vérifiez les taux et frais avant toute transaction.");
+          if ($("p2pGross")) $("p2pGross").textContent = money(gross);
+          if ($("p2pFees")) $("p2pFees").textContent = money(fees);
+          if ($("p2pNet")) $("p2pNet").textContent = money(net);
+          if ($("p2pResults")) $("p2pResults").hidden = false;
+        });
+      }
+
+      // Quiz éducatif
+      const quizButton = $("sf-quiz-check");
+      if (quizButton) {
+        quizButton.addEventListener("click", function () {
+          const answer = $("sf-quiz") ? $("sf-quiz").value : "";
+          if (answer === "b") {
+            showMessage("sf-quiz-result", "Bonne réponse ! L'effet de levier peut amplifier les gains comme les pertes.");
+          } else if (!answer) {
+            showMessage("sf-quiz-result", "Choisissez une réponse avant de vérifier.");
+          } else {
+            showMessage("sf-quiz-result", "Pas tout à fait. Réessayez : le levier augmente l'impact des variations de prix.");
+          }
+        });
+      }
+
+      // Langue française par défaut
+      setLanguage("fr");
+
+      // Afficher la première section active
+      const activeSection = document.querySelector(".section.active");
+      if (!activeSection) {
+        const home = $("home");
+        if (home) home.classList.add("active");
+      }
+    })();
+    </script>
     
-function calculateConversion() {
-  const amountInput = document.getElementById("amount");
-  const rateInput = document.getElementById("rate");
-  const directionInput = document.getElementById("direction");
-  const result = document.getElementById("conversionResult");
-
-  const amountText = amountInput.value.trim();
-  const rateText = rateInput.value.trim();
-  const amount = Number(amountText);
-  const rate = Number(rateText);
-  const direction = directionInput.value;
-
-  if (
-    amountText === "" ||
-    rateText === "" ||
-    !Number.isFinite(amount) ||
-    amount < 0 ||
-    !Number.isFinite(rate) ||
-    rate <= 0
-  ) {
-    result.textContent =
-      "Veuillez saisir un montant valide et un taux supérieur à zéro.";
-    return;
-  }
-
-  const converted = direction === "usdhtg"
-    ? amount * rate
-    : amount / rate;
-
-  const currency = direction === "usdhtg" ? "HTG" : "USD";
-
-  result.textContent =
-    new Intl.NumberFormat("fr-FR", {
-      maximumFractionDigits: 4
-    }).format(converted) + " " + currency;
-}
-
-document.getElementById("calculateConversion")
-  .addEventListener("click", calculateConversion);
-
-["amount", "rate", "direction"].forEach(id => {
-  const field = document.getElementById(id);
-  field.addEventListener("input", calculateConversion);
-  field.addEventListener("change", calculateConversion);
-});
-
-calculateConversion();
-
-    setLanguage("fr");
-  </script>
-  
-<script type="module">
-  import { initializeApp, getApp }
-    from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
-
-  import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut,
-    
-    sendEmailVerification,
-    updateProfile
-  } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCtjZ3vTKl9e27qnQx-KwinSCdHM1U4rdc",
-    authDomain: "skoochy-gourdes-et-dollarv.firebaseapp.com",
-    projectId: "skoochy-gourdes-et-dollarv",
-    storageBucket: "skoochy-gourdes-et-dollarv.firebasestorage.app",
-    messagingSenderId: "380459035444",
-    appId: "1:380459035444:web:a439ef727c2e7300e6d361",
-    measurementId: "G-W7JZJQ00GF"
-  };
-
-  // Réutilise Firebase s'il est déjà initialisé.
-  const app = (() => {
-    try {
-      return getApp();
-    } catch {
-      return initializeApp(firebaseConfig);
-    }
-  })();
-
-  const auth = getAuth(app);
-
-  const authPanel = document.getElementById("authPanel");
-  const profilePanel = document.getElementById("profilePanel");
-  const authName = document.getElementById("authName");
-  const authEmail = document.getElementById("authEmail");
-  const authPassword = document.getElementById("authPassword");
-  const authMode = document.getElementById("authMode");
-  const authSubmit = document.getElementById("authSubmit");
-  const authMessage = document.getElementById("authMessage");
-  const profileEmail = document.getElementById("profileEmail");
-  const profileAccess = document.getElementById("profileAccess");
-  const logoutButton = document.getElementById("logoutButton");
-
-  function showMessage(message, isError = false) {
-    authMessage.textContent = message;
-    authMessage.style.color = isError ? "#ff8585" : "#35d39a";
-  }
-
-  function translateError(error) {
-    const messages = {
-      "auth/email-already-in-use":
-        "Cette adresse e-mail possède déjà un compte.",
-      "auth/invalid-email":
-        "Veuillez saisir une adresse e-mail valide.",
-      "auth/weak-password":
-        "Le mot de passe est trop faible. Utilisez au moins 8 caractères.",
-      "auth/invalid-credential":
-        "E-mail ou mot de passe incorrect.",
-      "auth/user-not-found":
-        "Aucun compte trouvé. Créez un compte.",
-      "auth/wrong-password":
-        "Mot de passe incorrect.",
-      "auth/too-many-requests":
-        "Trop de tentatives. Réessayez plus tard.",
-      "auth/network-request-failed":
-        "Connexion Internet impossible. Vérifiez votre réseau.",
-      "auth/operation-not-allowed":
-        "Activez Email/Password dans Firebase Authentication."
-    };
-
-    return messages[error.code] ||
-      "Une erreur est survenue. Vérifiez les informations et réessayez.";
-  }
-
-  authMode.addEventListener("change", () => {
-    const registering = authMode.value === "register";
-    authName.parentElement.hidden = !registering;
-    authPassword.autocomplete = registering
-      ? "new-password"
-      : "current-password";
-    showMessage("");
-  });
-
-  authSubmit.addEventListener("click", async () => {
-    const email = authEmail.value.trim();
-    const password = authPassword.value;
-    const registering = authMode.value === "register";
-    const name = authName.value.trim();
-
-    if (!email || !password) {
-      showMessage(
-        "Veuillez saisir votre adresse e-mail et votre mot de passe.",
-        true
-      );
-      return;
-    }
-
-    if (registering && !name) {
-      showMessage("Veuillez saisir votre nom complet.", true);
-      return;
-    }
-
-    if (registering && password.length < 8) {
-      showMessage(
-        "Le mot de passe doit contenir au moins 8 caractères.",
-        true
-      );
-      return;
-    }
-
-    authSubmit.disabled = true;
-    authSubmit.textContent = "Veuillez patienter…";
-    showMessage("");
-    
-try {
-  if (registering) {
-    const credential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    await updateProfile(credential.user, {
-      displayName: name
-    });
-
-    await sendEmailVerification(credential.user);
-
-    showMessage(
-      "Compte créé. Vérifiez votre adresse e-mail avant de vous connecter."
-    );
-
-    await signOut(auth);
-  } else {
-    const credential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    if (!credential.user.emailVerified) {
-      showMessage(
-        "Veuillez vérifier votre adresse e-mail avant de vous connecter.",
-        true
-      );
-      await signOut(auth);
-      return;
-    }
-
-    showMessage("Connexion réussie.");
-  }
-
-  authPassword.value = "";
-
-} catch (error) {
-  showMessage(translateError(error), true);
-
-} finally {
-  authSubmit.disabled = false;
-  authSubmit.textContent = "Continuer";
-   }
- }); 
-
-  onAuthStateChanged(auth, user => {
-    if (user) {
-      authPanel.hidden = true;
-      profilePanel.hidden = false;
-      profileEmail.textContent =
-        "Compte connecté : " + user.email;
-      profileName.textContent =
-        "Nom : " + (user.displayName || "Client");
-      profileAccess.textContent = "Accès : gratuit";
-    } else {
-      authPanel.hidden = false;
-      profilePanel.hidden = true;
-      authName.parentElement.hidden =
-        authMode.value !== "register";
-    }
-  });
-
-  logoutButton.addEventListener("click", async () => {
-    try {
-      await signOut(auth);
-      showMessage("Vous êtes déconnecté.");
-      authPassword.value = "";
-    } catch {
-      showMessage(
-        "Impossible de vous déconnecter. Réessayez.",
-        true
-      );
-    }
-  });
-  
-  const editNameButton =
-  document.getElementById("editNameButton");
-
-editNameButton.addEventListener("click", async () => {
-  const user = auth.currentUser;
-
-  if (!user) {
-    alert("Veuillez vous connecter.");
-    return;
-  }
-
-  const newName = prompt("Entrez votre nouveau nom :");
-
-  if (newName === null) return;
-
-  const name = newName.trim();
-
-  if (!name) {
-    alert("Le nom ne peut pas être vide.");
-    return;
-  }
-
-  try {
-    await updateProfile(user, {
-      displayName: name
-    });
-
-    document.getElementById("profileName").textContent =
-      "Nom : " + name;
-
-    alert("Nom modifié avec succès.");
-  } catch (error) {
-    alert("Impossible de modifier le nom. Réessayez.");
-  }
-});
-  authName.parentElement.hidden = authMode.value !== "register";
-</script>
-  
-<script>
-(function () {
-  const $ = (id) => document.getElementById(id);
-
-  const ids = [
-    "fxBalance", "fxRisk", "fxEntry", "fxStop",
-    "fxTarget", "fxPipSize", "fxPipValue"
-  ];
-
-  function calculateForex() {
-    const balance = Number($("fxBalance").value);
-    const riskPercent = Number($("fxRisk").value);
-    const entry = Number($("fxEntry").value);
-    const stop = Number($("fxStop").value);
-    const target = Number($("fxTarget").value);
-
-    const pair = $("fxPair").value;
-    const pipSize = pair.endsWith("JPY") ? 0.01 : 0.0001;
-    $("fxPipSize").value = String(pipSize);
-    
-    const pipValue = Number($("fxPipValue").value);
-
-    const message = $("fxMessage");
-    const outputIds = [
-      "fxRiskAmount", "fxStopPips", "fxLotSize",
-      "fxPotentialGain", "fxRR"
-    ];
-
-    if (
-      ids.some(id => $(id) && $(id).value.trim() === "") ||
-      !ids.every(id => $(id) && Number.isFinite(Number($(id).value))) ||
-      balance <= 0 ||
-      riskPercent < 0.1 ||
-      riskPercent > 5 ||
-      entry <= 0 ||
-      stop <= 0 ||
-      target <= 0 ||
-      pipSize <= 0 ||
-      pipValue <= 0 ||
-      entry === stop
-    ) {
-      outputIds.forEach(id => $(id).textContent = "—");
-      message.textContent =
-        "Vérifiez les valeurs. Le risque doit être entre 0,1 % et 5 %, et le stop-loss doit être différent du prix d'entrée.";
-      return;
-    }
-
-    const stopPips = Math.abs(entry - stop) / pipSize;
-    const targetPips = Math.abs(target - entry) / pipSize;
-    const riskAmount = balance * riskPercent / 100;
-    const lotSize = riskAmount / (stopPips * pipValue);
-    const potentialGain = targetPips * pipValue * lotSize;
-    const ratio = targetPips / stopPips;
-
-    const money = value =>
-      value.toLocaleString("fr-FR", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
-
-    $("fxRiskAmount").textContent = "$" + money(riskAmount);
-    $("fxStopPips").textContent = money(stopPips) + " pips";
-    $("fxLotSize").textContent = money(lotSize) + " lot";
-    $("fxPotentialGain").textContent = "$" + money(potentialGain);
-    $("fxRR").textContent = "1 : " + money(ratio);
-
-    message.textContent =
-      "Estimation uniquement, hors frais et glissement. Vérifiez la valeur du pip pour votre paire et votre compte.";
-  }
-
-  const button = $("fxCalculate");
-   ids.forEach(id => {
-  const field = $(id);
-  if (field) {
-    field.addEventListener("input", calculateForex);
-    field.addEventListener("change", calculateForex);
-  }
-});
-
-const pairSelect = $("fxPair");
-if (pairSelect) {
-  pairSelect.addEventListener("change", calculateForex);
-}
-  
- if (button) {
-    button.addEventListener("click", calculateForex);
-    calculateForex();
-  }
-})();
-</script>
-  
-<script>
-(function () {
-  const $ = (id) => document.getElementById(id);
-
-  function calculateP2P() {
-    const amount = Number($("p2pAmount").value);
-    const rate = Number($("p2pRate").value);
-    const feePercent = Number($("p2pFee").value);
-
-    const grossOutput = $("p2pGross");
-    const feesOutput = $("p2pFees");
-    const netOutput = $("p2pNet");
-    const message = $("p2pMessage");
-
-    if (
-      $("p2pAmount").value.trim() === "" ||
-      $("p2pRate").value.trim() === "" ||
-      $("p2pFee").value.trim() === "" ||
-      !Number.isFinite(amount) ||
-      !Number.isFinite(rate) ||
-      !Number.isFinite(feePercent) ||
-      amount <= 0 ||
-      rate <= 0 ||
-      feePercent < 0 ||
-      feePercent > 10
-    ) {
-      grossOutput.textContent = "—";
-      feesOutput.textContent = "—";
-      netOutput.textContent = "—";
-      message.textContent =
-        "Entrez un montant et un taux positifs. Les frais doivent être entre 0 et 10 %.";
-      return;
-    }
-
-    const gross = amount * rate;
-    const fees = gross * feePercent / 100;
-    const net = gross - fees;
-
-    const money = (value) =>
-      value.toLocaleString("fr-FR", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
-
-    grossOutput.textContent = money(gross) + " HTG";
-    feesOutput.textContent = money(fees) + " HTG";
-    netOutput.textContent = money(net) + " HTG";
-
-    message.textContent =
-      "Estimation uniquement. Vérifiez le taux réel et les frais avant toute transaction.";
-  }
-
-  const button = $("p2pCalculate");
-
-  if (button) {
-    button.addEventListener("click", calculateP2P);
-  }
-})();
-</script>
-  
-<script>
-(function () {
-  "use strict";
-
-  const button = document.getElementById("cryptoCalculate");
-  if (!button) return;
-
-  button.addEventListener("click", function () {
-    const investment = Number(document.getElementById("cryptoInvestment").value);
-    const buyPrice = Number(document.getElementById("cryptoBuyPrice").value);
-    const sellPrice = Number(document.getElementById("cryptoSellPrice").value);
-    const feePercent = Number(document.getElementById("cryptoFee").value);
-
-    if (
-      !Number.isFinite(investment) || investment <= 0 ||
-      !Number.isFinite(buyPrice) || buyPrice <= 0 ||
-      !Number.isFinite(sellPrice) || sellPrice < 0 ||
-      !Number.isFinite(feePercent) || feePercent < 0 || feePercent > 100
-    ) {
-      alert("Veuillez saisir des valeurs valides.");
-      return;
-    }
-
-    const quantity = investment / buyPrice;
-    const saleValue = quantity * sellPrice;
-    const fees = (investment + saleValue) * feePercent / 100;
-    const profit = saleValue - investment - fees;
-    const percent = profit / investment * 100;
-    const money = value => "$" + value.toLocaleString("en-US", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    });
-
-    document.getElementById("cryptoQuantity").textContent =
-      quantity.toLocaleString("en-US", { maximumFractionDigits: 8 });
-    document.getElementById("cryptoSaleValue").textContent = money(saleValue);
-    document.getElementById("cryptoFees").textContent = money(fees);
-    document.getElementById("cryptoProfit").textContent = money(profit);
-    document.getElementById("cryptoPercent").textContent =
-      percent.toFixed(2) + "%";
-
-    document.getElementById("cryptoResults").hidden = false;
-  });
-})();
-</script>
-  <script>
-(function () {
-  "use strict";
-
-  const button = document.getElementById("cfdCalculate");
-  if (!button) return;
-
-  button.addEventListener("click", function () {
-    const direction = document.getElementById("cfdDirection").value;
-    const capital = Number(document.getElementById("cfdCapital").value);
-    const entry = Number(document.getElementById("cfdEntry").value);
-    const exit = Number(document.getElementById("cfdExit").value);
-    const units = Number(document.getElementById("cfdUnits").value);
-    const leverage = Number(document.getElementById("cfdLeverage").value);
-    const fees = Number(document.getElementById("cfdFee").value);
-
-    if (
-      !Number.isFinite(capital) || capital <= 0 ||
-      !Number.isFinite(entry) || entry <= 0 ||
-      !Number.isFinite(exit) || exit <= 0 ||
-      !Number.isFinite(units) || units <= 0 ||
-      !Number.isFinite(leverage) || leverage < 1 ||
-      !Number.isFinite(fees) || fees < 0
-    ) {
-      alert("Veuillez saisir des valeurs valides.");
-      return;
-    }
-
-    const positionValue = entry * units;
-    const margin = positionValue / leverage;
-    const sign = direction === "buy" ? 1 : -1;
-    const gross = (exit - entry) * units * sign;
-    const net = gross - fees;
-    const percent = (net / capital) * 100;
-
-    const money = value => value.toLocaleString("fr-FR", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    });
-
-    document.getElementById("cfdValue").textContent = money(positionValue);
-    document.getElementById("cfdMargin").textContent = money(margin);
-    document.getElementById("cfdGross").textContent = money(gross);
-    document.getElementById("cfdNet").textContent = money(net);
-    document.getElementById("cfdPercent").textContent =
-      percent.toFixed(2).replace(".", ",") + " %";
-
-    let warning = "";
-    if (margin > capital) {
-      warning = "Attention : la marge estimée dépasse le capital disponible.";
-    } else if (net < 0) {
-      warning = "Cette simulation indique une perte estimée.";
-    } else {
-      warning = "Simulation indicative : les frais réels et les conditions du courtier peuvent modifier le résultat.";
-    }
-
-    document.getElementById("cfdWarning").textContent = warning;
-    document.getElementById("cfdResults").hidden = false;
-  });
-})();
-  
-(function () {
-  "use strict";
-
-  const button = document.getElementById("analyzeTrade");
-  if (!button || button.dataset.ready === "true") return;
-  button.dataset.ready = "true";
-
-  button.addEventListener("click", function () {
-    const market = document.getElementById("tradeMarket").value;
-    const direction = document.getElementById("tradeDirection").value;
-    const entry = Number(document.getElementById("tradeEntry").value);
-    const stop = Number(document.getElementById("tradeStop").value);
-    const target = Number(document.getElementById("tradeTarget").value);
-    const quantity = Number(document.getElementById("tradeQuantity").value);
-    const output = document.getElementById("tradeAnalysis");
-
-    if (
-      !Number.isFinite(entry) || !Number.isFinite(stop) ||
-      !Number.isFinite(target) || !Number.isFinite(quantity) ||
-      entry <= 0 || stop <= 0 || target <= 0 || quantity <= 0
-    ) {
-      output.textContent = "Veuillez saisir des valeurs positives valides.";
-      return;
-    }
-
-    const valid = direction === "buy"
-      ? stop < entry && target > entry
-      : stop > entry && target < entry;
-
-    if (!valid) {
-      output.textContent =
-        "Niveaux invalides : vérifiez le Stop Loss et le Take Profit.";
-      return;
-    }
-
-    const risk = Math.abs(entry - stop) * quantity;
-    const reward = Math.abs(target - entry) * quantity;
-    const ratio = reward / risk;
-
-    output.replaceChildren();
-
-    const title = document.createElement("h3");
-    title.textContent = "Résultat de l'analyse";
-    output.appendChild(title);
-
-    [
-      "Marché : " + market,
-      "Position : " + (direction === "buy" ? "Achat (Long)" : "Vente (Short)"),
-      "Perte théorique au Stop Loss : " + risk.toFixed(2),
-      "Gain théorique au Take Profit : " + reward.toFixed(2),
-      "Rapport risque/rendement : 1:" + ratio.toFixed(2)
-    ].forEach(function (line) {
-      const p = document.createElement("p");
-      p.textContent = line;
-      output.appendChild(p);
-    });
-
-    const note = document.createElement("p");
-    note.className = "muted";
-    note.textContent =
-      "Simulation éducative hors frais, spread et glissement. Aucun ordre réel n'est envoyé.";
-    output.appendChild(note);
-  });
-})();  
- </script>
- </body>
- </html>
+    <section id="account" class="section">
+      <div class="card">
+        <h2 data-i18n="navAccount">Mon compte</h2>
+        <p>Créez un compte ou connectez-vous pour accéder aux fonctions de profil.</p>
+
+        <div id="authPanel">
+          <label for="authMode">Action</label>
+          <select id="authMode">
+            <option value="login">Se connecter</option>
+            <option value="register">Créer un compte</option>
+          </select>
+
+          <div id="authNameContainer">
+            <label for="authName">Nom</label>
+            <input id="authName" type="text" autocomplete="name" placeholder="Votre nom">
+          </div>
+
+          <label for="authEmail">Adresse e-mail</label>
+          <input id="authEmail" type="email" autocomplete="email" placeholder="nom@exemple.com">
+
+          <label for="authPassword">Mot de passe</label>
+          <input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Au moins 6 caractères">
+
+          <button id="authSubmit" type="button">Continuer</button>
+          <p id="authMessage" class="result" aria-live="polite"></p>
+        </div>
+
+        <div id="profilePanel" hidden>
+          <h3>Mon profil</h3>
+          <p>Nom : <strong id="profileName">—</strong></p>
+          <p>E-mail : <strong id="profileEmail">—</strong></p>
+          <p>État du compte : <strong id="profileAccess">—</strong></p>
+          <button id="editNameButton" type="button">Modifier mon nom</button>
+          <button id="logoutButton" type="button">Se déconnecter</button>
+        </div>
+
+        <p class="small-note">
+          La connexion nécessite une configuration Firebase valide et l'activation de la méthode
+          d'authentification par e-mail et mot de passe dans Firebase Console.
+        </p>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>© 2026 Skoochy Finance — Outils éducatifs et simulations financières.</p>
+      <p>Les calculs sont indicatifs. Les prix, frais et résultats réels peuvent différer. Aucun profit n'est garanti.</p>
+    </footer>
+
+    <script type="module">
+      const authMessage = document.getElementById("authMessage");
+      const authPanel = document.getElementById("authPanel");
+      const profilePanel = document.getElementById("profilePanel");
+      const authNameContainer = document.getElementById("authNameContainer");
+      const authMode = document.getElementById("authMode");
+      const authName = document.getElementById("authName");
+      const authEmail = document.getElementById("authEmail");
+      const authPassword = document.getElementById("authPassword");
+      const authSubmit = document.getElementById("authSubmit");
+      const profileName = document.getElementById("profileName");
+      const profileEmail = document.getElementById("profileEmail");
+      const profileAccess = document.getElementById("profileAccess");
+      const logoutButton = document.getElementById("logoutButton");
+      const editNameButton = document.getElementById("editNameButton");
+
+      function showAuthMessage(message) {
+        if (authMessage) authMessage.textContent = message;
+      }
+
+      function updateAuthMode() {
+        const registering = authMode && authMode.value === "register";
+        if (authNameContainer) authNameContainer.hidden = !registering;
+        if (authSubmit) {
+          authSubmit.textContent = registering ? "Créer un compte" : "Se connecter";
+        }
+        if (authPassword) {
+          authPassword.autocomplete = registering ? "new-password" : "current-password";
+        }
+      }
+
+      if (authMode) {
+        authMode.addEventListener("change", updateAuthMode);
+        updateAuthMode();
+      }
+
+      try {
+        const appModule = await import(
+          "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js"
+        );
+
+        const authModule = await import(
+          "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js"
+        );
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyCtjZ3vTKl9e27qnQx-KwinSCdHM1U4rdc",
+          authDomain: "skoochy-gourdes-et-dollarv.firebaseapp.com",
+          projectId: "skoochy-gourdes-et-dollarv",
+          storageBucket: "skoochy-gourdes-et-dollarv.firebasestorage.app",
+          messagingSenderId: "380459035444",
+          appId: "1:380459035444:web:a439ef727c2e7300e6d361",
+          measurementId: "G-W7JZJQ00GF"
+        };
+
+        const app = appModule.initializeApp(firebaseConfig);
+        const auth = authModule.getAuth(app);
+
+        const {
+          createUserWithEmailAndPassword,
+          signInWithEmailAndPassword,
+          onAuthStateChanged,
+          signOut,
+          sendEmailVerification,
+          updateProfile
+        } = authModule;
+
+        if (authSubmit) {
+          authSubmit.addEventListener("click", async function () {
+            const email = authEmail ? authEmail.value.trim() : "";
+            const password = authPassword ? authPassword.value : "";
+            const registering = authMode && authMode.value === "register";
+            const name = authName ? authName.value.trim() : "";
+
+            if (!email || !password) {
+              showAuthMessage("Veuillez saisir votre e-mail et votre mot de passe.");
+              return;
+            }
+
+            if (password.length < 6) {
+              showAuthMessage("Le mot de passe doit contenir au moins 6 caractères.");
+              return;
+            }
+
+            if (registering && !name) {
+              showAuthMessage("Veuillez saisir votre nom.");
+              return;
+            }
+
+            authSubmit.disabled = true;
+            showAuthMessage("Veuillez patienter...");
+
+            try {
+              if (registering) {
+                const credential = await createUserWithEmailAndPassword(
+                  auth,
+                  email,
+                  password
+                );
+
+                await updateProfile(credential.user, {
+                  displayName: name
+                });
+
+                await sendEmailVerification(credential.user);
+
+                showAuthMessage(
+                  "Compte créé. Consultez votre boîte e-mail pour vérifier votre adresse avant de vous connecter."
+                );
+
+                await signOut(auth);
+                if (authMode) authMode.value = "login";
+                if (authPassword) authPassword.value = "";
+                updateAuthMode();
+              } else {
+                const credential = await signInWithEmailAndPassword(
+                  auth,
+                  email,
+                  password
+                );
+
+                await credential.user.reload();
+
+                if (!credential.user.emailVerified) {
+                  await signOut(auth);
+                  showAuthMessage(
+                    "Votre adresse e-mail n'est pas encore vérifiée. Consultez votre boîte e-mail, puis réessayez."
+                  );
+                } else {
+                  showAuthMessage("Connexion réussie.");
+                }
+              }
+            } catch (error) {
+              const messages = {
+                "auth/email-already-in-use": "Cette adresse e-mail possède déjà un compte.",
+                "auth/invalid-email": "L'adresse e-mail n'est pas valide.",
+                "auth/weak-password": "Choisissez un mot de passe plus solide.",
+                "auth/invalid-credential": "E-mail ou mot de passe incorrect.",
+                "auth/user-not-found": "Aucun compte trouvé avec ces identifiants.",
+                "auth/wrong-password": "Mot de passe incorrect.",
+                "auth/too-many-requests": "Trop de tentatives. Réessayez plus tard.",
+                "auth/network-request-failed": "Problème de connexion réseau. Vérifiez Internet."
+              };
+
+              showAuthMessage(
+                messages[error.code] ||
+                "Impossible de terminer l'opération. Vérifiez la configuration Firebase et réessayez."
+              );
+            } finally {
+              authSubmit.disabled = false;
+            }
+          });
+        }
+
+        onAuthStateChanged(auth, async function (user) {
+          if (user) {
+            await user.reload();
+
+            if (authPanel) authPanel.hidden = true;
+            if (profilePanel) profilePanel.hidden = false;
+
+            if (profileName) profileName.textContent = user.displayName || "Utilisateur";
+            if (profileEmail) profileEmail.textContent = user.email || "—";
+            if (profileAccess) {
+              profileAccess.textContent = user.emailVerified
+                ? "E-mail vérifié"
+                : "E-mail non vérifié";
+            }
+          } else {
+            if (authPanel) authPanel.hidden = false;
+            if (profilePanel) profilePanel.hidden = true;
+          }
+        });
+
+        if (logoutButton) {
+          logoutButton.addEventListener("click", async function () {
+            try {
+              await signOut(auth);
+              showAuthMessage("Vous êtes déconnecté.");
+            } catch (error) {
+              showAuthMessage("La déconnexion a échoué. Réessayez.");
+            }
+          });
+        }
+
+        if (editNameButton) {
+          editNameButton.addEventListener("click", async function () {
+            const user = auth.currentUser;
+            if (!user) {
+              showAuthMessage("Connectez-vous pour modifier votre nom.");
+              return;
+            }
+
+            const newName = prompt("Saisissez votre nouveau nom :");
+            if (newName === null) return;
+
+            const cleanedName = newName.trim();
+            if (!cleanedName) {
+              showAuthMessage("Le nom ne peut pas être vide.");
+              return;
+            }
+
+            try {
+              await updateProfile(user, { displayName: cleanedName });
+              if (profileName) profileName.textContent = cleanedName;
+              showAuthMessage("Nom du profil mis à jour.");
+            } catch (error) {
+              showAuthMessage("Impossible de modifier le nom. Réessayez.");
+            }
+          });
+        }
+      } catch (error) {
+        showAuthMessage(
+          "Le service de compte n'est pas disponible. Vérifiez la connexion Internet et la configuration Firebase. Les autres outils peuvent continuer à fonctionner."
+        );
+        console.error("Firebase initialization error:", error);
+      }
+    </script>
+  </main>
+</body>
+</html>
