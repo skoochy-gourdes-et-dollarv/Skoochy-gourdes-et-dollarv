@@ -1578,5 +1578,132 @@ if (pairSelect) {
     <p>Sélectionnez une leçon pour commencer.</p>
   </div>
 </section>
+  
+<!-- ============================= -->
+<!-- PARTIE 3B : CRYPTO-ACTIFS -->
+<!-- ============================= -->
+
+<button type="button" onclick="openCryptoActifs()">
+  ₿ Crypto-actifs
+</button>
+
+<section id="crypto-actifs" hidden>
+  <h2>₿ Crypto-actifs</h2>
+
+  <p>
+    Découvrez les principaux actifs numériques,
+    leur fonctionnement et leurs risques.
+  </p>
+
+  <div class="crypto-card">
+    <h3>Bitcoin (BTC)</h3>
+    <p>
+      Bitcoin est un actif numérique utilisant son propre
+      réseau blockchain. Son prix peut varier fortement.
+      Aucun rendement n'est garanti.
+    </p>
+  </div>
+
+  <div class="crypto-card">
+    <h3>Ethereum (ETH)</h3>
+    <p>
+      Ethereum est un réseau blockchain qui permet notamment
+      d'utiliser des contrats intelligents. Ether (ETH)
+      est son actif natif.
+    </p>
+  </div>
+
+  <div class="crypto-card">
+    <h3>Binance Coin (BNB)</h3>
+    <p>
+      BNB est un actif numérique associé à l'écosystème
+      BNB Chain. Sa valeur peut varier.
+    </p>
+  </div>
+
+  <div class="crypto-card">
+    <h3>Solana (SOL)</h3>
+    <p>
+      Solana est une blockchain conçue pour prendre en charge
+      des transactions et des applications décentralisées.
+    </p>
+  </div>
+
+  <p>
+    <strong>Attention :</strong>
+    les crypto-actifs sont volatils et comportent des risques
+    de perte. Les informations présentées ne constituent
+    pas un conseil financier.
+  </p>
+</section>
+
+<style>
+  #crypto-actifs {
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 14px;
+    background: #101827;
+    color: #ffffff;
+  }
+
+  #crypto-actifs .crypto-card {
+    margin: 12px 0;
+    padding: 14px;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    background: #1e293b;
+  }
+
+  #crypto-actifs h2 {
+    color: #38bdf8;
+  }
+
+  #crypto-actifs h3 {
+    color: #fbbf24;
+  }
+</style>
+
+<script>
+(function () {
+  "use strict";
+
+  const lessons = {
+    btc: {
+      title: "Bitcoin (BTC)",
+      text: "Bitcoin est un actif numérique utilisant son propre réseau blockchain. Son prix peut varier fortement. Aucun rendement n'est garanti."
+    },
+
+    eth: {
+      title: "Ethereum (ETH)",
+      text: "Ethereum est un réseau blockchain qui permet notamment d'utiliser des contrats intelligents. Ether (ETH) est son actif natif."
+    },
+
+    bnb: {
+      title: "Binance Coin (BNB)",
+      text: "BNB est un actif numérique associé à l'écosystème BNB Chain. Sa valeur peut varier."
+    },
+
+    sol: {
+      title: "Solana (SOL)",
+      text: "Solana est une blockchain conçue pour prendre en charge des transactions et des applications décentralisées."
+    }
+  };
+
+  window.openCryptoActifs = function () {
+    const panel = document.getElementById("crypto-actifs");
+
+    if (!panel) {
+      return;
+    }
+
+    panel.hidden = false;
+    panel.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  };
+
+})();
+</script>
 </body>
 </html>
