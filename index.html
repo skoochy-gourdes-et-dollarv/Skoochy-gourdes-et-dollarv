@@ -264,7 +264,6 @@
         </article>
       </div>
     </section>
-
     
 <section id="trading" class="section">
   <div class="card">
@@ -478,8 +477,6 @@
   </p>
 </section>
 
-    
-
 <select id="cryptoCoin">
   <optgroup label="Principales crypto-actifs">
     <option value="BTC">Bitcoin (BTC)</option>
@@ -565,42 +562,47 @@
     <p>Les frais réduisent le résultat. Un gain n'est jamais garanti, et une perte est possible.</p>
   </div>
 </section>
-
-
-
-    <section id="cfd" class="section">
-  <h2 data-i18n="cfdTitle">Calculateur CFD</h2>
-
-  <div class="card">
-    <h3>Paramètres de la position</h3>
-    <p class="muted">
-      Outil éducatif : les résultats sont des estimations. Les CFD sont des produits
-      complexes à effet de levier et peuvent entraîner des pertes importantes.
-    </p>
-
-
-<label for="cfdDirection">Sens de la position</label>
-<select id="cfdDirection">
-  <option value="buy">Achat (Long)</option>
-  <option value="sell">Vente (Short)</option>
-</select>
-
-   <label for="cfdInstrument">Instrument financier</label> <select id="cfdInstrument">
-
+    
+<select id="cfdInstrument">
   <optgroup label="Indices boursiers">
     <option value="NAS100">NASDAQ 100 (NAS100)</option>
     <option value="US500">S&amp;P 500 (US500)</option>
     <option value="US30">Dow Jones (US30)</option>
     <option value="GER40">DAX 40 (GER40)</option>
+    <option value="UK100">FTSE 100 (UK100)</option>
+    <option value="FRA40">CAC 40 (FRA40)</option>
+    <option value="JP225">Nikkei 225 (JP225)</option>
+    <option value="AUS200">ASX 200 (AUS200)</option>
   </optgroup>
-  <optgroup label="Métaux">
+
+  <optgroup label="Métaux précieux">
     <option value="XAUUSD">Or (XAU/USD)</option>
     <option value="XAGUSD">Argent (XAG/USD)</option>
+    <option value="XPTUSD">Platine (XPT/USD)</option>
+    <option value="XPDUSD">Palladium (XPD/USD)</option>
   </optgroup>
+
   <optgroup label="Énergie">
     <option value="WTI">Pétrole WTI</option>
     <option value="BRENT">Pétrole Brent</option>
+    <option value="NATGAS">Gaz naturel</option>
   </optgroup>
+
+  <optgroup label="Actions américaines">
+    <option value="AAPL">Apple (AAPL)</option>
+    <option value="MSFT">Microsoft (MSFT)</option>
+    <option value="NVDA">NVIDIA (NVDA)</option>
+    <option value="AMZN">Amazon (AMZN)</option>
+    <option value="TSLA">Tesla (TSLA)</option>
+    <option value="GOOGL">Alphabet / Google (GOOGL)</option>
+    <option value="META">Meta (META)</option>
+    <option value="NFLX">Netflix (NFLX)</option>
+    <option value="AMD">AMD (AMD)</option>
+    <option value="INTC">Intel (INTC)</option>
+    <option value="JPM">JPMorgan Chase (JPM)</option>
+    <option value="WMT">Walmart (WMT)</option>
+  </optgroup>
+
   <optgroup label="Paires Forex">
     <option value="EURUSD">EUR/USD</option>
     <option value="GBPUSD">GBP/USD</option>
@@ -609,8 +611,12 @@
     <option value="AUDUSD">AUD/USD</option>
     <option value="USDCAD">USD/CAD</option>
     <option value="NZDUSD">NZD/USD</option>
+    <option value="EURGBP">EUR/GBP</option>
+    <option value="EURJPY">EUR/JPY</option>
+    <option value="GBPJPY">GBP/JPY</option>
+    <option value="USDHTG">USD/HTG (gourde haïtienne)</option>
   </optgroup>
-   </select>
+</select>
     
 <label for="cfdCapital">Capital disponible (USD)</label>
 <input id="cfdCapital" type="number" min="0" step="any" placeholder="Ex. : 1000">
