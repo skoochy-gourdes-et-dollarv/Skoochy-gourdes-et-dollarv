@@ -403,15 +403,64 @@
   </p>
 </section>
 
-    <section id="crypto" class="section">
-      <h2 data-i18n="cryptoTitle">Crypto-actifs</h2>
-      <div class="card">
-        <p class="muted" data-i18n="cryptoComing">
-          Les outils de calcul et les leçons crypto seront intégrés
-          dans la partie 3B.
-        </p>
-      </div>
-    </section>
+    ```
+<section id="crypto" class="section">
+  <h2 data-i18n="cryptoTitle">Crypto-actifs</h2>
+
+  <div class="card">
+    <h3>Calculateur de crypto-actifs</h3>
+    <p class="muted">
+      Calculez la quantité achetée, la valeur de revente et votre résultat estimé.
+      Entrez vos prix manuellement : les cours ne sont pas en temps réel.
+    </p>
+
+    <label for="cryptoCoin">Crypto-actif</label>
+    <select id="cryptoCoin">
+      <option value="BTC">Bitcoin (BTC)</option>
+      <option value="ETH">Ethereum (ETH)</option>
+      <option value="BNB">BNB</option>
+      <option value="SOL">Solana (SOL)</option>
+      <option value="OTHER">Autre crypto-actif</option>
+    </select>
+
+    <label for="cryptoInvestment">Montant investi (USD)</label>
+    <input id="cryptoInvestment" type="number" min="0" step="any" placeholder="Ex. : 100">
+
+    <label for="cryptoBuyPrice">Prix d'achat par unité (USD)</label>
+    <input id="cryptoBuyPrice" type="number" min="0" step="any" placeholder="Ex. : 50000">
+
+    <label for="cryptoSellPrice">Prix de vente par unité (USD)</label>
+    <input id="cryptoSellPrice" type="number" min="0" step="any" placeholder="Ex. : 55000">
+
+    <label for="cryptoFee">Frais estimés (%)</label>
+    <input id="cryptoFee" type="number" min="0" max="100" step="any" value="1">
+
+    <button type="button" id="cryptoCalculate">Calculer</button>
+
+    <div id="cryptoResults" class="card" aria-live="polite" hidden>
+      <p>Quantité estimée : <strong id="cryptoQuantity">—</strong></p>
+      <p>Valeur de revente avant frais : <strong id="cryptoSaleValue">—</strong></p>
+      <p>Frais estimés : <strong id="cryptoFees">—</strong></p>
+      <p>Résultat net estimé : <strong id="cryptoProfit">—</strong></p>
+      <p>Variation : <strong id="cryptoPercent">—</strong></p>
+    </div>
+    <p class="muted">
+      Calcul indicatif uniquement. Les prix, frais et résultats réels peuvent différer.
+      Les crypto-actifs sont volatils et peuvent entraîner des pertes.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Leçon 1 — Comprendre les crypto-actifs</h3>
+    <p>Bitcoin (BTC) et Ethereum (ETH) sont des crypto-actifs. Leur prix peut varier fortement.</p>
+    <h3>Leçon 2 — Achat et vente</h3>
+    <p>La quantité estimée correspond au montant investi divisé par le prix d'achat, avant prise en compte des frais d'achat.</p>
+    <h3>Leçon 3 — Risque et frais</h3>
+    <p>Les frais réduisent le résultat. Un gain n'est jamais garanti, et une perte est possible.</p>
+  </div>
+</section>
+```
+
 
     <section id="cfd" class="section">
       <h2 data-i18n="cfdTitle">Calculateur CFD</h2>
