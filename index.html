@@ -1671,5 +1671,68 @@ if (pairSelect) {
   });
 })();
 </script>
-</body>
-</html>
+  <script>
+(function () {
+  "use strict";
+
+  const button = document.getElementById("cfdCalculate");
+  if (!button) return;
+
+  button.addEventListener("click", function () {
+    const direction = document.getElementById("cfdDirection").value;
+    const capital = Number(document.getElementById("cfdCapital").value);
+    const entry = Number(document.getElementById("cfdEntry").value);
+    const exit = Number(document.getElementById("cfdExit").value);
+    const units = Number(document.getElementById("cfdUnits").value);
+    const leverage = Number(document.getElementById("cfdLeverage").value);
+    const fees = Number(document.getElementById("cfdFee").value);
+
+    if (
+      !Number.isFinite(capital) || capital <= 0 ||
+      !Number.isFinite(entry) || entry <= 0 ||
+      !Number.isFinite(exit) || exit <= 0 ||
+      !Number.isFinite(units) || units <= 0 ||
+      !Number.isFinite(leverage) || leverage < 1 ||
+      !Number.isFinite(fees) || fees < 0
+    ) {
+      alert("Veuillez saisir des valeurs valides.");
+      return;
+    }
+
+    const positionValue = entry * units;
+    const margin = positionValue / leverage;
+    const sign = direction === "buy" ? 1 : -1;
+    const gross = (exit - entry) * units * sign;
+    const net = gross - fees;
+    const percent = (net / capital) * 100;
+
+    const money = value => value.toLocaleString("fr-FR", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+
+    document.getElementById("cfdValue").textContent = money(positionValue);
+    document.getElementById("cfdMargin").textContent = money(margin);
+    document.getElementById("cfdGross").textContent = money(gross);
+    document.getElementById("cfdNet").textContent = money(net);
+    document.getElementById("cfdPercent").textContent =
+      percent.toFixed(2).replace(".", ",") + " %";
+
+    let warning = "";
+    if (margin > capital) {
+      warning = "Attention : la marge estimée dépasse le capital disponible.";
+    } else if (net < 0) {
+      warning = "Cette simulation indique une perte estimée.";
+    } else {
+      warning = "Simulation indicative : les frais réels et les conditions du courtier peuvent modifier le résultat.";
+    }
+
+    document.getElementById("cfdWarning").textContent = warning;
+    document.getElementById("cfdResults").hidden = false;
+  });
+})();
+  </script>
+ </body>
+ </html>
