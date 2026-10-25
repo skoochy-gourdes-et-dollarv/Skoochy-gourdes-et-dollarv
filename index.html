@@ -849,96 +849,82 @@
         }
       };
 
-      function setLanguage(language) {
-        const selected = translations[language] ? language : "fr";
+      
+function setLanguage(language) {
+  const selected = translations[language] ? language : "fr";
 
-        document.documentElement.lang = selected;
-        localStorage.setItem("skoochyLanguage", selected);
-        
-        document.querySelectorAll("[data-i18n]").forEach((element) => {
-          const key = element.getAttribute("data-i18n");
-          const translated = translations[selected][key];
+  document.documentElement.lang = selected;
+  localStorage.setItem("skoochyLanguage", selected);
 
-          if (translated) {
-            element.textContent = translated;
-          }
-        });
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    const key = element.getAttribute("data-i18n");
+    const translated = translations[selected][key];
 
-        const selector = $("languageSelect");
-        if (selector && selector.value !== selected) {
-          selector.value = selected;
-        }
-      }
+    if (translated !== undefined) {
+      element.textContent = translated;
+    }
+  });
 
-      window.setLanguage = setLanguage;
-      function setLanguage(language) {
-        const selected = translations[language] ? language : "fr";
+  const selector = $("languageSelect");
+  if (selector && selector.value !== selected) {
+    selector.value = selected;
+  }
+}
 
-        document.documentElement.lang = selected;
+window.setLanguage = setLanguage;
 
-        document.querySelectorAll("[data-i18n]").forEach((element) => {
-          const key = element.getAttribute("data-i18n");
-          const translated = translations[selected][key];
+// Yon sèl selektè lang
+const languageSelect = $("languageSelect");
 
-          if (translated) {
-            element.textContent = translated;
-          }
-        });
+if (languageSelect) {
+  languageSelect.addEventListener("change", function () {
+    setLanguage(this.value);
+  });
+}
 
-        const selector = $("languageSelect");
-        if (selector && selector.value !== selected) {
-          selector.value = selected;
-        }
-      }
+// Lang franse pa defo, sof si gen yon lang ki te deja sove
+const savedLanguage = localStorage.getItem("skoochyLanguage");
+const initialLanguage =
+  savedLanguage && translations[savedLanguage]
+    ? savedLanguage
+    : "fr";
 
-      window.setLanguage = setLanguage;
+setLanguage(initialLanguage);
 
-      const languageSelect = $("languageSelect");
-      if (languageSelect) {
-        languageSelect.addEventListener("change", function () {
-          setLanguage(this.value);
-        });
-      }
+// Navigasyon ant paj yo
+function showPage(pageId) {
+  const target = $(pageId);
 
-      const languageSelect = $("languageSelect");
-      if (languageSelect) {
-        languageSelect.addEventListener("change", function () {
-          setLanguage(this.value);
-        });
-      }
+  if (!target || !target.classList.contains("section")) {
+    return;
+  }
 
-      function showPage(pageId) {
-        const target = $(pageId);
-        if (!target || !target.classList.contains("section")) {
-          return;
-        }
+  document.querySelectorAll(".section").forEach((section) => {
+    section.classList.toggle("active", section.id === pageId);
+  });
 
-        document.querySelectorAll(".section").forEach((section) => {
-          section.classList.toggle("active", section.id === pageId);
-        });
+  document.querySelectorAll("[data-page]").forEach((button) => {
+    const isCurrent = button.getAttribute("data-page") === pageId;
+    button.classList.toggle("active", isCurrent);
+    button.setAttribute("aria-current", isCurrent ? "page" : "false");
+  });
 
-        document.querySelectorAll("[data-page]").forEach((button) => {
-          const isCurrent = button.getAttribute("data-page") === pageId;
-          button.classList.toggle("active", isCurrent);
-          button.setAttribute("aria-current", isCurrent ? "page" : "false");
-        });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
+window.showPage = showPage;
 
-      window.showPage = showPage;
+document.querySelectorAll("[data-page]").forEach((button) => {
+  button.addEventListener("click", function () {
+    showPage(this.getAttribute("data-page"));
+  });
+});
 
-      document.querySelectorAll("[data-page]").forEach((button) => {
-        button.addEventListener("click", function () {
-          showPage(this.getAttribute("data-page"));
-        });
-      });
-
-      document.querySelectorAll("[data-go]").forEach((button) => {
-        button.addEventListener("click", function () {
-          showPage(this.getAttribute("data-go"));
-        });
-      });
+document.querySelectorAll("[data-go]").forEach((button) => {
+  button.addEventListener("click", function () {
+    showPage(this.getAttribute("data-go"));
+  });
+});
 
       
 function numberValue(id) {
