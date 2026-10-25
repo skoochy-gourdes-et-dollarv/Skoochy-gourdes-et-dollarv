@@ -959,18 +959,20 @@
           return;
         }
 
-        const result = reverse ? amount / rate : amount * rate;
-        showMessage("sf-conversion-result", "Résultat estimé : " + money(result));
-      }
+        
+    const usdToHtg = $("sf-usd-htg");
+    const htgToUsd = $("sf-htg-usd");
 
-      const usdToHtg = $("sf-usd-htg");
-      if (usdToHtg) {
-        usdToHtg.addEventListener("click", () => calculateSimpleConversion(false));
-      }
+   if (usdToHtg) {
+  usdToHtg.addEventListener("click", function () {
+    calculateSimpleConversion(false);
+  });
+}
 
-      const htgToUsd = $("sf-htg-usd");
-      if (htgToUsd) {
-        htgToUsd.addEventListener("click", () => calculateSimpleConversion(true));
+if (htgToUsd) {
+  htgToUsd.addEventListener("click", function () {
+    calculateSimpleConversion(true);
+  });
       }
 
       // Calculatrice générale
