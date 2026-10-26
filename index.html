@@ -1350,5 +1350,84 @@ body {
   }
 }
 </style>
+  
+<script>
+(function () {
+  function openSkoochySection(sectionId) {
+    const section = document.getElementById(sectionId);
+
+    if (!section) {
+      alert("Seksyon sa a poko jwenn: " + sectionId);
+      return;
+    }
+
+    document.querySelectorAll(".page").forEach(function (page) {
+      page.classList.remove("active");
+      page.hidden = true;
+    });
+
+    section.classList.add("page", "active");
+    section.hidden = false;
+
+    document.querySelectorAll("#skoochy-navigation button").forEach(
+      function (button) {
+        const selected = button.dataset.page === sectionId;
+        button.classList.toggle("active", selected);
+      }
+    );
+
+    section.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+
+  document.addEventListener("click", function (event) {
+    const button = event.target.closest("button");
+    if (!button) return;
+
+    const label = button.textContent.trim().toLowerCase();
+
+    const destinations = {
+      "conversion": "converter",
+      "forex": "forex",
+      "crypto": "crypto",
+      "cfd": "cfd",
+      "trading": "trading",
+      "trading demo": "trading",
+      "formation": "learn",
+      "p2p": "p2p",
+      "mon compte": "account",
+      "assistant ai": "assistant",
+      "paramètres": "settings",
+      "parametres": "settings",
+      "accueil": "home"
+    };
+
+    if (label.startsWith("ouvrir")) {
+      const card = button.closest(".card");
+      if (!card) return;
+
+      const title = card.querySelector("h2, h3, h4");
+      if (!title) return;
+
+      const name = title.textContent.trim().toLowerCase();
+      const sectionId = destinations[name];
+
+      if (sectionId) {
+        event.preventDefault();
+        openSkoochySection(sectionId);
+      }
+      return;
+    }
+
+    const navButton = button.closest("#skoochy-navigation button");
+    if (navButton && navButton.dataset.page) {
+      event.preventDefault();
+      openSkoochySection(navButton.dataset.page);
+    }
+  });
+})();
+</script>
 </body>
 </html>
