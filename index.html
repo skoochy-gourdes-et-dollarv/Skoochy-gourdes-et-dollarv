@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#06142d">
+<meta name="description" content="Skoochy Finance — outils éducatifs de gestion financière et de simulation de marchés.">
+<title>Skoochy Finance</title>
+<style>
+:root{--bg:#041126;--panel:#0b1c39;--panel2:#10284b;--line:#193d69;--text:#f4f7ff;--muted:#aebfdd;--gold:#ffc247;--blue:#1687ff;--green:#16c995;--red:#ef6671;--purple:#a45bff;--radius:22px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 70% 0,#102d54 0,var(--bg) 45%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}button,input,select{font:inherit}button,select{cursor:pointer}button{border:1px solid var(--line);border-radius:14px;background:#10284b;color:var(--text);padding:11px 15px;font-weight:650}button:hover{filter:brightness(1.13)}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}input,select{width:100%;padding:12px 13px;border:1px solid #28486f;border-radius:12px;background:#06162f;color:var(--text)}label{display:block;color:var(--muted);font-size:.9rem;margin:12px 0 6px}.app{max-width:1180px;margin:auto;min-height:100vh;border-inline:1px solid #183454}.topbar{display:flex;align-items:center;gap:14px;padding:20px 22px;border-bottom:1px solid #173657;background:#06152bde;position:sticky;top:0;z-index:10;backdrop-filter:blur(16px)}.brand-icon{display:grid;place-items:center;width:62px;height:62px;border-radius:18px;background:#9ce9c6;color:#063b34;font-size:30px;flex-shrink:0}.brand{flex:1;min-width:0}.brand h1{font-size:clamp(1.15rem,3vw,1.75rem);margin:0}.brand h1 span{color:var(--gold)}.brand p{margin:4px 0 0;color:var(--muted);font-size:.92rem}.icon-btn{font-size:1.3rem;width:48px;height:48px;padding:0;border-radius:50%;background:#142b4c}.language-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:20px 22px;padding:12px 16px;border:1px solid var(--line);border-radius:18px;background:#081a34}.language-bar label{margin:0;font-size:1rem}.language-bar select{max-width:260px}.content{padding:0 22px 100px}.page{display:none}.page.active{display:block}.hero{position:relative;overflow:hidden;padding:28px;border:1px solid #1d4a7a;border-radius:28px;background:radial-gradient(circle at 80% 30%,#17457a 0,#0c2345 40%,#07172e 78%);margin-bottom:22px}.hero h2{font-size:clamp(1.8rem,5vw,3rem);line-height:1.12;max-width:700px;margin:18px 0}.hero h2 span{color:var(--gold)}.hero p{color:#c0d1ef;max-width:700px;line-height:1.65}.pill{display:inline-flex;align-items:center;gap:8px;background:#075c4c;color:#a7ffe0;border-radius:999px;padding:9px 14px;font-weight:700;font-size:.9rem}.primary{background:var(--gold);color:#111e32;border-color:var(--gold);border-radius:999px;padding:14px 23px}.hero-art{position:absolute;right:4%;top:23%;font-size:clamp(5rem,15vw,10rem);opacity:.95;filter:drop-shadow(0 12px 24px #0008);pointer-events:none}.hero-copy{position:relative;z-index:1;max-width:75%}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{border:1px solid #1b4778;background:linear-gradient(145deg,#0b2040,#08182f);border-radius:22px;padding:20px;min-width:0}.feature-icon{width:68px;height:68px;display:grid;place-items:center;border-radius:18px;font-size:2rem;margin-bottom:15px}.blue{background:#064a9d;color:#75c4ff}.green{background:#075c4d;color:#65f4cb}.gold{background:#68420c;color:#ffd16a}.purple{background:#4c1685;color:#d7aaff}.card h3{margin:5px 0 8px;font-size:1.35rem}.card p{color:var(--muted);line-height:1.55;margin:8px 0 16px}.open-btn{border-radius:999px;background:#064a9d;border-color:#1687ff}.section-title{margin:0 0 16px;font-size:1.55rem}.subtle{color:var(--muted);line-height:1.55}.account-strip{display:flex;align-items:center;gap:16px;margin-top:20px}.account-strip .grow{flex:1}.two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}.result{padding:14px;margin-top:14px;background:#06162e;border:1px solid #24466e;border-radius:14px;color:#dceaff;line-height:1.6;overflow-wrap:anywhere}.warning{color:#ffd28b;font-size:.9rem}.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.stat strong{display:block;font-size:1.8rem;margin:12px 0}.green-text{color:#38d6a2}.red-text{color:#ff777f}.quicknav{background:#0c1a35;border:1px solid #203b62;border-radius:24px;padding:20px;margin-top:22px}.quicknav button{width:100%;display:flex;justify-content:space-between;align-items:center;text-align:left;margin:8px 0;background:#132848;border:0;padding:16px}.bottom-nav{position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);width:min(1180px,100%);display:flex;overflow-x:auto;background:#06142bf2;border-top:1px solid #1b3c63;padding:8px 6px calc(8px + env(safe-area-inset-bottom));backdrop-filter:blur(16px)}.bottom-nav button{flex:1;min-width:72px;background:transparent;border:0;padding:8px 4px;color:#b6c7e5;font-size:.72rem;display:flex;align-items:center;gap:5px;flex-direction:column}.bottom-nav button .navicon{font-size:1.25rem}.bottom-nav button.active{color:var(--gold);border-bottom:3px solid var(--gold);border-radius:0}.bottom-nav button[data-page="settings"]{position:relative}.bottom-nav button[data-page="settings"]::after{content:"";position:absolute;right:18%;top:4px;width:8px;height:8px;border-radius:50%;background:#ff5364}.list-row{display:flex;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px solid #203a5c}.list-row:last-child{border-bottom:0}.progress{height:9px;border-radius:99px;background:#20304b;overflow:hidden;margin:8px 0 16px}.progress span{display:block;height:100%;background:var(--blue)}.lesson{margin:10px 0;border:1px solid #28486d;border-radius:14px;padding:14px;background:#091a34}.lesson summary{cursor:pointer;font-weight:700}.lesson p{color:var(--muted);line-height:1.6}.status{font-size:.88rem;color:#9ef1cf}.footer{text-align:center;color:#8194b4;padding:25px 15px 40px;font-size:.85rem}.hidden{display:none!important}
+@media(min-width:800px){.hero{padding:38px}.hero-copy{max-width:72%}.feature-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.feature-grid .card{padding:18px}.content{padding-bottom:45px}.bottom-nav{position:sticky;transform:none;left:auto;width:100%;bottom:0}.topbar{position:sticky}}
+@media(max-width:540px){.topbar{padding:14px 12px;gap:9px}.brand-icon{width:50px;height:50px;border-radius:15px;font-size:25px}.brand p{font-size:.75rem}.icon-btn{width:39px;height:39px}.language-bar{margin:12px;padding:10px;gap:8px}.language-bar select{max-width:190px}.content{padding:0 12px 90px}.hero{padding:20px}.hero-copy{max-width:100%}.hero-art{opacity:.16;right:0;top:22%}.grid,.two-col,.field-grid,.stats{grid-template-columns:1fr}.feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-grid .card{padding:14px}.feature-icon{width:54px;height:54px;font-size:1.6rem}.card h3{font-size:1.1rem}.card p{font-size:.9rem}.account-strip{align-items:flex-start;flex-wrap:wrap}.account-strip .grow{min-width:60%}.bottom-nav button{min-width:67px}.bottom-nav button .navicon{font-size:1.1rem}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand-icon" aria-hidden="true">▤</div>
+  <div class="brand"><h1>Skoochy <span>Finance</span></h1><p data-i18n="subtitle">Gourdes, dollar et marchés financiers</p></div>
+  <button class="icon-btn" aria-label="Notifications" title="Notifications" onclick="alert(t('notificationsInfo'))">♧</button>
+  <button class="icon-btn" aria-label="Mon compte" title="Mon compte" data-goto="account">♙</button>
+  <button class="icon-btn" aria-label="Paramètres" title="Paramètres" data-goto="settings">⚙</button>
+</header>
+<div class="language-bar"><label for="language-select">◎ <span data-i18n="language">Langue</span></label><select id="language-select" aria-label="Langue"><option value="fr">🇫🇷 Français</option><option value="ht">🇭🇹 Kreyòl ayisyen</option><option value="en">🇬🇧 English</option><option value="es">🇪🇸 Español</option></select></div>
+<main class="content">
+<section id="home" class="page active">
+ <div class="hero"><div class="hero-copy"><span class="pill" data-i18n="freeAccess">✓ Accès gratuit disponible</span><h2 data-i18n="heroTitle">Gérez vos calculs financiers avec <span>précision.</span></h2><p data-i18n="heroText">Convertissez vos devises, calculez vos positions et découvrez les marchés Forex, CFD, Crypto et P2P.</p><button class="primary" data-goto="converter" data-i18n="start">▶ Commencer</button></div><div class="hero-art" aria-hidden="true">📈💰</div></div>
+ <div class="grid feature-grid">
+  <article class="card"><div class="feature-icon blue">💱</div><h3 data-i18n="card1Title">Conversion</h3><p data-i18n="card1Text">Préparez vos conversions entre gourdes et dollars.</p><button class="open-btn" data-goto="converter" data-i18n="open">Ouvrir ›</button></article>
+  <article class="card"><div class="feature-icon green">📊</div><h3 data-i18n="card2Title">Forex</h3><p data-i18n="card2Text">Découvrez les lots, les pips et la gestion du risque.</p><button class="open-btn" data-goto="forex" data-i18n="open">Ouvrir ›</button></article>
+  <article class="card"><div class="feature-icon gold">₿</div><h3 data-i18n="card3Title">Crypto</h3><p data-i18n="card3Text">Étudiez les crypto-actifs et leurs variations.</p><button class="open-btn" data-goto="crypto" data-i18n="open">Ouvrir ›</button></article>
+  <article class="card"><div class="feature-icon purple">🎓</div><h3 data-i18n="card4Title">Formation</h3><p data-i18n="card4Text">Apprenez les notions essentielles des marchés financiers.</p><button class="open-btn" data-goto="learn" data-i18n="open">Ouvrir ›</button></article>
+ </div>
+ <div class="card account-strip"><div class="feature-icon blue" style="margin:0">♙</div><div class="grow"><h3 data-i18n="navAccount">Mon compte</h3><p data-i18n="accountTeaser">Connectez-vous pour accéder à votre profil et vos paramètres.</p></div><button data-goto="account" data-i18n="login">Se connecter ›</button></div>
+ <div class="quicknav"><h3 data-i18n="overview">Vue d'ensemble</h3><button data-goto="home">▦ <span data-i18n="dashboard">Tableau de bord</span><span>›</span></button><button data-goto="trading">⇄ <span data-i18n="navTrading">Trading</span><span>›</span></button><button data-goto="p2p">♧ <span data-i18n="navP2P">P2P</span><span>›</span></button><button data-goto="settings">⚙ <span data-i18n="navSettings">Paramètres</span><span>›</span></button></div>
+  </section>
+  <section id="converter" class="page">
+  <div class="section-heading">
+    <h2 data-i18n="converterTitle">Konvètisè lajan</h2>
+    <p>Konvèti lajan ou fasil.</p>
+  </div>
+
+  <div class="card">
+    <label for="amount">Montan</label>
+    <input id="amount" type="number" min="0" step="any" value="1">
+
+    <label for="fromCurrency">Soti nan</label>
+    <select id="fromCurrency">
+      <option value="USD">USD — Dola ameriken</option>
+      <option value="HTG">HTG — Goud ayisyen</option>
+      <option value="EUR">EUR — Euro</option>
+      <option value="CAD">CAD — Dola kanadyen</option>
+      <option value="GBP">GBP — Liv britanik</option>
+      <option value="DOP">DOP — Peso dominiken</option>
+    </select>
+
+    <label for="toCurrency">Ale nan</label>
+    <select id="toCurrency">
+      <option value="HTG">HTG — Goud ayisyen</option>
+      <option value="USD">USD — Dola ameriken</option>
+      <option value="EUR">EUR — Euro</option>
+      <option value="CAD">CAD — Dola kanadyen</option>
+      <option value="GBP">GBP — Liv britanik</option>
+      <option value="DOP">DOP — Peso dominiken</option>
+    </select>
+
+    <button type="button" onclick="convertCurrency()">
+      Konvèti
+    </button>
+
+    <div id="conversionResult" class="result" aria-live="polite">
+      Rezilta a ap parèt la.
+    </div>
+
+    <p class="small-note">
+      To ki anba yo se egzanp. Mete to echanj ajou anvan ou itilize
+      rezilta a pou yon tranzaksyon reyèl.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Kalkilatris pwofi ak pèt</h3>
+
+    <label for="entryPrice">Pri antre</label>
+    <input id="entryPrice" type="number" min="0" step="any"
+      placeholder="Egzanp: 100">
+
+    <label for="exitPrice">Pri sòti</label>
+    <input id="exitPrice" type="number" min="0" step="any"
+      placeholder="Egzanp: 110">
+
+    <label for="tradeAmount">Montan envestisman</label>
+    <input id="tradeAmount" type="number" min="0" step="any"
+      placeholder="Egzanp: 50">
+
+    <button type="button" onclick="calculateProfitLoss()">
+      Kalkile pwofi/pèt
+    </button>
+
+    <div id="profitResult" class="result" aria-live="polite">
+      Rezilta a ap parèt la.
+    </div>
+  </div>
+</section>
+
+<script>
+function convertCurrency() {
+  const rates = {
+    USD: 1,
+    HTG: 130,
+    EUR: 0.92,
+    CAD: 1.38,
+    GBP: 0.78,
+    DOP: 60
+  };
+
+  const amount = Number(document.getElementById("amount").value);
+  const from = document.getElementById("fromCurrency").value;
+  const to = document.getElementById("toCurrency").value;
+  const output = document.getElementById("conversionResult");
+
+  if (!Number.isFinite(amount) || amount < 0) {
+    output.textContent = "Tanpri antre yon montan ki valab.";
+    return;
+  }
+
+  const result = (amount / rates[from]) * rates[to];
+
+  output.textContent =
+    amount.toLocaleString("fr-FR") + " " + from + " = " +
+    result.toLocaleString("fr-FR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 4
+    }) + " " + to;
+}
+
+function calculateProfitLoss() {
+  const entry = Number(document.getElementById("entryPrice").value);
+  const exit = Number(document.getElementById("exitPrice").value);
+  const amount = Number(document.getElementById("tradeAmount").value);
+  const output = document.getElementById("profitResult");
+
+  if (
+    document.getElementById("entryPrice").value === "" ||
+    document.getElementById("exitPrice").value === "" ||
+    document.getElementById("tradeAmount").value === "" ||
+    !Number.isFinite(entry) ||
+    !Number.isFinite(exit) ||
+    !Number.isFinite(amount) ||
+    entry <= 0 ||
+    exit < 0 ||
+    amount < 0
+  ) {
+    output.textContent = "Tanpri verifye tout valè yo.";
+    return;
+  }
+
+  const profit = ((exit - entry) / entry) * amount;
+  const label = profit >= 0 ? "Pwofi estime" : "Pèt estime";
+
+  output.textContent =
+    label + " : " +
+    Math.abs(profit).toLocaleString("fr-FR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }) + " USD";
+}
+</script>
+<section id="forex" class="page">
+  <div class="section-heading">
+    <h2>Forex — Kalkilatris pozisyon</h2>
+    <p>Kalkile diferans ant pri antre ak pri sòti.</p>
+  </div>
+
+  <div class="card">
+    <label for="forexPair">Pè lajan</label>
+    <select id="forexPair">
+      <option value="EUR/USD">EUR/USD</option>
+      <option value="GBP/USD">GBP/USD</option>
+      <option value="USD/JPY">USD/JPY</option>
+      <option value="USD/CHF">USD/CHF</option>
+      <option value="AUD/USD">AUD/USD</option>
+      <option value="USD/CAD">USD/CAD</option>
+      <option value="USD/HTG">USD/HTG</option>
+    </select>
+
+    <label for="forexEntry">Pri antre</label>
+    <input id="forexEntry" type="number" min="0" step="any"
+      placeholder="Egzanp: 1.0850">
+
+    <label for="forexExit">Pri sòti</label>
+    <input id="forexExit" type="number" min="0" step="any"
+      placeholder="Egzanp: 1.0900">
+
+    <label for="forexLot">Gwosè pozisyon (lot)</label>
+    <input id="forexLot" type="number" min="0.01" step="0.01"
+      value="0.01">
+
+    <label for="forexDirection">Direksyon</label>
+    <select id="forexDirection">
+      <option value="buy">Achte (Buy)</option>
+      <option value="sell">Vann (Sell)</option>
+    </select>
+
+    <button type="button" onclick="calculateForex()">
+      Kalkile rezilta
+    </button>
+
+    <div id="forexResult" class="result" aria-live="polite">
+      Rezilta kalkil la ap parèt la.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Konprann Forex</h3>
+    <ul>
+      <li><strong>Buy:</strong> ou espere pri a monte.</li>
+      <li><strong>Sell:</strong> ou espere pri a desann.</li>
+      <li><strong>Lot:</strong> gwosè pozisyon an.</li>
+      <li><strong>Spread:</strong> diferans ant pri acha ak pri vant.</li>
+      <li><strong>Leverage:</strong> li ogmante ekspozisyon an ak risk la.</li>
+    </ul>
+    <p class="small-note">
+      Rezilta a se yon estimasyon pedagojik. Li pa enkli spread,
+      komisyon, swap oswa chanjman valè pip selon lajan kont lan.
+    </p>
+  </div>
+</section>
+
+<script>
+function calculateForex() {
+  const entry = Number(document.getElementById("forexEntry").value);
+  const exit = Number(document.getElementById("forexExit").value);
+  const lot = Number(document.getElementById("forexLot").value);
+  const direction = document.getElementById("forexDirection").value;
+  const pair = document.getElementById("forexPair").value;
+  const output = document.getElementById("forexResult");
+
+  if (
+    document.getElementById("forexEntry").value === "" ||
+    document.getElementById("forexExit").value === "" ||
+    !Number.isFinite(entry) ||
+    !Number.isFinite(exit) ||
+    !Number.isFinite(lot) ||
+    entry <= 0 ||
+    exit <= 0 ||
+    lot <= 0
+  ) {
+    output.textContent = "Antre pri ak gwosè lot ki valab.";
+    return;
+  }
+
+  const movement = direction === "buy"
+    ? exit - entry
+    : entry - exit;
+
+  const pipSize = pair.includes("JPY") ? 0.01 : 0.0001;
+  const pips = movement / pipSize;
+
+  output.textContent =
+    "Pè: " + pair +
+    " | Pips estime: " + pips.toFixed(1) +
+    " | Direksyon: " + (direction === "buy" ? "Buy" : "Sell") +
+    " | Gwosè lot: " + lot.toFixed(2) +
+    ". Pwofi an lajan kont lan pa kalkile isit la.";
+}
+</script>
+<section id="crypto" class="page">
+  <div class="section-heading">
+    <h2>Crypto-actifs</h2>
+    <p>Aprann kijan pou analize pri kripto yo.</p>
+  </div>
+
+  <div class="card">
+    <label for="cryptoAsset">Aktif</label>
+    <select id="cryptoAsset">
+      <option value="BTC/USD">Bitcoin (BTC/USD)</option>
+      <option value="ETH/USD">Ethereum (ETH/USD)</option>
+      <option value="SOL/USD">Solana (SOL/USD)</option>
+      <option value="XRP/USD">XRP/USD</option>
+    </select>
+
+    <label for="cryptoBuy">Pri acha</label>
+    <input id="cryptoBuy" type="number" min="0" step="any"
+      placeholder="Pri acha">
+
+    <label for="cryptoSell">Pri vant</label>
+    <input id="cryptoSell" type="number" min="0" step="any"
+      placeholder="Pri vant">
+
+    <label for="cryptoQuantity">Kantite aktif</label>
+    <input id="cryptoQuantity" type="number" min="0" step="any"
+      value="0.01">
+
+    <button type="button" onclick="calculateCrypto()">
+      Kalkile rezilta
+    </button>
+
+    <div id="cryptoResult" class="result" aria-live="polite">
+      Rezilta a ap parèt la.
+    </div>
+  </div>
+</section>
+
+<section id="cfd" class="page">
+  <div class="section-heading">
+    <h2>CFD</h2>
+    <p>Aprann ekspozisyon ak risk CFD yo.</p>
+  </div>
+
+  <div class="card">
+    <label for="cfdCapital">Kapital ou vle itilize ($)</label>
+    <input id="cfdCapital" type="number" min="0" step="any"
+      placeholder="Egzanp: 100">
+
+    <label for="cfdLeverage">Leverage</label>
+    <select id="cfdLeverage">
+      <option value="1">1:1</option>
+      <option value="5">1:5</option>
+      <option value="10">1:10</option>
+      <option value="20">1:20</option>
+      <option value="30">1:30</option>
+    </select>
+
+    <label for="cfdMove">Chanjman pri (%)</label>
+    <input id="cfdMove" type="number" step="any"
+      placeholder="Egzanp: 2 oswa -2">
+
+    <button type="button" onclick="calculateCFD()">
+      Estime rezilta
+    </button>
+
+    <div id="cfdResult" class="result" aria-live="polite">
+      Rezilta a ap parèt la.
+    </div>
+
+    <p class="small-note">
+      CFD ak leverage gen gwo risk. Kalkil sa a se yon demonstrasyon
+      edikatif, li pa yon lòd reyèl.
+    </p>
+  </div>
+</section>
+
+<section id="risk" class="page">
+  <div class="section-heading">
+    <h2>Jesyon risk</h2>
+    <p>Aprann estime kantite kapital ou riske.</p>
+  </div>
+
+  <div class="card">
+    <label for="riskCapital">Kapital kont lan ($)</label>
+    <input id="riskCapital" type="number" min="0" step="any"
+      value="500">
+
+    <label for="riskPercent">Risk ou chwazi (%)</label>
+    <input id="riskPercent" type="number" min="0" max="100"
+      step="any" value="1">
+
+    <button type="button" onclick="calculateRisk()">
+      Kalkile risk la
+    </button>
+
+    <div id="riskResult" class="result" aria-live="polite">
+      Rezilta a ap parèt la.
+    </div>
+  </div>
+</section>
+
+<script>
+function calculateCrypto() {
+  const buy = Number(document.getElementById("cryptoBuy").value);
+  const sell = Number(document.getElementById("cryptoSell").value);
+  const quantity = Number(document.getElementById("cryptoQuantity").value);
+  const asset = document.getElementById("cryptoAsset").value;
+  const output = document.getElementById("cryptoResult");
+
+  if (
+    document.getElementById("cryptoBuy").value === "" ||
+    document.getElementById("cryptoSell").value === "" ||
+    !Number.isFinite(buy) ||
+    !Number.isFinite(sell) ||
+    !Number.isFinite(quantity) ||
+    buy <= 0 || sell < 0 || quantity <= 0
+  ) {
+    output.textContent = "Verifye pri yo ak kantite aktif la.";
+    return;
+  }
+
+  const profit = (sell - buy) * quantity;
+
+  output.textContent =
+    asset + " | " +
+    (profit >= 0 ? "Pwofi estime: $" : "Pèt estime: $") +
+    Math.abs(profit).toFixed(2);
+}
+
+function calculateCFD() {
+  const capital = Number(document.getElementById("cfdCapital").value);
+  const leverage = Number(document.getElementById("cfdLeverage").value);
+  const move = Number(document.getElementById("cfdMove").value);
+  const output = document.getElementById("cfdResult");
+
+  if (
+    document.getElementById("cfdCapital").value === "" ||
+    document.getElementById("cfdMove").value === "" ||
+    !Number.isFinite(capital) ||
+    !Number.isFinite(move) ||
+    capital <= 0
+  ) {
+    output.textContent = "Antre kapital ak chanjman pri ki valab.";
+    return;
+  }
+
+  const exposure = capital * leverage;
+  const estimated = exposure * (move / 100);
+
+  output.textContent =
+    "Ekspozisyon estime: $" + exposure.toFixed(2) +
+    " | Rezilta anvan frè: " +
+    (estimated >= 0 ? "+$" : "-$") +
+    Math.abs(estimated).toFixed(2);
+}
+
+function calculateRisk() {
+  const capital = Number(document.getElementById("riskCapital").value);
+  const percent = Number(document.getElementById("riskPercent").value);
+  const output = document.getElementById("riskResult");
+
+  if (
+    document.getElementById("riskCapital").value === "" ||
+    document.getElementById("riskPercent").value === "" ||
+    !Number.isFinite(capital) ||
+    !Number.isFinite(percent) ||
+    capital < 0 || percent < 0 || percent > 100
+  ) {
+    output.textContent = "Antre valè ki valab. Risk la dwe ant 0 ak 100%.";
+    return;
+  }
+
+  output.textContent =
+    "Montan risk estime: $" +
+    (capital * percent / 100).toFixed(2);
+}
+     </script>
+     
+<section id="trading" class="page">
+  <div class="section-heading">
+    <h2>Trading Demo</h2>
+    <p>Pratike trading san ou pa riske lajan reyèl.</p>
+  </div>
+
+  <div class="card">
+    <p>Balans demo ou</p>
+    <h2 id="demoBalance">$500.00</h2>
+    <p id="demoStatus">Kont demo pare pou pratike.</p>
+  </div>
+
+  <div class="card">
+    <label for="demoPair">Aktif pou pratike</label>
+    <select id="demoPair">
+      <option value="BTC/USD">BTC/USD</option>
+      <option value="ETH/USD">ETH/USD</option>
+      <option value="EUR/USD">EUR/USD</option>
+      <option value="GBP/USD">GBP/USD</option>
+      <option value="XAU/USD">Gold (XAU/USD)</option>
+    </select>
+
+    <label for="demoEntry">Pri antre ($)</label>
+    <input id="demoEntry" type="number" min="0.00001"
+      step="any" placeholder="Egzanp: 100">
+
+    <label for="demoExit">Pri sòti ($)</label>
+    <input id="demoExit" type="number" min="0.00001"
+      step="any" placeholder="Egzanp: 110">
+
+    <label for="demoAmount">Montan pozisyon ($)</label>
+    <input id="demoAmount" type="number" min="1"
+      step="any" value="50">
+
+    <div class="row">
+      <button type="button" onclick="executeDemoTrade('buy')">
+        Buy
+      </button>
+      <button type="button" onclick="executeDemoTrade('sell')">
+        Sell
+      </button>
+    </div>
+
+    <p id="demoTradeResult" class="result" aria-live="polite">
+      Chwazi pri yo epi pratike.
+    </p>
+
+    <button type="button" onclick="resetDemo()">
+      Rekòmanse Demo a ($500)
+    </button>
+
+    <p class="small-note">
+      Sa a se yon simulation edikatif. Li pa voye lòd sou mache reyèl.
+      Balans lan pa reprezante lajan ou ka retire.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Istwa tranzaksyon demo</h3>
+    <ul id="demoHistory">
+      <li>Pa gen tranzaksyon pou kounye a.</li>
+    </ul>
+  </div>
+</section>
+
+<script>
+let demoBalance = 500;
+let demoHistory = [];
+
+function renderDemo() {
+  document.getElementById("demoBalance").textContent =
+    "$" + demoBalance.toFixed(2);
+
+  const history = document.getElementById("demoHistory");
+  history.replaceChildren();
+
+  if (demoHistory.length === 0) {
+    const item = document.createElement("li");
+    item.textContent = "Pa gen tranzaksyon pou kounye a.";
+    history.appendChild(item);
+    return;
+  }
+
+  demoHistory.slice().reverse().forEach((trade) => {
+    const item = document.createElement("li");
+    item.textContent = trade;
+    history.appendChild(item);
+  });
+}
+
+function executeDemoTrade(direction) {
+  const entryInput = document.getElementById("demoEntry");
+  const exitInput = document.getElementById("demoExit");
+  const amountInput = document.getElementById("demoAmount");
+  const result = document.getElementById("demoTradeResult");
+  const status = document.getElementById("demoStatus");
+
+  const entry = Number(entryInput.value);
+  const exit = Number(exitInput.value);
+  const amount = Number(amountInput.value);
+  const pair = document.getElementById("demoPair").value;
+
+  if (
+    entryInput.value === "" ||
+    exitInput.value === "" ||
+    amountInput.value === "" ||
+    !Number.isFinite(entry) ||
+    !Number.isFinite(exit) ||
+    !Number.isFinite(amount) ||
+    entry <= 0 || exit <= 0 || amount <= 0
+  ) {
+    result.textContent = "Antre pri antre, pri sòti ak montan ki valab.";
+    return;
+  }
+
+  if (amount > demoBalance) {
+    result.textContent = "Montan pozisyon an depase balans demo ou.";
+    return;
+  }
+
+  const movement = direction === "buy"
+    ? (exit - entry) / entry
+    : (entry - exit) / entry;
+
+  const pnl = amount * movement;
+
+  if (demoBalance + pnl < 0) {
+    result.textContent =
+      "Balans lan pa sifi pou aplike rezilta simulation sa a.";
+    return;
+  }
+
+  demoBalance += pnl;
+
+  const label = direction === "buy" ? "BUY" : "SELL";
+  const outcome = pnl >= 0 ? "Pwofi" : "Pèt";
+
+  const message =
+    label + " " + pair + " — " + outcome + ": $" +
+    Math.abs(pnl).toFixed(2);
+
+  result.textContent = message;
+  status.textContent = "Dènye operasyon an se yon simulation.";
+
+  demoHistory.push(message);
+  renderDemo();
+}
+
+function resetDemo() {
+  demoBalance = 500;
+  demoHistory = [];
+
+  document.getElementById("demoStatus").textContent =
+    "Balans demo a retounen nan $500.";
+
+  document.getElementById("demoTradeResult").textContent =
+    "Demo a rekòmanse. Pratike avèk prekosyon.";
+
+  renderDemo();
+}
+
+renderDemo();
+</script>
+<section id="learn" class="page">
+  <div class="section-heading">
+    <h2>Akademi Skoochy Finance</h2>
+    <p>Aprann baz trading yo etap pa etap.</p>
+  </div>
+
+  <div class="card">
+    <h3>1. Bouji Japonè (Candlesticks)</h3>
+    <p>
+      Chak bouji montre pri ouvèti, pri fèmti, pri ki pi wo
+      ak pri ki pi ba pandan yon peryòd.
+    </p>
+    <ul>
+      <li><strong>Bouji monte:</strong> pri fèmti a pi wo pase pri ouvèti a.</li>
+      <li><strong>Bouji desann:</strong> pri fèmti a pi ba pase pri ouvèti a.</li>
+      <li><strong>Lonbray:</strong> li montre limit pri a te rive pandan peryòd la.</li>
+    </ul>
+
+    <div class="candle-demo" aria-label="Egzanp bouji Japonè">
+      <div class="candle-example">
+        <span>Bouji monte</span>
+        <svg viewBox="0 0 80 120" width="80" height="120"
+             role="img" aria-label="Bouji ki monte">
+          <line x1="40" y1="10" x2="40" y2="110"
+                stroke="#159b73" stroke-width="3"/>
+          <rect x="25" y="35" width="30" height="45"
+                fill="#159b73" rx="2"/>
+        </svg>
+      </div>
+      <div class="candle-example">
+        <span>Bouji desann</span>
+        <svg viewBox="0 0 80 120" width="80" height="120"
+             role="img" aria-label="Bouji ki desann">
+          <line x1="40" y1="10" x2="40" y2="110"
+                stroke="#e05260" stroke-width="3"/>
+          <rect x="25" y="35" width="30" height="45"
+                fill="#e05260" rx="2"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>2. Tandans mache a</h3>
+    <ul>
+      <li><strong>Tandans monte:</strong> pri a fòme somè ak fon ki monte.</li>
+      <li><strong>Tandans desann:</strong> pri a fòme somè ak fon ki desann.</li>
+      <li><strong>Mache lateral:</strong> pri a deplase nan yon zòn san direksyon klè.</li>
+    </ul>
+    <p>Pa gen tandans ki garanti sa pri a pral fè apre.</p>
+  </div>
+
+  <div class="card">
+    <h3>3. Order Block</h3>
+    <p>
+      Nan kèk metòd analiz teknik, Order Block se yon zòn sou
+      grafik la kote komèsan yo konsidere te gen gwo aktivite
+      acha oswa vant. Zòn sa yo pa garanti pri a ap reyaji ladan yo.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>4. Fair Value Gap (FVG)</h3>
+    <p>
+      FVG se yon espas sou yon modèl twa bouji kote mouvman pri a
+      kite yon zòn ki pa sipèpoze nèt ant premye ak twazyèm bouji yo.
+      Kèk komèsan sèvi avè l kòm yon zouti analiz, men li pa yon
+      garanti pou yon mouvman nan lavni.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>5. Ti egzèsis</h3>
+    <p>
+      Si yon pè lajan ouvri nan 1.1000 epi li fèmen nan 1.1050,
+      ki kalite bouji sa a ye?
+    </p>
+
+    <div class="row">
+      <button type="button"
+        onclick="document.getElementById('lessonAnswer').textContent =
+        'Bon repons: bouji monte, paske pri fèmti a pi wo pase pri ouvèti a.'">
+        Bouji monte
+      </button>
+
+      <button type="button"
+        onclick="document.getElementById('lessonAnswer').textContent =
+        'Eseye ankò: konpare pri ouvèti a ak pri fèmti a.'">
+        Bouji desann
+      </button>
+    </div>
+
+    <p id="lessonAnswer" class="result" aria-live="polite">
+      Chwazi repons ou.
+    </p>
+  </div>
+</section>
+<section id="p2p" class="page">
+  <div class="section-heading">
+    <h2>Skoochy P2P</h2>
+    <p>Aprann kijan echanj ant moun fonksyone.</p>
+  </div>
+
+  <div class="card">
+    <h3>Ki sa P2P ye?</h3>
+    <p>
+      P2P vle di Peer-to-Peer: moun ka fè tranzaksyon youn ak lòt
+      atravè yon platfòm. Platfòm nan dwe mete mezi sekirite,
+      verifikasyon ak règleman pou diminye fwod.
+    </p>
+
+    <label for="p2pCurrency">Lajan</label>
+    <select id="p2pCurrency">
+      <option value="USD">USD — Dola ameriken</option>
+      <option value="HTG">HTG — Goud ayisyen</option>
+      <option value="USDT">USDT — Tether</option>
+    </select>
+
+    <label for="p2pAmount">Montan</label>
+    <input id="p2pAmount" type="number" min="0.01"
+      step="any" placeholder="Antre montan an">
+
+    <label for="p2pRate">To echanj ou vle itilize</label>
+    <input id="p2pRate" type="number" min="0.00001"
+      step="any" placeholder="Antre to a">
+
+    <button type="button" onclick="calculateP2P()">
+      Estime echanj la
+    </button>
+
+    <p id="p2pResult" class="result" aria-live="polite">
+      Rezilta a ap parèt la.
+    </p>
+
+    <p class="small-note">
+      Sa a se yon kalkilatris demonstrasyon sèlman. Li pa pibliye
+      òf, li pa jwenn lòt itilizatè epi li pa deplase lajan.
+    </p>
+  </div>
+</section>
+
+<section id="account" class="page">
+  <div class="section-heading">
+    <h2>Kont mwen</h2>
+    <p>Enfòmasyon sou kont Skoochy Finance ou.</p>
+  </div>
+
+  <div class="card">
+    <h3>Enfòmasyon itilizatè</h3>
+
+    <label for="accountName">Non konplè</label>
+    <input id="accountName" type="text"
+      placeholder="Antre non ou">
+
+    <label for="accountEmail">Imèl</label>
+    <input id="accountEmail" type="email"
+      placeholder="ou@example.com">
+
+    <button type="button" onclick="saveAccountInfo()">
+      Sove enfòmasyon yo
+    </button>
+
+    <p id="accountResult" class="result" aria-live="polite">
+      Enfòmasyon yo poko sove.
+    </p>
+
+    <p class="small-note">
+      Vèsyon sa a sove enfòmasyon yo nan navigatè a sèlman.
+      Li pa yon sistèm kont sekirize epi li pa senkronize ant aparèy.
+      Pa mete modpas ou nan chan sa yo.
+    </p>
+  </div>
+</section>
+
+<section id="security" class="page">
+  <div class="section-heading">
+    <h2>Sekirite</h2>
+    <p>Kèk bon pratik pou pwoteje kont ou.</p>
+  </div>
+
+  <div class="card">
+    <ul>
+      <li>Chwazi yon modpas solid epi pa pataje li.</li>
+      <li>Pa janm pataje kòd verifikasyon ou.</li>
+      <li>Verifye adrès sit la anvan ou konekte.</li>
+      <li>Pa voye lajan bay moun ou pa verifye.</li>
+      <li>Aktive verifikasyon an de etap si sèvis la ofri li.</li>
+    </ul>
+
+    <p class="small-note">
+      Verifikasyon imèl, rekiperasyon modpas ak pwoteksyon kont robo
+      dwe konekte ak yon sèvis otantifikasyon reyèl pou fonksyone.
+      Tèks sa yo poukont yo pa aktive sekirite.
+    </p>
+  </div>
+</section>
+
+<script>
+function calculateP2P() {
+  const amountInput = document.getElementById("p2pAmount");
+  const rateInput = document.getElementById("p2pRate");
+  const amount = Number(amountInput.value);
+  const rate = Number(rateInput.value);
+  const currency = document.getElementById("p2pCurrency").value;
+  const output = document.getElementById("p2pResult");
+
+  if (
+    amountInput.value === "" ||
+    rateInput.value === "" ||
+    !Number.isFinite(amount) ||
+    !Number.isFinite(rate) ||
+    amount <= 0 ||
+    rate <= 0
+  ) {
+    output.textContent = "Antre yon montan ak yon to ki valab.";
+    return;
+  }
+
+  output.textContent =
+    "Montan: " + amount.toLocaleString("fr-FR") +
+    " " + currency +
+    " | Valè estime selon to ou antre a: " +
+    (amount * rate).toLocaleString("fr-FR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 4
+    });
+}
+
+function saveAccountInfo() {
+  const name = document.getElementById("accountName").value.trim();
+  const email = document.getElementById("accountEmail").value.trim();
+  const output = document.getElementById("accountResult");
+
+  if (!name || !email || !email.includes("@")) {
+    output.textContent = "Tanpri antre yon non ak yon imèl ki valab.";
+    return;
+  }
+
+  try {
+    localStorage.setItem("skoochyAccountName", name);
+    localStorage.setItem("skoochyAccountEmail", email);
+    output.textContent = "Enfòmasyon yo sove nan navigatè sa a.";
+  } catch (error) {
+    output.textContent =
+      "Navigatè a pa pèmèt sove enfòmasyon yo.";
+  }
+}
+
+function loadAccountInfo() {
+  try {
+    const name = localStorage.getItem("skoochyAccountName") || "";
+    const email = localStorage.getItem("skoochyAccountEmail") || "";
+
+    document.getElementById("accountName").value = name;
+    document.getElementById("accountEmail").value = email;
+  } catch (error) {
+    // Depo navigatè a pa disponib.
+  }
+}
+
+loadAccountInfo();
+</script>
+  
+    
+<section id="assistant" class="page">
+  <div class="section-heading">
+    <h2>Asistan Skoochy AI</h2>
+    <p>Poze kesyon sou fonksyon aplikasyon an.</p>
+  </div>
+
+  <div class="card">
+    <div id="aiMessages" class="ai-messages" aria-live="polite">
+      <p><strong>Skoochy:</strong> Bonjou! Mwen ka ede w konprann
+      Forex, Crypto, CFD, P2P ak Trading Demo.</p>
+    </div>
+
+    <label for="aiQuestion">Kesyon ou</label>
+    <textarea id="aiQuestion" rows="3"
+      placeholder="Egzanp: Ki sa Forex ye?"></textarea>
+
+    <button type="button" onclick="askSkoochyAssistant()">
+      Voye kesyon
+    </button>
+
+    <p class="small-note">
+      Sa a se yon asistan lokal ki reponn ak kèk repons prepare.
+      Pou yon vrè asistan AI ki reponn kesyon lib, konekte yon API
+      AI atravè yon sèvè sekirize. Pa mete kle API sekrè nan HTML.
+    </p>
+  </div>
+</section>
+
+<section id="settings" class="page">
+  <div class="section-heading">
+    <h2>Paramèt aplikasyon an</h2>
+    <p>Jere lang ak preferans ou.</p>
+  </div>
+
+  <div class="card">
+    <label for="appLanguage">Langue / Lang</label>
+    <select id="appLanguage" onchange="saveAppLanguage()">
+      <option value="fr">Français</option>
+      <option value="ht">Kreyòl ayisyen</option>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
+
+    <p id="languageStatus" class="result" aria-live="polite">
+      Chwazi lang ou prefere a.
+    </p>
+
+    <button type="button" onclick="clearLocalPreferences()">
+      Reyajiste preferans lokal yo
+    </button>
+  </div>
+</section>
+
+<script>
+function askSkoochyAssistant() {
+  const input = document.getElementById("aiQuestion");
+  const messages = document.getElementById("aiMessages");
+  const question = input.value.trim().toLowerCase();
+
+  if (!question) {
+    input.focus();
+    return;
+  }
+
+  const userMessage = document.createElement("p");
+  userMessage.textContent = "Ou: " + input.value.trim();
+  messages.appendChild(userMessage);
+
+  let answer =
+    "Mwen poko gen repons pou kesyon sa a. Eseye mande sou Forex, Crypto, CFD, P2P oswa Demo.";
+
+  if (question.includes("forex")) {
+    answer =
+      "Forex se mache kote moun echanje pè lajan, tankou EUR/USD. Pri yo ka monte oswa desann, epi trading gen risk.";
+  } else if (question.includes("crypto") || question.includes("bitcoin")) {
+    answer =
+      "Crypto se byen dijital tankou Bitcoin ak Ethereum. Pri yo ka varye anpil, epi ou ka pèdi lajan.";
+  } else if (question.includes("cfd")) {
+    answer =
+      "CFD se yon kontra ki pèmèt ou espekile sou chanjman pri san ou pa posede byen an dirèkteman. Leverage ka ogmante pèt yo.";
+  } else if (question.includes("p2p")) {
+    answer =
+      "P2P vle di echanj ant moun. Verifye moun ou ap fè tranzaksyon avè l epi pa voye lajan san pwoteksyon.";
+  } else if (
+    question.includes("demo") ||
+    question.includes("500") ||
+    question.includes("balans")
+  ) {
+    answer =
+      "Trading Demo Skoochy la sèvi ak yon balans simulation $500 pou pratike. Li pa reprezante lajan reyèl.";
+  } else if (
+    question.includes("risk") ||
+    question.includes("riske")
+  ) {
+    answer =
+      "Jesyon risk ede w limite kantite kapital ou ekspoze. Pa gen okenn estrateji ki garanti pwofi.";
+  } else if (
+    question.includes("lang") ||
+    question.includes("language")
+  ) {
+    answer =
+      "Ou ka chwazi Français, Kreyòl ayisyen, English oswa Español nan paramèt lang yo.";
+  }
+
+  const botMessage = document.createElement("p");
+  const label = document.createElement("strong");
+  label.textContent = "Skoochy: ";
+  botMessage.appendChild(label);
+  botMessage.appendChild(document.createTextNode(answer));
+  messages.appendChild(botMessage);
+
+  input.value = "";
+}
+
+function saveAppLanguage() {
+  const selector = document.getElementById("appLanguage");
+  const language = selector.value;
+  const status = document.getElementById("languageStatus");
+
+  try {
+    localStorage.setItem("skoochyLanguage", language);
+    status.textContent =
+      "Lang ou chwazi a sove: " + selector.options[selector.selectedIndex].text +
+      ". Pou chanje tout tèks aplikasyon an, lang sa a dwe konekte ak sistèm tradiksyon an.";
+  } catch (error) {
+    status.textContent =
+      "Navigatè a pa t kapab konsève chwa lang lan.";
+  }
+
+  const mainLanguageSelector = document.getElementById("language");
+  if (mainLanguageSelector) {
+    mainLanguageSelector.value = language;
+
+    if (typeof setLanguage === "function") {
+      setLanguage(language);
+    }
+  }
+}
+
+function loadAppLanguage() {
+  try {
+    const savedLanguage = localStorage.getItem("skoochyLanguage");
+    const selector = document.getElementById("appLanguage");
+
+    if (savedLanguage && selector) {
+      selector.value = savedLanguage;
+    }
+  } catch (error) {
+    // Preferans lokal yo pa disponib.
+  }
+}
+
+function clearLocalPreferences() {
+  try {
+    localStorage.removeItem("skoochyLanguage");
+    localStorage.removeItem("skoochyAccountName");
+    localStorage.removeItem("skoochyAccountEmail");
+
+    document.getElementById("languageStatus").textContent =
+      "Preferans lokal yo efase. Lang default la se Français.";
+  } catch (error) {
+    document.getElementById("languageStatus").textContent =
+      "Navigatè a pa pèmèt efase preferans yo.";
+  }
+
+  document.getElementById("appLanguage").value = "fr";
+
+  if (typeof setLanguage === "function") {
+    setLanguage("fr");
+  }
+}
+
+loadAppLanguage();
+</script>
+  
+<style>
+/* Navigasyon Skoochy Finance */
+#skoochy-navigation {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 10px;
+  background: #101827;
+  border-top: 1px solid #334155;
+  scrollbar-width: thin;
+}
+
+#skoochy-navigation button {
+  flex: 0 0 auto;
+  min-width: 76px;
+  padding: 10px 12px;
+  border: 1px solid #475569;
+  border-radius: 10px;
+  background: #1e293b;
+  color: white;
+  cursor: pointer;
+}
+
+#skoochy-navigation button.active {
+  background: #d9a441;
+  color: #101827;
+  border-color: #d9a441;
+  font-weight: bold;
+}
+
+body {
+  padding-bottom: 85px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+</style>
+
+<nav id="skoochy-navigation" aria-label="Navigasyon prensipal">
+  <button type="button" data-page="home"
+    onclick="showSkoochyPage('home')">Accueil</button>
+
+  <button type="button" data-page="converter"
+    onclick="showSkoochyPage('converter')">Conversion</button>
+
+  <button type="button" data-page="forex"
+    onclick="showSkoochyPage('forex')">Forex</button>
+
+  <button type="button" data-page="crypto"
+    onclick="showSkoochyPage('crypto')">Crypto</button>
+
+  <button type="button" data-page="cfd"
+    onclick="showSkoochyPage('cfd')">CFD</button>
+
+  <button type="button" data-page="trading"
+    onclick="showSkoochyPage('trading')">Trading Demo</button>
+
+  <button type="button" data-page="learn"
+    onclick="showSkoochyPage('learn')">Formation</button>
+
+  <button type="button" data-page="p2p"
+    onclick="showSkoochyPage('p2p')">P2P</button>
+
+  <button type="button" data-page="account"
+    onclick="showSkoochyPage('account')">Mon compte</button>
+
+  <button type="button" data-page="assistant"
+    onclick="showSkoochyPage('assistant')">Assistant AI</button>
+
+  <button type="button" data-page="settings"
+    onclick="showSkoochyPage('settings')">Paramètres</button>
+</nav>
+
+<script>
+function showSkoochyPage(pageId) {
+  const target = document.getElementById(pageId);
+
+  if (!target || !target.classList.contains("page")) {
+    alert("Cette page n'est pas disponible : " + pageId);
+    return;
+  }
+
+  document.querySelectorAll(".page").forEach(function(page) {
+    page.classList.remove("active");
+    page.setAttribute("hidden", "");
+  });
+
+  target.classList.add("active");
+  target.removeAttribute("hidden");
+
+  document.querySelectorAll(
+    "#skoochy-navigation button"
+  ).forEach(function(button) {
+    const selected = button.dataset.page === pageId;
+    button.classList.toggle("active", selected);
+
+    if (selected) {
+      button.setAttribute("aria-current", "page");
+    } else {
+      button.removeAttribute("aria-current");
+    }
+  });
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  const pages = document.querySelectorAll(".page");
+
+  pages.forEach(function(page) {
+    page.classList.remove("active");
+    page.setAttribute("hidden", "");
+  });
+
+  showSkoochyPage("home");
+});
+</script>
+</body>
+</html>
