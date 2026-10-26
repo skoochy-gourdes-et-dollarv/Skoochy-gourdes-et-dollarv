@@ -1174,8 +1174,30 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
   
+
 <style>
-/* Meni Skoochy: mete bouton yo nan paj la, pa anba ekran an */
+/* Skoochy Finance — aparans pwofesyonèl sou mobil */
+:root {
+  --sf-bg: #07152a;
+  --sf-panel: #0d203b;
+  --sf-border: #244a73;
+  --sf-gold: #ffbf45;
+  --sf-text: #f4f7ff;
+  --sf-muted: #b7c6dc;
+  --sf-blue: #1261b0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--sf-bg);
+  color: var(--sf-text);
+  padding-bottom: 24px !important;
+}
+
+/* Meni prensipal */
 #skoochy-navigation {
   position: static !important;
   inset: auto !important;
@@ -1183,69 +1205,150 @@ document.addEventListener("DOMContentLoaded", function() {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   width: auto;
-  overflow: visible;
+  max-width: 900px;
+  margin: 16px auto 24px;
   padding: 16px;
-  margin: 12px 16px 20px;
-  border: 1px solid #214b76;
-  border-radius: 18px;
-  background: #0b1b33;
+  overflow: visible;
+  border: 1px solid var(--sf-border);
+  border-radius: 20px;
+  background: var(--sf-panel);
   box-sizing: border-box;
 }
 
 #skoochy-navigation button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-width: 0;
-  width: 100%;
-  min-height: 48px;
+  min-height: 54px;
+  padding: 12px 8px;
+  border: 1px solid #405574;
+  border-radius: 13px;
+  background: #192b45;
+  color: var(--sf-text);
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.3;
+  text-align: center;
   white-space: normal;
   overflow-wrap: anywhere;
-  border-radius: 12px;
+  box-shadow: none;
+  transition: background 0.2s ease;
 }
 
 #skoochy-navigation button.active {
-  background: #ffbf42;
+  background: var(--sf-gold);
   color: #08172d;
+  border-color: var(--sf-gold);
 }
 
-body {
-  padding-bottom: 20px !important;
+/* Kat enfòmasyon yo */
+.card {
+  box-sizing: border-box;
+  border: 1px solid var(--sf-border);
+  border-radius: 20px;
+  background: linear-gradient(145deg, #102542, #0a1a31);
+  padding: 20px;
+  margin-bottom: 16px;
+  min-width: 0;
 }
 
-@media (min-width: 600px) {
+.section-heading {
+  margin-bottom: 18px;
+}
+
+.section-heading h2,
+.card h2,
+.card h3 {
+  color: var(--sf-text);
+  line-height: 1.3;
+}
+
+.card p,
+.section-heading p {
+  color: var(--sf-muted);
+  line-height: 1.65;
+}
+
+.card input,
+.card select,
+.card textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  margin: 8px 0 16px;
+  padding: 12px;
+  border: 1px solid #355477;
+  border-radius: 12px;
+  background: #08182e;
+  color: var(--sf-text);
+  font: inherit;
+}
+
+.card button {
+  max-width: 100%;
+  min-height: 46px;
+  padding: 11px 18px;
+  border: 1px solid #2686ef;
+  border-radius: 12px;
+  background: var(--sf-blue);
+  color: white;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.card button:focus-visible,
+#skoochy-navigation button:focus-visible {
+  outline: 3px solid var(--sf-gold);
+  outline-offset: 3px;
+}
+
+.result {
+  overflow-wrap: anywhere;
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid var(--sf-border);
+  border-radius: 12px;
+  background: #08182e;
+  color: var(--sf-text);
+  line-height: 1.5;
+}
+
+.small-note {
+  font-size: 13px;
+}
+
+/* Kat Accueil yo */
+#home .card {
+  height: 100%;
+}
+
+/* Ti ekran */
+@media (max-width: 380px) {
+  #skoochy-navigation {
+    gap: 8px;
+    padding: 10px;
+  }
+
+  #skoochy-navigation button {
+    min-height: 48px;
+    font-size: 13px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+}
+
+/* Gwo ekran */
+@media (min-width: 700px) {
   #skoochy-navigation {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 20px;
   }
 }
 </style>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const menu = document.getElementById("skoochy-navigation");
-  if (!menu) return;
-
-  const selectors = Array.from(
-    document.querySelectorAll("select")
-  );
-
-  const languageSelector = selectors.find(function (select) {
-    const values = Array.from(select.options).map(function (option) {
-      return option.value;
-    });
-
-    return ["fr", "ht", "en", "es"].every(function (value) {
-      return values.includes(value);
-    });
-  });
-
-  if (languageSelector) {
-    const languageBox =
-      languageSelector.closest(".card") ||
-      languageSelector.parentElement;
-
-    if (languageBox && languageBox.parentElement) {
-      languageBox.insertAdjacentElement("afterend", menu);
-    }
-  }
-});
-        </script>
-        </body>
-        </html>
+</body>
+</html>
