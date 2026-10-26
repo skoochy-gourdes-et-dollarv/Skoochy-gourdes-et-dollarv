@@ -1173,5 +1173,79 @@ document.addEventListener("DOMContentLoaded", function() {
   showSkoochyPage("home");
 });
 </script>
-</body>
-</html>
+  
+<style>
+/* Meni Skoochy: mete bouton yo nan paj la, pa anba ekran an */
+#skoochy-navigation {
+  position: static !important;
+  inset: auto !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: auto;
+  overflow: visible;
+  padding: 16px;
+  margin: 12px 16px 20px;
+  border: 1px solid #214b76;
+  border-radius: 18px;
+  background: #0b1b33;
+  box-sizing: border-box;
+}
+
+#skoochy-navigation button {
+  min-width: 0;
+  width: 100%;
+  min-height: 48px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  border-radius: 12px;
+}
+
+#skoochy-navigation button.active {
+  background: #ffbf42;
+  color: #08172d;
+}
+
+body {
+  padding-bottom: 20px !important;
+}
+
+@media (min-width: 600px) {
+  #skoochy-navigation {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const menu = document.getElementById("skoochy-navigation");
+  if (!menu) return;
+
+  const selectors = Array.from(
+    document.querySelectorAll("select")
+  );
+
+  const languageSelector = selectors.find(function (select) {
+    const values = Array.from(select.options).map(function (option) {
+      return option.value;
+    });
+
+    return ["fr", "ht", "en", "es"].every(function (value) {
+      return values.includes(value);
+    });
+  });
+
+  if (languageSelector) {
+    const languageBox =
+      languageSelector.closest(".card") ||
+      languageSelector.parentElement;
+
+    if (languageBox && languageBox.parentElement) {
+      languageBox.insertAdjacentElement("afterend", menu);
+    }
+  }
+});
+        </script>
+        </body>
+        </html>
